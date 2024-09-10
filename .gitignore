@@ -1,0 +1,4 @@
+#build_folder
+build/
+#.vscode
+.vscode/
