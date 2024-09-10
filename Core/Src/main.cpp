@@ -17,13 +17,14 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+//#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdout.h"
 #include <iostream>
-#include <imu_creater.hpp>
+#include "peripheral.h"
+#include "stdout.h"
+//#include "printf.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +58,6 @@
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-//main文はグローバル名前空間に存在してないとだめらしい
 /* USER CODE END 0 */
 
 /**
@@ -105,12 +105,18 @@ int main(void)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  imu::Creater imu_c;
-  std::unique_ptr<imu::Product> imu = imu_c.Create();
-  imu -> Init();
-  MotionParameter* mp;
-  //imu -> Init();
-
+  // uint8_tからfloat型までの表示試験
+  uint8_t u8 = 255;
+  uint16_t u16 = 65535;
+  uint32_t u32 = 4294967295;
+  int i = -123456;
+  float f = 3.14159f;
+  
+  std::cout << "uint8_t: " << static_cast<int>(u8) << std::endl;
+  std::cout << "uint16_t: " << u16 << std::endl;
+  std::cout << "uint32_t: " << u32 << std::endl;
+  std::cout << "int: " << i << std::endl;
+  std::cout << "float: " << f << std::endl;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -118,15 +124,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  imu -> ReadVal();
-	  mp = imu -> get_imu_ptr();
-	  std::cout << mp -> omega[static_cast<int>(COORD::X)] << std::endl;
-	  std::cout << mp -> omega[static_cast<int>(COORD::Y)] << std::endl;
-	  std::cout << mp -> omega[static_cast<int>(COORD::Z)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::X)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::Y)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::Z)] << std::endl;
-	  HAL_Delay(5*100);
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
