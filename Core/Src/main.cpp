@@ -17,13 +17,16 @@
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
+//#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdout.h"
+#include <adc_driver.hpp>
 #include <iostream>
-#include <imu_creater.hpp>
+#include <memory>
+#include "peripheral.h"
+#include "stdout.h"
+//#include "printf.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,15 +59,13 @@
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-//main文はグローバル名前空間に存在してないとだめらしい
 /* USER CODE END 0 */
 
 /**
   * @brief  The application entry point.
   * @retval int
   */
-int main(void)
+int main(int argc, char** argv)
 {
 
   /* USER CODE BEGIN 1 */
@@ -105,29 +106,25 @@ int main(void)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  imu::Creater imu_c;
-  std::unique_ptr<imu::Product> imu = imu_c.Create();
-  imu -> Init();
-  MotionParameter* mp;
-  //imu -> Init();
-
-  /* USER CODE END 2 */
-
+  std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
+  uint16_t* buff_ptr = adc->get_buff_ptr();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-	  imu -> ReadVal();
-	  mp = imu -> get_imu_ptr();
-	  std::cout << mp -> omega[static_cast<int>(COORD::X)] << std::endl;
-	  std::cout << mp -> omega[static_cast<int>(COORD::Y)] << std::endl;
-	  std::cout << mp -> omega[static_cast<int>(COORD::Z)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::X)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::Y)] << std::endl;
-	  std::cout << mp -> accel[static_cast<int>(COORD::Z)] << std::endl;
-	  HAL_Delay(5*100);
-    /* USER CODE BEGIN 3 */
+  // adc->ReadVal(&hadc1);
+  // std::cout << "\n";
+  // for (int i = 0; i < 5; i++) {
+  //   std::cout << "buff_[" << i << "] = " << adc->buff_[i] <<"\n";
+  // }
+  // std::cout << "\n";
+  
+  std::cout << "get buffer pointer:\n";
+  for (int i = 0; i < 5; i++) {
+    std::cout << "buff_ptr[" << i << "] = " << buff_ptr[i] << "\n";
+  }
+  std::cout << "\n";
+    HAL_Delay(5*100);
   }
   /* USER CODE END 3 */
 }
