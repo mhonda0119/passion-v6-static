@@ -106,24 +106,20 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
+  uint16_t* buff_ptr;
+
   std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
-  uint16_t* buff_ptr = adc->get_buff_ptr();
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-  // adc->ReadVal(&hadc1);
-  // std::cout << "\n";
-  // for (int i = 0; i < 5; i++) {
-  //   std::cout << "buff_[" << i << "] = " << adc->buff_[i] <<"\n";
-  // }
-  // std::cout << "\n";
-  
-  std::cout << "get buffer pointer:\n";
-  for (int i = 0; i < 5; i++) {
+    adc->ReadVal(&hadc1);
+    buff_ptr = adc->get_buff_ptr();
+    std::cout << "get buffer pointer:\n";
+    for (int i = 0; i < 5; i++) {
     std::cout << "buff_ptr[" << i << "] = " << buff_ptr[i] << "\n";
-  }
-  std::cout << "\n";
+    }
+    std::cout << "\n";
     HAL_Delay(5*100);
   }
   /* USER CODE END 3 */
