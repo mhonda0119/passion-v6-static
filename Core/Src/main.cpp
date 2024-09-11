@@ -131,9 +131,8 @@ int main(int argc, char** argv)
     wp = pxstr -> get_pxstr_ptr();
     std::cout << "R: " << wp->dir[static_cast<size_t>(DIR::R)] << std::endl;
     std::cout << "L: " << wp->dir[static_cast<size_t>(DIR::L)] << std::endl;
-    std::cout << "F: " << wp->dir[static_cast<size_t>(DIR::FR)] << std::endl;
+    std::cout << "FR: " << wp->dir[static_cast<size_t>(DIR::FR)] << std::endl;
     std::cout << "FL: " << wp->dir[static_cast<size_t>(DIR::FL)] << std::endl;
-    std::cout << "BAT: " << wp->dir[static_cast<size_t>(DIR::BAT)] << std::endl;
     std::cout << std::endl;  // 空白行を追加.
 
   }

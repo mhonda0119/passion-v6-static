@@ -10,12 +10,12 @@
 
 enum struct DIR
 {
-	R = 0, L , FR , FL , BAT
+	R = 0, L , FR , FL
 };
 
 // MotionParameter 構造体の定義
 struct WallParameter {
-    uint16_t dir[5] = {0};       // 位置
+    uint16_t dir[4] = {0};       // 位置
 };
 
 #endif /* _WALL_PARAMETER_HPP_ */
