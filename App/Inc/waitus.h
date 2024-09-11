@@ -5,10 +5,7 @@
  extern "C" {
 #endif
 
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void tim1_wait_us(uint32_t us);
-
 
 #ifdef __cplusplus
 }

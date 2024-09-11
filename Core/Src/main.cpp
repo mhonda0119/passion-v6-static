@@ -105,8 +105,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
-
-
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
