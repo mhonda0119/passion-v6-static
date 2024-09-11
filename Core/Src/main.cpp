@@ -21,7 +21,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <adc_driver.hpp>
 #include <pxstr_creater.hpp>
 #include <iostream>
 #include <memory>
