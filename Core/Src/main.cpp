@@ -106,7 +106,11 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  uint16_t* buff_ptr;
+
+  HAL_GPIO_WritePin(IR__R_GPIO_Port, IR__R_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET);
 
   std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
   /* Infinite loop */
@@ -114,12 +118,12 @@ int main(int argc, char** argv)
   while (1)
   {
     adc->ReadVal(&hadc1);
-    buff_ptr = adc->get_buff_ptr();
-    std::cout << "get buffer pointer:\n";
-    for (int i = 0; i < 5; i++) {
-    std::cout << "buff_ptr[" << i << "] = " << buff_ptr[i] << "\n";
-    }
-    std::cout << "\n";
+    // buff_ptr = adc->get_buff_ptr();
+    // std::cout << "get buffer pointer:\n";
+    // for (int i = 0; i < 5; i++) {
+    // std::cout << "buff_ptr[" << i << "] = " << buff_ptr[i] << "\n";
+    // }
+    // std::cout << "\n";
     HAL_Delay(5*100);
   }
   /* USER CODE END 3 */
