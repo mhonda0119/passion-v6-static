@@ -26,6 +26,7 @@
 #include <memory>
 #include "peripheral.h"
 #include "stdout.h"
+#include "waitus.h"
 //#include "printf.h"
 /* USER CODE END Includes */
 
