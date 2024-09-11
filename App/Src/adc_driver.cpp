@@ -12,7 +12,7 @@ namespace adc{
 		HAL_ADC_Start_DMA(hadc,(uint32_t *)buff_,channels_);
 	}
 
-	volatile uint16_t* Driver::get_buff_ptr(){
+	uint16_t* Driver::get_buff_ptr(){
 		return buff_;
 	}
 }

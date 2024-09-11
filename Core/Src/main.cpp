@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <adc_driver.hpp>
+#include <pxstr_creater.hpp>
 #include <iostream>
 #include <memory>
 #include "peripheral.h"
@@ -106,17 +107,35 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
+  //std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
+
+ 
+  std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
+  std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
+  pxstr -> Init();
+  WallParameter* wp;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    adc->ReadVal(&hadc1);
-    volatile uint16_t* buff = adc->get_buff_ptr();
-    for (int i = 0; i < 5; i++) {
-        std::cout << "buff[" << i << "]: " << buff[i] << std::endl;
-    }
+    // adc->ReadVal(&hadc1);
+    // volatile uint16_t* buff = adc->get_buff_ptr();
+    // for (int i = 0; i < 5; i++) {
+    //     std::cout << "buff[" << i << "]: " << buff[i] << std::endl;
+    // }//なんか、adc読むやつをもう一つインスタンス化してどっちも使おうと思ったらおかしくなった.
+    std::cout << std::endl;  // 空白行を追加.
+
     HAL_Delay(5*100);
+
+    pxstr -> ReadVal();
+    wp = pxstr -> get_pxstr_ptr();
+    std::cout << "R: " << wp->dir[static_cast<size_t>(DIR::R)] << std::endl;
+    std::cout << "L: " << wp->dir[static_cast<size_t>(DIR::L)] << std::endl;
+    std::cout << "F: " << wp->dir[static_cast<size_t>(DIR::FR)] << std::endl;
+    std::cout << "FL: " << wp->dir[static_cast<size_t>(DIR::FL)] << std::endl;
+    std::cout << "BAT: " << wp->dir[static_cast<size_t>(DIR::BAT)] << std::endl;
+    std::cout << std::endl;  // 空白行を追加.
+
   }
   /* USER CODE END 3 */
 }
