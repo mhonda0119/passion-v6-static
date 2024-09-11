@@ -10,7 +10,6 @@
 namespace adc{
 	void Driver::ReadVal(ADC_HandleTypeDef *hadc){//,uint32_t rank)
 		HAL_ADC_Start_DMA(hadc,(uint32_t *)buff_,channels_);
-		std::cout << "ADCの値:" << std::endl;
 	}
 
 	volatile uint16_t* Driver::get_buff_ptr(){

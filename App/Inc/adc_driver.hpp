@@ -16,7 +16,7 @@
 namespace adc{
 	class Driver {
 	private:
-		volatile uint16_t buff_[5] ={0};
+		volatile uint16_t buff_[10] ={0};
 		uint32_t channels_ = 5;
 
 	public:
