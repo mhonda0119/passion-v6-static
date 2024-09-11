@@ -562,7 +562,7 @@ void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 84-1;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 10000-1;
+  htim5.Init.Period = 1000-1;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim5) != HAL_OK)
@@ -710,7 +710,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, IR_L_Pin|IR_FL_Pin|MOTOR_L_CCW_Pin|MOTOR_L_CW_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOH, IR__R_Pin|IR_FR_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOH, IR_R_Pin|IR_FR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, LED_4_Pin|LED_6_Pin|LED_5_Pin|LED_7_Pin, GPIO_PIN_RESET);
@@ -730,7 +730,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : IR__R_Pin IR_FR_Pin */
-  GPIO_InitStruct.Pin = IR__R_Pin|IR_FR_Pin;
+  GPIO_InitStruct.Pin = IR_R_Pin|IR_FR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

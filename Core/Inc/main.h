@@ -63,8 +63,8 @@ void Error_Handler(void);
 #define IR_L_GPIO_Port GPIOC
 #define IR_FL_Pin GPIO_PIN_15
 #define IR_FL_GPIO_Port GPIOC
-#define IR__R_Pin GPIO_PIN_0
-#define IR__R_GPIO_Port GPIOH
+#define IR_R_Pin GPIO_PIN_0
+#define IR_R_GPIO_Port GPIOH
 #define IR_FR_Pin GPIO_PIN_1
 #define IR_FR_GPIO_Port GPIOH
 #define VOL_CHECK_Pin GPIO_PIN_0

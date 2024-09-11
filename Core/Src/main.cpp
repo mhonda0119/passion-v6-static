@@ -55,7 +55,26 @@
 /* Private function prototypes -----------------------------------------------*/
 
 /* USER CODE BEGIN PFP */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  // タイマー割り込みのコールバック関数
+  if (htim->Instance == TIM5) {
+    std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
+    std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
+    pxstr -> Init();
+    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
+    tim1_wait_us(20);
+    pxstr -> ReadVal();
+    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_RESET);
+    // TIM5の周期的な割り込み処理をここに記述
+  }
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -108,32 +127,24 @@ int main(int argc, char** argv)
   std::cout << "hello_c++" << std::endl;
 
   //std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
-
- 
   std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
   std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
   pxstr -> Init();
   WallParameter* wp;
+
+  HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Base_Start_IT(&htim5);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // adc->ReadVal(&hadc1);
-    // volatile uint16_t* buff = adc->get_buff_ptr();
-    // for (int i = 0; i < 5; i++) {
-    //     std::cout << "buff[" << i << "]: " << buff[i] << std::endl;
-    // }//なんか、adc読むやつをもう一つインスタンス化してどっちも使おうと思ったらおかしくなった.
-    std::cout << std::endl;  // 空白行を追加.
-
-    HAL_Delay(5*100);
-
-    pxstr -> ReadVal();
     wp = pxstr -> get_pxstr_ptr();
     std::cout << "R: " << wp->dir[static_cast<size_t>(DIR::R)] << std::endl;
     std::cout << "L: " << wp->dir[static_cast<size_t>(DIR::L)] << std::endl;
     std::cout << "FR: " << wp->dir[static_cast<size_t>(DIR::FR)] << std::endl;
     std::cout << "FL: " << wp->dir[static_cast<size_t>(DIR::FL)] << std::endl;
-    std::cout << std::endl;  // 空白行を追加.
+    std::cout << std::endl;
+    HAL_Delay(5*100);
 
   }
   /* USER CODE END 3 */
