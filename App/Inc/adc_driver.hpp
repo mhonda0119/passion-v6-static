@@ -22,7 +22,7 @@ namespace adc{
 	public:
 		Driver() = default;
 		void ReadVal(ADC_HandleTypeDef *hadc);
-		uint16_t * get_buff_ptr();
+		volatile uint16_t * get_buff_ptr();
 		~Driver() = default;
 	};
 }
