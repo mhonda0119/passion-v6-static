@@ -118,12 +118,6 @@ int main(int argc, char** argv)
   while (1)
   {
     adc->ReadVal(&hadc1);
-    // buff_ptr = adc->get_buff_ptr();
-    // std::cout << "get buffer pointer:\n";
-    // for (int i = 0; i < 5; i++) {
-    // std::cout << "buff_ptr[" << i << "] = " << buff_ptr[i] << "\n";
-    // }
-    // std::cout << "\n";
     HAL_Delay(5*100);
   }
   /* USER CODE END 3 */
