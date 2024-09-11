@@ -112,7 +112,7 @@ int main(int argc, char** argv)
   while (1)
   {
     adc->ReadVal(&hadc1);
-    volatile uint16_t* buff = adc->get_buff_ptr();
+    uint16_t* buff = adc->get_buff_ptr();
     for (int i = 0; i < 5; i++) {
         std::cout << "buff[" << i << "]: " << buff[i] << std::endl;
     }
