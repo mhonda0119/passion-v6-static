@@ -24,6 +24,7 @@
 #include <iostream>
 #include "peripheral.h"
 #include "stdout.h"
+#include "waitus.h"
 //#include "printf.h"
 /* USER CODE END Includes */
 
@@ -105,18 +106,7 @@ int main(void)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  // uint8_tからfloat型までの表示試験
-  uint8_t u8 = 255;
-  uint16_t u16 = 65535;
-  uint32_t u32 = 4294967295;
-  int i = -123456;
-  float f = 3.14159f;
-  
-  std::cout << "uint8_t: " << static_cast<int>(u8) << std::endl;
-  std::cout << "uint16_t: " << u16 << std::endl;
-  std::cout << "uint32_t: " << u32 << std::endl;
-  std::cout << "int: " << i << std::endl;
-  std::cout << "float: " << f << std::endl;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
