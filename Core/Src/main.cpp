@@ -16,8 +16,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
-//#include "main.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -27,59 +25,16 @@
 #include "peripheral.h"
 #include "stdout.h"
 #include "waitus.h"
-//#include "printf.h"
 /* USER CODE END Includes */
 
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
 
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
+std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
+std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
+pxstr->Init();
+WallParameter* wp;
 
 
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
-
-/* USER CODE BEGIN PFP */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-  // タイマー割り込みのコールバック関数
-  if (htim->Instance == TIM5) {
-    std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
-    std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
-    pxstr -> Init();
-    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
-    tim1_wait_us(20);
-    pxstr -> ReadVal();
-    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_RESET);
-    // TIM5の周期的な割り込み処理をここに記述
-  }
-}
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-/* USER CODE END 0 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
   * @brief  The application entry point.
@@ -88,27 +43,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 int main(int argc, char** argv)
 {
 
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
@@ -126,12 +65,6 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  //std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
-  std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
-  std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
-  pxstr -> Init();
-  WallParameter* wp;
-
   HAL_TIM_Base_Start_IT(&htim1);
   HAL_TIM_Base_Start_IT(&htim5);
   /* Infinite loop */
@@ -145,7 +78,6 @@ int main(int argc, char** argv)
     std::cout << "FL: " << wp->dir[static_cast<size_t>(DIR::FL)] << std::endl;
     std::cout << std::endl;
     HAL_Delay(5*100);
-
   }
   /* USER CODE END 3 */
 }
@@ -157,7 +89,21 @@ int main(int argc, char** argv)
 
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim->Instance == htim5.Instance) {
+          HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
+    tim1_wait_us(20);
+    pxstr -> ReadVal();
+    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_RESET);
+    }
+}
 /* USER CODE END 4 */
 
 /**
