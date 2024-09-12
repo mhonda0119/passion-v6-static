@@ -33,7 +33,6 @@ std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
 pxstr->Init();
 WallParameter* wp;
 
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
