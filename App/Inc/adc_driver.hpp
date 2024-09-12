@@ -1,10 +1,3 @@
-/*
- * adc_driver.hpp
- *
- *  Created on: Aug 28, 2024
- *      Author: MasakatsuHonda
- */
-
 #ifndef _ADCDRIVER_HPP_
 #define _ADCDRIVER_HPP_
 
@@ -16,7 +9,7 @@
 namespace adc{
 	class Driver {
 	private:
-		uint16_t buff_[10] ={0};
+		static uint16_t buff_[10];
 		uint32_t channels_ = 5;
 	public:
 		Driver() = default;

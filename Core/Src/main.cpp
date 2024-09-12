@@ -22,19 +22,13 @@
 #include <pxstr_creater.hpp>
 #include <iostream>
 #include <memory>
+#include "interrupt.hpp"
 #include "peripheral.h"
 #include "stdout.h"
-#include "waitus.h"
 /* USER CODE END Includes */
 
 
-std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
-std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
-pxstr->Init();
-WallParameter* wp;
-
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
   * @brief  The application entry point.
@@ -65,19 +59,18 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  HAL_TIM_Base_Start_IT(&htim1);
-  HAL_TIM_Base_Start_IT(&htim5);
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+  std::unique_ptr<tim::It> it = std::make_unique<tim::It>();
+  
+  std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
+  std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
+  pxstr->Init();
+  WallParameter* wp = pxstr->get_pxstr_ptr();
+  
   while (1)
-  {
-    wp = pxstr -> get_pxstr_ptr();
-    std::cout << "R: " << wp->dir[static_cast<size_t>(DIR::R)] << std::endl;
-    std::cout << "L: " << wp->dir[static_cast<size_t>(DIR::L)] << std::endl;
-    std::cout << "FR: " << wp->dir[static_cast<size_t>(DIR::FR)] << std::endl;
-    std::cout << "FL: " << wp->dir[static_cast<size_t>(DIR::FL)] << std::endl;
-    std::cout << std::endl;
-    HAL_Delay(5*100);
+  { 
+  for (int i = 0; i < 4; ++i) {
+      std::cout << "WallParameter contents [" << i << "]: " << wp->dir[i] << std::endl;
+  }
   }
   /* USER CODE END 3 */
 }
@@ -89,21 +82,6 @@ int main(int argc, char** argv)
 
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-    if (htim->Instance == htim5.Instance) {
-          HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
-    tim1_wait_us(20);
-    pxstr -> ReadVal();
-    HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_RESET);
-    }
-}
 /* USER CODE END 4 */
 
 /**

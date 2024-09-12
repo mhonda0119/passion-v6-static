@@ -6,7 +6,7 @@
  */
 
 #ifndef _PXSTR_CREATER_HPP_
-#define _PXSTR_CREATOR_HPP_
+#define _PXSTR_CREATER_HPP_
 
 #include <st1kl3a.hpp>
 
@@ -24,4 +24,4 @@ namespace pxstr{
 	};
 }
 
-#endif /* _PXSTR_CREATOR_HPP_ */
+#endif /* _PXSTR_CREATER_HPP_ */
