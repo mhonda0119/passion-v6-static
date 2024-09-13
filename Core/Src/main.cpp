@@ -26,6 +26,15 @@
 #include "peripheral.h"
 #include "stdout.h"
 /* USER CODE END Includes */
+// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+// {
+//   if(htim->Instance == TIM5)
+//   {
+//     HAL_GPIO_TogglePin(LED_3_GPIO_Port, LED_3_Pin);
+//     std::cout << "TIM5 callback triggered" << std::endl;
+//   }
+// }
+
 
 
 // void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
@@ -59,7 +68,7 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  std::unique_ptr<tim::It> it = std::make_unique<tim::It>();
+  std::unique_ptr<It> it = std::make_unique<It>();
   
   std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
   std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
