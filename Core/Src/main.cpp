@@ -19,15 +19,18 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <pxstr_creater.hpp>
 #include <iostream>
-#include <memory>
-#include "interrupt.hpp"
 #include "peripheral.h"
 #include "stdout.h"
 /* USER CODE END Includes */
 
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
+  if(htim == &htim5)
+  {
+    printf("Wall sensor updated\n");
+    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_15); // led3をtoggle
+  }
+}
 // void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
@@ -59,18 +62,11 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  std::unique_ptr<tim::It> it = std::make_unique<tim::It>();
-  
-  std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
-  std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
-  pxstr->Init();
-  WallParameter* wp = pxstr->get_pxstr_ptr();
-  
+  HAL_TIM_Base_Start_IT(&htim5);
+  HAL_TIM_Base_Start_IT(&htim1);
+    
   while (1)
   { 
-  for (int i = 0; i < 4; ++i) {
-      std::cout << "WallParameter contents [" << i << "]: " << wp->dir[i] << std::endl;
-  }
   }
   /* USER CODE END 3 */
 }
