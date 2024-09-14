@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 #include "peripheral.h"
+#include "stdout.h"
+#include <stdio.h>
 
 void tim1_wait_us(uint32_t us);
 

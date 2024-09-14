@@ -67,19 +67,12 @@ int main(int argc, char** argv)
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
-
-  std::unique_ptr<It> it = std::make_unique<It>();
   
-  std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
-  std::unique_ptr<pxstr::Product> pxstr = pxstr_c->Create();
-  pxstr->Init();
-  WallParameter* wp = pxstr->get_pxstr_ptr();
+  HAL_TIM_Base_Start_IT(&htim5);
   
   while (1)
   { 
-  for (int i = 0; i < 4; ++i) {
-      std::cout << "WallParameter contents [" << i << "]: " << wp->dir[i] << std::endl;
-  }
+
   }
   /* USER CODE END 3 */
 }
