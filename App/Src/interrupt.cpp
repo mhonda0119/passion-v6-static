@@ -34,7 +34,7 @@ namespace tim{
             HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_RESET);
             HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_RESET);
-            wp = pxstr->get_pxstr_ptr();
+            wp = pxstr->get_val_ptr();
             std::cout << "WallParameter_val: ";
             std::cout << wp -> dir[static_cast<int>(DIR::R)] << std::endl;
             std::cout << wp -> dir[static_cast<int>(DIR::L)] << std::endl;

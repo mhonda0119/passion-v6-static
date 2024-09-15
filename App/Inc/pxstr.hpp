@@ -18,7 +18,7 @@ namespace pxstr {
 		Product() = default;
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual WallParameter* get_pxstr_ptr() = 0;
+		virtual WallParameter* get_val_ptr() = 0;
 		virtual ~Product() = default;
 
 	};

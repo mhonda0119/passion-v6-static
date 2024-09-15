@@ -13,7 +13,7 @@ namespace pxstr{
 			pxstr_.dir[i] = buff[i];
 		}
 	}
-	WallParameter* ST1KL3A::get_pxstr_ptr(){
+	WallParameter* ST1KL3A::get_val_ptr(){
 		return &pxstr_; // 修正: アドレスを返すように変更
 	};
 

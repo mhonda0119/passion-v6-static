@@ -13,7 +13,7 @@ namespace pxstr{
 		ST1KL3A() = default;
 		void Init() override ;
 		void ReadVal() override ;
-		WallParameter* get_pxstr_ptr() override;
+		WallParameter* get_val_ptr() override;
 		virtual ~ST1KL3A() = default;
 	};
 }
