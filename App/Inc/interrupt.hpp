@@ -11,10 +11,11 @@
 #include "stm32f4xx_hal.h"
 #include "waitus.h"
 
-	class It{
+	class timer{
 	public:
 		It();
         static void PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+
 		~It() = default;
 	};
 

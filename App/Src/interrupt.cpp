@@ -1,6 +1,6 @@
 #include <interrupt.hpp>
 
-void tim::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_HandletyDef を TIM_HandleTypeDef に変更
+void It::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_HandletyDef を TIM_HandleTypeDef に変更
     if(htim -> Instance == TIM5){
         std::cout << "seikou" << std::endl;
 
@@ -9,7 +9,7 @@ void tim::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_Handlet
         HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET);
         HAL_GPIO_WritePin(IR_FL_GPIO_Port, IR_FL_Pin, GPIO_PIN_SET);
 
-        tim1_wait_us(20);
+        Tim1WaitUs(20);
 
         adc::Driver::ReadVal(&hadc1);
 
@@ -28,5 +28,5 @@ void tim::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_Handlet
 }
 
 extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-    It::PeriodElapsedCallback(htim);
+    timer::PeriodElapsedCallback(htim);
 }

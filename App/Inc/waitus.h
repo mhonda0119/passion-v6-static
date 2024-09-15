@@ -5,12 +5,12 @@
  extern "C" {
 #endif
 
+#include <stdio.h>
 #include <stdint.h>
 #include "peripheral.h"
 #include "stdout.h"
-#include <stdio.h>
 
-void tim1_wait_us(uint32_t us);
+void Tim1WaitUs(uint32_t us);
 
 #ifdef __cplusplus
 }
