@@ -1,6 +1,6 @@
 #include <interrupt.hpp>
 
-void It::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_HandletyDef を TIM_HandleTypeDef に変更
+void tim::PeriodElapsedCallback(TIM_HandleTypeDef *htim){ // 修正: TIM_HandletyDef を TIM_HandleTypeDef に変更
     if(htim -> Instance == TIM5){
         std::cout << "seikou" << std::endl;
 
