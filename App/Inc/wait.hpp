@@ -10,9 +10,9 @@
 namespace tim{
     class Wait{
     private:
-        TIM_HandleTypeDef tim;
     public:
-        Wait(TIM_HandleTypeDef* timnum);
+        TIM_HandleTypeDef name_;
+        Wait(TIM_HandleTypeDef name);
         void Us(uint32_t us);
         ~Wait() = default;
     };

@@ -13,7 +13,7 @@ namespace tim{
         //WallParameterの初期化
         wp = nullptr;
         //Waitのインスタンスを作成
-        tim1 = std::make_unique<tim::Wait>(&htim1);
+        tim1 = std::make_unique<tim::Wait>(htim1);
     }
 
     void It::PeriodElapsedCallback(TIM_HandleTypeDef *htim){
