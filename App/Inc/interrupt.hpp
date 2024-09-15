@@ -11,7 +11,7 @@
 #include "stm32f4xx_hal.h"
 #include "waitus.h"
 
-	class timer{
+	class It{
 	public:
 		It();
         static void PeriodElapsedCallback(TIM_HandleTypeDef *htim);
