@@ -8,7 +8,7 @@ namespace pxstr{
 
 	void ST1KL3A::ReadVal(){
 		adc_->ReadVal(&hadc1);
-		uint16_t* buff = adc_->get_buff_ptr();
+		uint16_t* buff = adc_->get_val_ptr();
 		for (int i = 0; i < 4; i++) {
 			pxstr_.dir[i] = buff[i];
 		}

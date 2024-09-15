@@ -22,8 +22,8 @@ namespace tim{
             && 
             wp != nullptr
             &&
-            tim1 != nullptr
-            ){
+            tim1 != nullptr)
+            {
             HAL_GPIO_WritePin(IR_R_GPIO_Port, IR_R_Pin, GPIO_PIN_SET); // R
             HAL_GPIO_WritePin(IR_L_GPIO_Port, IR_L_Pin, GPIO_PIN_SET); // L
             HAL_GPIO_WritePin(IR_FR_GPIO_Port, IR_FR_Pin, GPIO_PIN_SET); // FR
