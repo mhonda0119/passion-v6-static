@@ -1,10 +1,3 @@
-/*
- * pxstr.hpp
- *
- *  Created on: Sep 3, 2024
- *      Author: MasakatsuHonda
- */
-
 #ifndef _PXSTR_HPP_
 #define _PXSTR_HPP_
 
@@ -12,8 +5,8 @@
 #include <stdout.h>
 #include <iostream>
 #include <memory>
-#include <adc_driver.hpp>
-#include <wall_parameter.hpp>
+#include "adc_driver.hpp"
+#include "wall_parameter.hpp"
 
 namespace pxstr {
 

@@ -68,8 +68,6 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
   
-  HAL_TIM_Base_Start_IT(&htim5);
-  
   while (1)
   { 
 

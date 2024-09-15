@@ -5,12 +5,9 @@
  *      Author: MasakatsuHonda
  */
 
-#include <adc_driver.hpp>
+#include "adc_driver.hpp"
 
 namespace adc{
-
-	uint16_t Driver::buff_[10] = {0};
-
 	void Driver::ReadVal(ADC_HandleTypeDef *hadc){//,uint32_t rank)
 		HAL_ADC_Start_DMA(hadc,(uint32_t *)buff_,channels_);
 	}

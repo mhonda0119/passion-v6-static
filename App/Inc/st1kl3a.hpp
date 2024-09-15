@@ -1,7 +1,7 @@
 #ifndef _ST1KL3A_HPP_
 #define _ST1KL3A_HPP_
 
-#include <pxstr.hpp>
+#include "pxstr.hpp"
 
 namespace pxstr{
 

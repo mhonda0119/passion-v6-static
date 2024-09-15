@@ -9,15 +9,21 @@
 #include "stdint.h"
 #include "wall_parameter.hpp"
 #include "stm32f4xx_hal.h"
-#include "waitus.h"
+#include "wait.hpp"
+#include "pxstr_creater.hpp"
 
+namespace tim{
 	class It{
-	public:
+		private:
+		static std::unique_ptr<pxstr::Product> pxstr;
+		static WallParameter* wp;
+		static std::unique_ptr<tim::Wait> tim1;
+
+		public:
 		It();
         static void PeriodElapsedCallback(TIM_HandleTypeDef *htim);
-
 		~It() = default;
 	};
-
+}
 
 #endif /* _INTERRUPT_HPP_ */

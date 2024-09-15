@@ -9,8 +9,8 @@
 namespace adc{
 	class Driver {
 	private:
-		uint16_t buff_[10];
-		const uint32_t channels_ = 5;
+		uint16_t buff_[10] = {0};
+		uint32_t channels_ = 5;
 	public:
 		Driver() = default;
 		void ReadVal(ADC_HandleTypeDef *hadc);
