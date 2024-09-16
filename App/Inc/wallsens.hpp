@@ -15,9 +15,9 @@ namespace sensor{
             std::unique_ptr<ir::Driver> ir_;
             std::unique_ptr<tim::Wait> tim1_;
         public:
-            Wall();//いろんなのインスタンス化する．
-            ReadVal();//wallparameterの壁のあるなしを0,1で示す．
-            get_val_ptr();//その配列のポインターを返す．
+            Wall();//繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ蛹悶→繝｡繝ｳ繝仙､画焚縺ｫ莉｣蜈･
+            ReadVal();//繧ｫ繝吶�ｮ縺ゅｋ縺ｪ縺励ｒ01縺ｧ
+            get_val_ptr();
             ~Wall() = default;
     };
 }
