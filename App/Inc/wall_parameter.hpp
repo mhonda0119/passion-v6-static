@@ -8,6 +8,7 @@
 #ifndef _WALL_PARAMETER_HPP_
 #define _WALL_PARAMETER_HPP_
 
+#include <cstdint>
 enum struct DIR
 {
 	R = 0, L , FR , FL , ALL

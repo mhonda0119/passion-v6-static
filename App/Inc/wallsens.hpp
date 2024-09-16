@@ -6,18 +6,19 @@
 #include "pxstr_creater.hpp"
 #include "ir.hpp"
 #include "wait.hpp"
+#include <cstdint>
 
 namespace sensor{
     class Wall{
         private:
             WallParameter* wp_;
-            static constexpr WallParameter* thresh_;
+            static WallParameter* thresh_;
             std::unique_ptr<pxstr::Product> pxstr_;
             std::unique_ptr<ir::Driver> ir_;
             std::unique_ptr<tim::Wait> tim1_;
         public:
             Wall();//インスタンス化とメンバ変数に代入
-            ReadVal();//カベのあるなしを01で
+            void ReadVal();//カベのあるなしを01で
             WallParameter* get_val_ptr();
             ~Wall() = default;
     };

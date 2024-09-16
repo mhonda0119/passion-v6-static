@@ -4,7 +4,9 @@
 #include "peripheral.h"
 #include "wall_parameter.hpp"
 #include "led.hpp"
+#include "main.h"
 #include <memory>
+#include <iostream>
 
 namespace ir{
     class Driver{
@@ -15,9 +17,9 @@ namespace ir{
     std::unique_ptr<gpio::LED> fr_;
     std::unique_ptr<gpio::LED> fl_;
     public:
-        Driver();//ledをインスタンス化して4つ分
-        void On(DIR dir = DIR::ALL);//何も引数取らなかったら全部光らせて指定したら指定
-        void Off(DIR dir = DIR::ALL);//何も引数取らなかったら全部光らせて指定したら指定
+        Driver();
+        void On(DIR dir = DIR::ALL);
+        void Off(DIR dir = DIR::ALL);
         ~Driver() = default;
     };
 }

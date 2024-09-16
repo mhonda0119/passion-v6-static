@@ -2,13 +2,14 @@
 
 namespace ir{
     Driver::Driver(){
-    std::unique_ptr<gpio::LED> r_ = std::make_unique<gpio::LED>(IR_R_GPIO_Port, IR_R_Pin);
-    std::unique_ptr<gpio::LED> l_ = std::make_unique<gpio::LED>(IR_L_GPIO_Port, IR_L_Pin);
-    std::unique_ptr<gpio::LED> fr_ = std::make_unique<gpio::LED>(IR_FR_GPIO_Port, IR_FR_Pin);
-    std::unique_ptr<gpio::LED> fl_ = std::make_unique<gpio::LED>(IR_FL_GPIO_Port, IR_FL_Pin);
+        r_ = std::make_unique<gpio::LED>(IR_R_GPIO_Port, IR_R_Pin);
+        l_ = std::make_unique<gpio::LED>(IR_L_GPIO_Port, IR_L_Pin);
+        fr_ = std::make_unique<gpio::LED>(IR_FR_GPIO_Port, IR_FR_Pin);
+        fl_ = std::make_unique<gpio::LED>(IR_FL_GPIO_Port, IR_FL_Pin);
     };
 
     void Driver::On(DIR dir){
+
         switch(dir){
             case DIR::ALL:
                 r_->On();
