@@ -11,16 +11,20 @@
 #include "pxstr_creater.hpp"
 
 namespace tim{
-	class It{
+	class IT{
 		private:
-		static std::unique_ptr<pxstr::Product> pxstr;
-		static WallParameter* wp;
-		static std::unique_ptr<tim::Wait> tim1;
+		static std::unique_ptr<pxstr::Product> pxstr_;
+		static WallParameter* wp_;
+		static std::unique_ptr<tim::Wait> tim1_;
+		static TIM_HandleTypeDef name_;
 
 		public:
-		It();
-        static void PeriodElapsedCallback(TIM_HandleTypeDef *htim);
-		~It() = default;
+		IT() = delete;
+		static void Init(TIM_HandleTypeDef name); // 修正: 戻り値の型を追加
+		static HAL_StatusTypeDef Start();
+        static void PeriodElapsedCallback(); // 修正: 戻り値の型を追加
+		static HAL_StatusTypeDef Stop();
+		~IT() = default;
 	};
 }
 
