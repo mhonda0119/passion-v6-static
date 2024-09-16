@@ -6,6 +6,7 @@ namespace tim{
 		std::unique_ptr<tim::Wait> IT::tim1_ = nullptr;
         //タイマー5を使用
         TIM_HandleTypeDef IT::name_ = htim5;
+        std::unique_ptr<sensor::Wall> IT::wall_ = nullptr;
 
     void IT::Init(TIM_HandleTypeDef name){ // 戻り値の型を追加
         //ITのタイマー決定

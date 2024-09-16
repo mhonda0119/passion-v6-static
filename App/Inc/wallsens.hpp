@@ -11,13 +11,14 @@ namespace sensor{
     class Wall{
         private:
             WallParameter* wp_;
+            static constexpr WallParameter* thresh_;
             std::unique_ptr<pxstr::Product> pxstr_;
             std::unique_ptr<ir::Driver> ir_;
             std::unique_ptr<tim::Wait> tim1_;
         public:
             Wall();//インスタンス化とメンバ変数に代入
             ReadVal();//カベのあるなしを01で
-            get_val_ptr();
+            WallParameter* get_val_ptr();
             ~Wall() = default;
     };
 }

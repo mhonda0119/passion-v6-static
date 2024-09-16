@@ -10,6 +10,7 @@
 #include "wait.hpp"
 #include "pxstr_creater.hpp"
 #include "waitus.h"
+#include "wallsens.hpp"
 
 namespace tim{
 	class IT{
@@ -18,6 +19,7 @@ namespace tim{
 		static WallParameter* wp_;
 		static std::unique_ptr<tim::Wait> tim1_;
 		static TIM_HandleTypeDef name_;
+		static std::unique_ptr<sensor::Wall> wall_;
 
 		public:
 		IT() = delete;
