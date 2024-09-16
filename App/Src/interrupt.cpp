@@ -18,8 +18,6 @@ namespace tim{
         wp_ = nullptr;
         //Waitのインスタンスを作成
         tim1_ = std::make_unique<tim::Wait>(name_);
-        //全てのインスタンスを生成した後，start;
-        Start();
     }
 
     void IT::PeriodElapsedCallback(){
