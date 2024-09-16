@@ -67,6 +67,9 @@ int main(int argc, char** argv)
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
+
+  tim::IT::Init(htim5);
+  tim::IT::Start();
   
   while (1)
   { 

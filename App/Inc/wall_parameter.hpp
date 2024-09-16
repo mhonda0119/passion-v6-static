@@ -10,10 +10,10 @@
 
 enum struct DIR
 {
-	R = 0, L , FR , FL
+	R = 0, L , FR , FL , ALL
 };
 
-// MotionParameter 構造体の定義
+// MotionParameter 
 struct WallParameter {
     uint16_t dir[4] = {0};       // 位置
 };

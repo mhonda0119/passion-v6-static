@@ -9,6 +9,7 @@
 #include "wall_parameter.hpp"
 #include "wait.hpp"
 #include "pxstr_creater.hpp"
+#include "waitus.h"
 
 namespace tim{
 	class IT{
