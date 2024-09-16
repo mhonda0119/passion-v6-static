@@ -57,7 +57,7 @@ namespace tim{
     }
 
     extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-        if (htim == &htim5) {
+        if (htim->Instance == htim5.Instance) {
             IT::PeriodElapsedCallback();
         }
     }
