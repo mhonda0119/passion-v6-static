@@ -15,9 +15,7 @@
 namespace tim{
 	class IT{
 		private:
-		static std::unique_ptr<pxstr::Product> pxstr_;
 		static WallParameter* wp_;
-		static std::unique_ptr<tim::Wait> tim1_;
 		static TIM_HandleTypeDef name_;
 		static std::unique_ptr<sensor::Wall> wall_;
 
