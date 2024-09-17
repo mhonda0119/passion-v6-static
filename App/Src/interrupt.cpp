@@ -5,7 +5,7 @@ namespace tim{
 		WallParameter* IT::wp_ = nullptr;
         //タイマー5を使用
         TIM_HandleTypeDef IT::name_ = htim5;
-        //wall_sensのインスタンス化
+        //wall_sensの
         std::unique_ptr<sensor::Wall> IT::wall_ = nullptr;
 
     void IT::Init(TIM_HandleTypeDef name){ // 戻り値の型を追加
@@ -28,7 +28,7 @@ namespace tim{
             //ここまで
             std::cout << "WallParameter: " << std::endl;
             for (int i = 0; i < 4; i++) {
-                std::cout << wp_->dir[i] << " " << std::endl;
+                std::cout <<"[" << i << "]" << wp_->dir[i] << " " << std::endl;
             }
             std::cout << std::endl;
 

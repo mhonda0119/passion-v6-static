@@ -46,6 +46,8 @@
 int main(int argc, char** argv)
 {
 
+
+
   HAL_Init();
 
 
@@ -70,9 +72,20 @@ int main(int argc, char** argv)
 
   tim::IT::Init(htim5);
   tim::IT::Start();
+  // std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
+
+  //  uint16_t val[4];
   
   while (1)
   { 
+    // adc -> ReadVal(&hadc1);
+    // uint16_t* buff = adc->get_val_ptr();
+    // for (int i = 0; i < 4; i++) {
+		// 	val[i] = buff[i];
+		// }
+    // for(int i = 0;i < 4; i++){
+		// std::cout << "main[" << i << "]" <<val[i] << std::endl;
+		// }
 
   }
   /* USER CODE END 3 */

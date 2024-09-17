@@ -12,7 +12,7 @@ namespace sensor{
     class Wall{
         private:
             WallParameter* wp_;
-            static WallParameter* thresh_;
+            static std::unique_ptr<WallParameter> thresh_;
             std::unique_ptr<pxstr::Product> pxstr_;
             std::unique_ptr<ir::Driver> ir_;
             std::unique_ptr<tim::Wait> tim1_;
