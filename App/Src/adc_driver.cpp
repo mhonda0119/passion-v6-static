@@ -10,9 +10,9 @@
 namespace adc{
 	void Driver::ReadVal(ADC_HandleTypeDef *hadc){//,uint32_t rank)
 		HAL_ADC_Start_DMA(hadc,(uint32_t *)buff_,channels_);
-		for(int i = 1;i < 4; i++){
+		for(int i = 0;i < 4; i++){
 		std::cout << "adc" << i << buff_[i] << std::endl;
-		}		
+		}
 	}
 
 	uint16_t* Driver::get_val_ptr(){

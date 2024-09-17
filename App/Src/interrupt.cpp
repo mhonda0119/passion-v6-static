@@ -1,6 +1,7 @@
 #include "interrupt.hpp"
 
 namespace tim{
+        //staticなメンバ変数の初期化
 		WallParameter* IT::wp_ = nullptr;
         //タイマー5を使用
         TIM_HandleTypeDef IT::name_ = htim5;
@@ -10,9 +11,7 @@ namespace tim{
     void IT::Init(TIM_HandleTypeDef name){ // 戻り値の型を追加
         //ITのタイマー決定
         name_ = name;
-        //WallParameterの初期化
-        wp_ = nullptr;
-        //wallsensのインスタンス化
+        //wallsensのインスタンス化　
         wall_ = std::make_unique<sensor::Wall>();
     }
 
