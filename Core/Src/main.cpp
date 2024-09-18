@@ -26,18 +26,6 @@
 #include "peripheral.h"
 #include "stdout.h"
 /* USER CODE END Includes */
-// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-// {
-//   if(htim->Instance == TIM5)
-//   {
-//     HAL_GPIO_TogglePin(LED_3_GPIO_Port, LED_3_Pin);
-//     std::cout << "TIM5 callback triggered" << std::endl;
-//   }
-// }
-
-
-
-// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 
 /**
   * @brief  The application entry point.
@@ -78,14 +66,6 @@ int main(int argc, char** argv)
   
   while (1)
   { 
-    // adc -> ReadVal(&hadc1);
-    // uint16_t* buff = adc->get_val_ptr();
-    // for (int i = 0; i < 4; i++) {
-		// 	val[i] = buff[i];
-		// }
-    // for(int i = 0;i < 4; i++){
-		// std::cout << "main[" << i << "]" <<val[i] << std::endl;
-		// }
 
   }
   /* USER CODE END 3 */
