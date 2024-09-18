@@ -63,15 +63,6 @@ int main(int argc, char** argv)
   std::unique_ptr<indicator::led::Driver> led = std::make_unique<indicator::led::Driver>();
   std::unique_ptr<indicator::buzzer::Driver> buzzer = std::make_unique<indicator::buzzer::Driver>();
 
-  #define C 261
-  #define D 294
-  #define E 329
-  #define F 349
-  #define G 392
-  #define A 440
-  #define B 493
-  #define C_HIGH 523
-
   while (1)
   { 
   for (int i = 1; i <= 7; i++) {
