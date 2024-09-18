@@ -2,21 +2,22 @@
 #define _LED_HPP_
 
 #include "peripheral.h"
-#include "main.h"
-#include "stdout.h"
+#include "gpio_driver.hpp"
+#include <memory>
 #include <iostream>
+#include "main.h"
+#include <cstdint>
 
-namespace gpio{
-    class LED{
+namespace indicator::led{
+    class Driver{
     private:
-        GPIO_TypeDef* port_;
-        uint16_t pin_;
+    std::unique_ptr<gpio::Driver> led_[8];
     public:
-        LED(GPIO_TypeDef *,uint16_t);
-        void On();
-        void Off();
-        void Toggle();
-        ~LED() = default;
+        Driver();
+        void On(uint8_t num = 8); //なんもしなければ全部点灯．引数入れればそのledだけ点灯
+        void Off(uint8_t num = 8);//なんもしなければ全部消灯．引数入れればそのledだけ消灯
+        void Toggle(uint8_t num = 8);//なんもしなければ全部toggle.引数入れればそのledだけtoggle
+        ~Driver() = default;
     };
 }
 

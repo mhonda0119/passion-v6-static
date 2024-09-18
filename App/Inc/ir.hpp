@@ -3,7 +3,7 @@
 
 #include "peripheral.h"
 #include "wall_parameter.hpp"
-#include "led.hpp"
+#include "gpio_driver.hpp"
 #include "main.h"
 #include <memory>
 #include <iostream>
@@ -12,10 +12,10 @@ namespace ir{
     class Driver{
     private:
     DIR dir_;
-    std::unique_ptr<gpio::LED> r_;
-    std::unique_ptr<gpio::LED> l_;
-    std::unique_ptr<gpio::LED> fr_;
-    std::unique_ptr<gpio::LED> fl_;
+    std::unique_ptr<gpio::Driver> r_;
+    std::unique_ptr<gpio::Driver> l_;
+    std::unique_ptr<gpio::Driver> fr_;
+    std::unique_ptr<gpio::Driver> fl_;
     public:
         Driver();
         void On(DIR dir = DIR::ALL);
