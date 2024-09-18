@@ -14,6 +14,7 @@ namespace tim{
         TIM_HandleTypeDef name_;
         Wait(TIM_HandleTypeDef name);
         void Us(uint32_t us);
+        void Ms(uint32_t ms);
         ~Wait() = default;
     };
 }

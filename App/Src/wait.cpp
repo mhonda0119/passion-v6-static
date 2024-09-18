@@ -11,4 +11,8 @@ namespace tim{
         while(name_.Instance->CNT < us);
         HAL_TIM_Base_Stop(&name_);
     }
+
+    void WaitMs(uint32_t ms){
+        HAL_Delay(ms);
+    }
 }

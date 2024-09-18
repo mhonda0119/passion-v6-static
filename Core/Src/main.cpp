@@ -62,33 +62,26 @@ int main(int argc, char** argv)
 
   std::unique_ptr<indicator::led::Driver> led = std::make_unique<indicator::led::Driver>();
   std::unique_ptr<indicator::buzzer::Driver> buzzer = std::make_unique<indicator::buzzer::Driver>();
-  // std::unique_ptr<pwm::Driver> pwm = std::make_unique<pwm::Driver>(&htim3,TIM_CHANNEL_2);
-  //  pwm ->Start();
-  //  pwm -> set_duty(0.5);
-  //  pwm -> set_freq(440);
-  //buzzer->Start(440,0.5); // 1ïbä‘440HzÇÃâπÇñ¬ÇÁÇ∑
-    //  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
-    //  __HAL_TIM_SET_AUTORELOAD(&htim3, 1000);
-    //  __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 1000 * 0.6);
-    //  HAL_Delay(1000);
-    // HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_2);
 
-  // tim::IT::Init(htim5);Å@
-  // tim::IT::Start();
-  // std::unique_ptr<adc::Driver> adc = std::make_unique<adc::Driver>();
-  //  uint16_t val[4];
-  
+  #define C 261
+  #define D 294
+  #define E 329
+  #define F 349
+  #define G 392
+  #define A 440
+  #define B 493
+  #define C_HIGH 523
+
   while (1)
   { 
   for (int i = 1; i <= 7; i++) {
     led->On(i);
-    HAL_Delay(200); // 200msä‘äuÇ≈ì_ìî
+    HAL_Delay(200); 
   }
-
 
   for (int i = 7; i >= 1; i--) {
     led->Off(i);
-    HAL_Delay(200); // 200msä‘äuÇ≈è¡ìî
+    HAL_Delay(200); 
   }
 
   }
