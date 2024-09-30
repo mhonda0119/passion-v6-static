@@ -14,4 +14,4 @@ namespace encoder{
 				return nullptr;
 		}
 	}
-}
+}//いまんとこなんも検証してない
