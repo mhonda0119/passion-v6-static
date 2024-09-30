@@ -1,10 +1,3 @@
-/*
- * motion_parameter.hpp
- *
- *  Created on: Aug 30, 2024
- *      Author: IshiiLabHonda
- */
-
 #ifndef _MOTIONPARAMETER_HPP_
 #define _MOTIONPARAMETER_HPP_
 

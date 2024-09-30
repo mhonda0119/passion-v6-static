@@ -1,10 +1,3 @@
-/*
- * wall_parameter.hpp
- *
- *  Created on: Sep 3, 2024
- *      Author: MasakatsuHonda
- */
-
 #ifndef _WALL_PARAMETER_HPP_
 #define _WALL_PARAMETER_HPP_
 
