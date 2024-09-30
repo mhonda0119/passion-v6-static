@@ -1,9 +1,3 @@
-/*
- * imu.hpp
- *
- *  Created on: Aug 30, 2024
- *      Author: IshiiLabHonda
- */
 #ifndef _IMU_HPP_
 #define _IMU_HPP_
 
