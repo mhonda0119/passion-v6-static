@@ -1,23 +1,13 @@
-/*
- * imu_creater.cpp
- *
- *  Created on: Aug 31, 2024
- *      Author: MasakatsuHonda
- */
+#include "imu_creater.hpp"
 
-#include <imu_creater.hpp>
-
-namespace imu{
-	Creater::Creater(){
-		name_ = IMU_NAME::ICM20689;
-	}
-
+namespace sensor::imu{
+	Creater::Creater(NAME name)
+	:name_(name){}
 	std::unique_ptr<Product> Creater::Create() {
-		std::unique_ptr<Product> imu;
 		switch (name_) {
-			case IMU_NAME::ICM20689:
-				imu = std::make_unique<ICM20689>();
-				return imu;
+			case NAME::ICM20689:
+				imu_ = std::make_unique<ICM20689>();
+				return std::move(imu_);//pointerの所有権の受け渡し
 			default:
 				return nullptr;
 		}

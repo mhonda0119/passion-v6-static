@@ -1,14 +1,14 @@
-#include "ir.hpp"
+#include "osi3ca5111a.hpp"
 
-namespace ir{
-    Driver::Driver(){
-        r_ = std::make_unique<gpio::Driver>(IR_R_GPIO_Port, IR_R_Pin);
-        l_ = std::make_unique<gpio::Driver>(IR_L_GPIO_Port, IR_L_Pin);
-        fr_ = std::make_unique<gpio::Driver>(IR_FR_GPIO_Port, IR_FR_Pin);
-        fl_ = std::make_unique<gpio::Driver>(IR_FL_GPIO_Port, IR_FL_Pin);
+namespace sensor::ir{
+    OSI3CA5111A::OSI3CA5111A(){
+        r_ = std::make_unique<peripheral::gpio::Driver>(IR_R_GPIO_Port, IR_R_Pin);
+        l_ = std::make_unique<peripheral::gpio::Driver>(IR_L_GPIO_Port, IR_L_Pin);
+        fr_ = std::make_unique<peripheral::gpio::Driver>(IR_FR_GPIO_Port, IR_FR_Pin);
+        fl_ = std::make_unique<peripheral::gpio::Driver>(IR_FL_GPIO_Port, IR_FL_Pin);
     };
 
-    void Driver::On(DIR dir){
+    void OSI3CA5111A::On(DIR dir){
         switch(dir){
             case DIR::ALL:
                 r_->On();
@@ -30,7 +30,7 @@ namespace ir{
         }
     }
 
-    void Driver::Off(DIR dir){
+    void OSI3CA5111A::Off(DIR dir){
         switch(dir){
             case DIR::ALL:
                 r_->Off();

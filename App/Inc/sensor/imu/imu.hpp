@@ -1,19 +1,23 @@
 #ifndef _IMU_HPP_
 #define _IMU_HPP_
 
-#include "stdint.h"
-#include "stdout.h"
+//標準ライブラリ，システムライブラリ
 #include <iostream>
 #include <memory>
+#include <cstring>
+#include <stdint.h>
+//自作ヘッダファイル
+#include "stdout.h"
 #include "motion_parameter.hpp"
+#include "spi_driver.hpp"
 
-namespace imu{
+namespace sensor::imu{
 	class Product {
 	public:
 		Product() = default;
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual MotionParameter* get_imu_ptr() = 0;
+		virtual MotionParameter* get_val_ptr() = 0;
 		virtual ~Product() = default;//仮想デストラクタ（親クラス）
 	};
 }

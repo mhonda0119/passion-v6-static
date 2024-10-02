@@ -1,28 +1,15 @@
-/*
- * phototransistor_creater.cpp
- *
- *  Created on: Sep 4, 2024
- *      Author: MasakatsuHonda
- */
-
 #include "pxstr_creater.hpp"
 
-namespace pxstr{
-	Creater::Creater(){
-		name_ = PXSTR_NAME::ST1KL3A;
-	}
+namespace sensor::pxstr{
+	Creater::Creater(NAME name)
+	:name_(name){}
 	std::unique_ptr<Product> Creater::Create(){
-		std::unique_ptr<Product> pxstr;
 		switch(name_){
-			case PXSTR_NAME::ST1KL3A:
-				pxstr = std::make_unique<ST1KL3A>();
-				return pxstr;
+			case NAME::ST1KL3A:
+				pxstr_ = std::make_unique<ST1KL3A>();
+				return std::move(pxstr_);
 			default:
 				return nullptr;
 		}
 	}
 }
-
-
-
-

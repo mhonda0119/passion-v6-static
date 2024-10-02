@@ -4,7 +4,7 @@
 #include "wall_parameter.hpp"
 #include <memory>
 #include "pxstr_creater.hpp"
-#include "ir.hpp"
+#include "osi3ca5111a.hpp"
 #include "wait.hpp"
 #include <cstdint>
 
@@ -13,8 +13,8 @@ namespace sensor{
         private:
             WallParameter* wp_;
             static std::unique_ptr<WallParameter> thresh_;
-            std::unique_ptr<pxstr::Product> pxstr_;
-            std::unique_ptr<ir::Driver> ir_;
+            std::unique_ptr<sensor::pxstr::Product> pxstr_;
+            std::unique_ptr<sensor::ir::OSI3CA5111A> ir_;
             std::unique_ptr<tim::Wait> tim1_;
         public:
             Wall();//インスタンス化とメンバ変数に代入

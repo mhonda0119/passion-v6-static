@@ -8,19 +8,19 @@
 #include <memory>
 #include <iostream>
 
-namespace ir{
-    class Driver{
+namespace sensor::ir{
+    class OSI3CA5111A{
     private:
     DIR dir_;
-    std::unique_ptr<gpio::Driver> r_;
-    std::unique_ptr<gpio::Driver> l_;
-    std::unique_ptr<gpio::Driver> fr_;
-    std::unique_ptr<gpio::Driver> fl_;
+    std::unique_ptr<peripheral::gpio::Driver> r_;
+    std::unique_ptr<peripheral::gpio::Driver> l_;
+    std::unique_ptr<peripheral::gpio::Driver> fr_;
+    std::unique_ptr<peripheral::gpio::Driver> fl_;
     public:
-        Driver();
+        OSI3CA5111A();
         void On(DIR dir = DIR::ALL);
         void Off(DIR dir = DIR::ALL);
-        ~Driver() = default;
+        ~OSI3CA5111A() = default;
     };
 }
 

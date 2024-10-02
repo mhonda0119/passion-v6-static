@@ -1,17 +1,18 @@
 #include "wallsens.hpp"
 namespace sensor{
     std::unique_ptr<WallParameter> Wall::thresh_ = nullptr;
+
     Wall::Wall(){
-        if (!Wall::thresh_) {
+        if (!Wall::thresh_) {//なんか入ってたら
         Wall::thresh_ = std::make_unique<WallParameter>();  // 動的メモリ割り当て（スマートポインタを使って）
         }
         for (int i = 0; i < 4; ++i) {
         Wall::thresh_->dir[i] = 100;  // すべてのdirを10に設定
         }
-        std::unique_ptr<pxstr::Creater> pxstr_c = std::make_unique<pxstr::Creater>();
+        std::unique_ptr<sensor::pxstr::Creater> pxstr_c = std::make_unique<sensor::pxstr::Creater>();
         pxstr_ = pxstr_c->Create();
         pxstr_ -> Init();
-        ir_ = std::make_unique<ir::Driver>();
+        ir_ = std::make_unique<sensor::ir::OSI3CA5111A>();
         tim1_ = std::make_unique<tim::Wait>(htim1);
     }
     void Wall::ReadVal(){

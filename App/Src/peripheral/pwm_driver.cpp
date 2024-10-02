@@ -1,12 +1,12 @@
 #include "pwm_driver.hpp"
 
-namespace pwm{
+namespace peripheral::pwm{
     Driver::Driver(TIM_HandleTypeDef* htim,uint32_t channel){
         htim_ = htim;
         channel_ = channel;
         arr_ = htim_->Init.Period;
         clock_ = 2*HAL_RCC_GetPCLK1Freq();
-        prescaler_ = htim_ -> Init.Prescaler;
+        prescaler_ = htim_->Init.Prescaler;
     }
     void Driver::Start(){
         HAL_TIM_PWM_Start(htim_, channel_);

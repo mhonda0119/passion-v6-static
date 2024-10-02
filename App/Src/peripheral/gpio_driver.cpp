@@ -1,6 +1,6 @@
 #include "gpio_driver.hpp"
 
-namespace gpio{
+namespace peripheral::gpio{
 
     Driver::Driver(GPIO_TypeDef* port,uint16_t pin):port_(port), pin_(pin) {}
 

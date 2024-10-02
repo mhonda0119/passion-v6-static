@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace encoder{
+namespace peripheral::encoder{
     class Driver{
     private:
         TIM_HandleTypeDef* htim_;  // タイマのハンドル

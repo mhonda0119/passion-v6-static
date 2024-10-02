@@ -3,14 +3,14 @@
 
 #include "pxstr.hpp"
 
-namespace pxstr{
+namespace sensor::pxstr{
 
 	class ST1KL3A : public Product{
 	private:
-		WallParameter pxstr_;
-		std::unique_ptr<adc::Driver> adc_;
+		WallParameter* pxstr_;
+		std::unique_ptr<peripheral::adc::Driver> adc_;
 	public:
-		ST1KL3A() = default;
+		ST1KL3A();
 		void Init() override ;
 		void ReadVal() override ;
 		WallParameter* get_val_ptr() override;

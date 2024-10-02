@@ -1,15 +1,11 @@
-/*
- * adc_driver.cpp
- *
- *  Created on: Aug 28, 2024
- *      Author: MasakatsuHonda
- */
-
 #include "adc_driver.hpp"
 
-namespace adc{
-	void Driver::ReadVal(ADC_HandleTypeDef *hadc){//,uint32_t rank)
-		HAL_ADC_Start_DMA(hadc,(uint32_t *)buff_,channels_);
+namespace peripheral::adc{
+	Driver::Driver(ADC_HandleTypeDef* hadc)
+	:hadc_(hadc){}
+	
+	void Driver::ReadVal(){//,uint32_t rank)
+		HAL_ADC_Start_DMA(hadc_,(uint32_t *)buff_,channels_);
 		// for(int i = 0;i < 4; i++){
 		// std::cout << "adc" << "[" <<i << "]" << buff_[i] << std::endl;
 		// }

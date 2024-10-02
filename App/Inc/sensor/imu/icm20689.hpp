@@ -1,30 +1,21 @@
-/*
- * icm20689.hpp
- *
- *  Created on: Aug 30, 2024
- *      Author: IshiiLabHonda
- */
-
 #ifndef _ICM20689_HPP_
 #define _ICM20689_HPP_
 
 #include "imu.hpp"
-#include "motion_parameter.hpp"
-#include "spi_driver.hpp"
 
-namespace imu{
+namespace sensor::imu{
 	class ICM20689 : public Product{
 	private:
-		MotionParameter imu_;
-
+		MotionParameter* imu_;
+		std::unique_ptr<peripheral::spi::Driver> spi_;
 		float AccelRead(uint8_t H_reg) ;
 		float OmegaRead(uint8_t H_reg) ;
 	public:
-		ICM20689() = default;//コンストラクタの定義はとりあえず全部した方がいいらしい
-		virtual ~ICM20689() = default;//デストラクタ（子クラス）
+		ICM20689();//コンストラクタの定義はとりあえず全部した方がいいらしい
 		void Init() override ;
 		void ReadVal() override ;
-		MotionParameter* get_imu_ptr() override ;
+		MotionParameter* get_val_ptr() override ;
+		virtual ~ICM20689() = default;//デストラクタ（子クラス）
 	};
 }
 

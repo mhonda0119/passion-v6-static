@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace pwm{
+namespace peripheral::pwm{
     class Driver{
     private://duty比と周波数を決められるようなset関数をつくりたい．
         TIM_HandleTypeDef* htim_;  // タイマのハンドル

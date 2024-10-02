@@ -6,13 +6,13 @@
 #include "stdout.h"
 #include <iostream>
 
-namespace gpio{
+namespace peripheral::gpio{
     class Driver{
     private:
         GPIO_TypeDef* port_;
         uint16_t pin_;
     public:
-        Driver(GPIO_TypeDef *,uint16_t);
+        Driver(GPIO_TypeDef* port,uint16_t pin);
         void On();
         void Off();
         void Toggle();

@@ -1,4 +1,4 @@
-#include "IEH2-4096.hpp"
+#include "ieh2-4096.hpp"
 
 namespace encoder {
     IEH2_4096::IEH2_4096(TIM_HandleTypeDef* htim, uint32_t channel) {

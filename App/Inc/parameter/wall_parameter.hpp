@@ -9,7 +9,7 @@ enum struct DIR
 
 // MotionParameter 
 struct WallParameter {
-    uint16_t dir[4] = {0};       // 位置
+    uint16_t dir[4] = {0};       // 方向
 };
 
 #endif /* _WALL_PARAMETER_HPP_ */
