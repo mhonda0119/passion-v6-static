@@ -8,7 +8,7 @@ namespace indicator::buzzer{
     private:
         uint32_t freq_;
         uint32_t duration;
-        std::unique_ptr<pwm::Driver> pwm_;
+        std::unique_ptr<peripheral::pwm::Driver> pwm_;
     public:
         Driver();//pwm_driverのインスタンス化
         void Start(uint32_t freq,float duty = 0.5);//指定された周波数で鳴らす

@@ -11,7 +11,7 @@
 namespace indicator::led{
     class Driver{
     private:
-    std::unique_ptr<gpio::Driver> led_[8];
+    std::unique_ptr<peripheral::gpio::Driver> led_[8];
     public:
         Driver();
         void On(uint8_t num = 8); //なんもしなければ全部点灯．引数入れればそのledだけ点灯

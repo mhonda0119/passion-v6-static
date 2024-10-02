@@ -1,18 +1,20 @@
 #ifndef _WALLSENS_HPP_
 #define _WALLSENS_HPP_
 
-#include "wall_parameter.hpp"
+
 #include <memory>
+#include <cstdint>
+#include "wall_parameter.hpp"
 #include "pxstr_creater.hpp"
 #include "osi3ca5111a.hpp"
 #include "wait.hpp"
-#include <cstdint>
+
 
 namespace sensor{
     class Wall{
         private:
             WallParameter* wp_;
-            static std::unique_ptr<WallParameter> thresh_;
+            static WallParameter* thresh_;
             std::unique_ptr<sensor::pxstr::Product> pxstr_;
             std::unique_ptr<sensor::ir::OSI3CA5111A> ir_;
             std::unique_ptr<tim::Wait> tim1_;

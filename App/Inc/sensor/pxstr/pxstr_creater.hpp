@@ -5,16 +5,16 @@
 
 namespace sensor::pxstr{
 	class Creater{
+	public:
+	enum struct NAME{
+	ST1KL3A = 0,
+	};
+	Creater(NAME name);
+	std::unique_ptr<Product> Create();
+	~Creater() = default;
 	private:
 	std::unique_ptr<Product> pxstr_;
-		enum struct NAME{
-			ST1KL3A = 0,
-		};
-		NAME name_;
-	public:
-		Creater(NAME name);
-		std::unique_ptr<Product> Create();
-		~Creater() = default;
+	NAME name_;
 	};
 }
 

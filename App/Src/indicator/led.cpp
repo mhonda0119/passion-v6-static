@@ -5,7 +5,6 @@ namespace indicator::led {
 Driver::Driver() {
     led_[0] = std::make_unique<peripheral::gpio::Driver>(LED_1_GPIO_Port, LED_1_Pin);
     led_[1] = std::make_unique<peripheral::gpio::Driver>(LED_2_GPIO_Port, LED_2_Pin);
-    led_[2] = std::make_unique<peripheral::gpio::Driver>(LED_3_GPIO_Port, LED_3_Pin);
     led_[3] = std::make_unique<peripheral::gpio::Driver>(LED_4_GPIO_Port, LED_4_Pin);
     led_[4] = std::make_unique<peripheral::gpio::Driver>(LED_5_GPIO_Port, LED_5_Pin);
     led_[5] = std::make_unique<peripheral::gpio::Driver>(LED_6_GPIO_Port, LED_6_Pin);

@@ -20,8 +20,8 @@ namespace peripheral::pwm{
     public:
         Driver(TIM_HandleTypeDef* htim,uint32_t channel);
         void Start();
-        void set_duty(float);
-        void set_freq(uint32_t);
+        void set_duty(float duty);
+        void set_freq(uint32_t freq);
         void Stop();
         ~Driver() = default;
     };

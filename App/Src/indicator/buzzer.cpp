@@ -2,7 +2,7 @@
 
 namespace indicator::buzzer{
     Driver::Driver(){
-        pwm_ = std::make_unique<pwm::Driver>(&htim3, TIM_CHANNEL_2);
+        pwm_ = std::make_unique<peripheral::pwm::Driver>(&htim3, TIM_CHANNEL_2);
     }
 
     void Driver::Start(uint32_t freq,float duty){

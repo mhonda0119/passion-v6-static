@@ -1,18 +1,18 @@
 #include "wait.hpp"
 
 namespace tim{
-    Wait::Wait(TIM_HandleTypeDef name){
-        name_ = name;
+    Wait::Wait(TIM_HandleTypeDef* htim){
+        htim_ = htim;
     }
 
     void Wait::Us(uint32_t us){
-        __HAL_TIM_SET_COUNTER(&name_, 0);
-        HAL_TIM_Base_Start(&name_);
-        while(name_.Instance->CNT < us);
-        HAL_TIM_Base_Stop(&name_);
+        __HAL_TIM_SET_COUNTER(htim_, 0);
+        HAL_TIM_Base_Start(htim_);
+        while(htim_->Instance->CNT < us);
+        HAL_TIM_Base_Stop(htim_);
     }
 
-    void WaitMs(uint32_t ms){
+    void Wait::Ms(uint32_t ms){
         HAL_Delay(ms);
     }
 }
