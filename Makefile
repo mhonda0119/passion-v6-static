@@ -61,12 +61,20 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
 Core/Src/system_stm32f4xx.c \
 Core/Src/sysmem.c \
 Core/Src/syscalls.c  \
-$(wildcard App/Src/*.c) \
+$(wildcard App/Src/c/*.c) \
 
 # CPP sources
 CPP_SOURCES = \
 $(wildcard Core/Src/*.cpp) \
-$(wildcard App/Src/*.cpp) \
+$(wildcard App/Src/indicator/*.cpp)\
+$(wildcard App/Src/md/*.cpp) \
+$(wildcard App/Src/peripheral/*.cpp) \
+$(wildcard App/Src/sensor/*.cpp) \
+$(wildcard App/Src/sensor/encoder/*.cpp) \
+$(wildcard App/Src/sensor/imu/*.cpp) \
+$(wildcard App/Src/sensor/ir/*.cpp) \
+$(wildcard App/Src/sensor/pxstr/*.cpp) \
+$(wildcard App/Src/tim/*.cpp) \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -137,12 +145,22 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
 -IDrivers/CMSIS/Include\
--IApp/Inc\
+-IApp/Inc/c\
 
+# Cpp includes
 CPP_INCLUDES = $(C_INCLUDES)
 CPP_INCLUDES += \
--ICore/Inc\
--IApp/Inc\
+-ICore/Inc \
+-IApp/Inc/indicator\
+-IApp/Inc/md \
+-IApp/Inc/parameter \
+-IApp/Inc/peripheral \
+-IApp/Inc/sensor\
+-IApp/Inc/sensor/encoder\
+-IApp/Inc/sensor/imu\
+-IApp/Inc/sensor/ir\
+-IApp/Inc/sensor/pxstr\
+-IApp/Inc/tim \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections

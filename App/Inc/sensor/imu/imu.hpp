@@ -5,7 +5,7 @@
 #include "stdout.h"
 #include <iostream>
 #include <memory>
-#include <motion_parameter.hpp>
+#include "motion_parameter.hpp"
 
 namespace imu{
 	class Product {

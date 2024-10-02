@@ -8,9 +8,9 @@
 #ifndef _ICM20689_HPP_
 #define _ICM20689_HPP_
 
-#include <imu.hpp>
-#include <motion_parameter.hpp>
-#include <spi_driver.hpp>
+#include "imu.hpp"
+#include "motion_parameter.hpp"
+#include "spi_driver.hpp"
 
 namespace imu{
 	class ICM20689 : public Product{
