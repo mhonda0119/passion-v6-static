@@ -4,18 +4,18 @@
 #include "st1kl3a.hpp"
 
 namespace sensor::pxstr{
-	class Creater{
-	public:
 	enum struct NAME{
-	ST1KL3A = 0,
+		ST1KL3A = 0,
 	};
-	Creater(NAME name);
-	std::unique_ptr<Product> Create();
-	~Creater() = default;
+	class Creater{
 	private:
 	std::unique_ptr<Product> pxstr_;
 	NAME name_;
+	public:
+	Creater(NAME name);
+	std::unique_ptr<Product> Create(ADC_HandleTypeDef* hadc);
+	~Creater() = default;
 	};
 }
 
-#endif /* _PXSTR_CREATER_HPP_ */
+#endif /*_PXSTR_CREATER_HPP_*/

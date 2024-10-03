@@ -1,9 +1,9 @@
 #include "ieh2-4096.hpp"
 
-namespace encoder {
-    IEH2_4096::IEH2_4096(TIM_HandleTypeDef* htim, uint32_t channel) {
+namespace sensor {
+    IEH2_4096::IEH2_4096() {
         // エンコーダドライバのインスタンス化
-    encoder_driver_ = std::make_unique<encoder::Driver>(htim, channel);
+    encoder_ = std::make_unique<peripheral::Encoder>(htim, channel);
     }
 
     void IEH2_4096::Init() {

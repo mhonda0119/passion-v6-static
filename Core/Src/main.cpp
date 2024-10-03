@@ -23,11 +23,11 @@
 #include "pxstr_creater.hpp"
 #include <iostream>
 #include <memory>
-#include "interrupt.hpp"
 #include "peripheral.h"
 #include "stdout.h"
 #include "buzzer.hpp"
 #include "led.hpp"
+#include "md_creater.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -61,22 +61,16 @@ int main(int argc, char** argv)
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
 
-  std::unique_ptr<indicator::led::Driver> led = std::make_unique<indicator::led::Driver>();
-  std::unique_ptr<indicator::buzzer::Driver> buzzer = std::make_unique<indicator::buzzer::Driver>();
+  //imuのインスタンス化
+  std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
+  std::unique_ptr<sensor::imu::Product> imu = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
+  //pxstrのインスタンス化
+  std::unique_ptr<sensor::pxstr::Creater> pxstr_creater = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
+  std::unique_ptr<sensor::pxstr::Product> pxstr = pxstr_creater->Create(&hadc1);
 
-  while (1)
-  { 
-  for (int i = 1; i <= 7; i++) {
-    led->On(i);
-    HAL_Delay(200); 
-  }
+  std::unique_ptr<md::Creater> md_creater = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
+  std::unique_ptr<md::Product> md = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
 
-  for (int i = 7; i >= 1; i--) {
-    led->Off(i);
-    HAL_Delay(200); 
-  }
-
-  }
   /* USER CODE END 3 */
 }
 

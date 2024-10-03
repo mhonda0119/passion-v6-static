@@ -4,7 +4,7 @@
 
 #include <memory>
 #include <cstdint>
-#include "wall_parameter.hpp"
+#include "wall.hpp"
 #include "pxstr_creater.hpp"
 #include "osi3ca5111a.hpp"
 #include "wait.hpp"

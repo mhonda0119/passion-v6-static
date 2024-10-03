@@ -2,9 +2,8 @@
 
 namespace sensor::pxstr{
 
-	ST1KL3A::ST1KL3A(){
-		adc_ = std::make_unique<peripheral::ADC>(&hadc1);
-	}
+	ST1KL3A::ST1KL3A(ADC_HandleTypeDef* hadc)
+	 : adc_(std::make_unique<peripheral::ADC>(hadc)) {}
 
 	void ST1KL3A::Init(){
 
@@ -18,7 +17,7 @@ namespace sensor::pxstr{
 		}
 	}
 
-	WallParameter* ST1KL3A::get_val_ptr(){
+	parameter::Wall* ST1KL3A::get_val_ptr(){
 		return pxstr_; // 修正: アドレスを返すように変更
 	};
 

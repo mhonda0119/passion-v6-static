@@ -7,13 +7,13 @@ namespace sensor::pxstr{
 
 	class ST1KL3A : public Product{
 	private:
-		WallParameter* pxstr_;
+		parameter::Wall* pxstr_;
 		std::unique_ptr<peripheral::ADC> adc_;
 	public:
-		ST1KL3A();
+		ST1KL3A(ADC_HandleTypeDef* hadc);
 		void Init() override ;
 		void ReadVal() override ;
-		WallParameter* get_val_ptr() override;
+		parameter::Wall* get_val_ptr() override;
 		virtual ~ST1KL3A() = default;
 	};
 }

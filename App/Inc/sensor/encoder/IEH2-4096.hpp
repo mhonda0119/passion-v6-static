@@ -3,17 +3,17 @@
 
 
 #include "encoder.hpp"
+#include "peripheral.h"
+#include "motion_parameter.hpp"
 
-namespace encoder{
+namespace sensor{
 	class IEH2_4096 : public Product{
 	private:
 	//encoderのpin設定のmember変数は持っとくべき,かも．
-		TIM_HandleTypeDef* htim_;	//タイマのハンドル
-		uint32_t channel_;	//タイマのチャンネル
 		MotionParameter* encoder_;	//パラメータ
-		std::unique_ptr<encoder::Driver> encoder_driver_;
+		std::unique_ptr<peripheral::Encoder> encoder_;
 	public:
-		IEH2_4096(TIM_HandleTypeDef* htim, uint32_t channel);//encorder_driverのインスタンス化
+		IEH2_4096();//encorder_driverのインスタンス化
 		void Init() override;//
 		void Start() override;//    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		void ReadVal() override;//MotionParameterへ読んだ値を入れます．

@@ -3,7 +3,7 @@
 
 #include "encoder.hpp"
 
-namespace encoder{
+namespace sensor{
 	class Creater{
 	private:
 		enum struct NAME{

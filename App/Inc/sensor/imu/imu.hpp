@@ -8,7 +8,7 @@
 #include <stdint.h>
 //自作ヘッダファイル
 #include "stdout.h"
-#include "motion_parameter.hpp"
+#include "motion.hpp"
 #include "spi.hpp"
 
 namespace sensor::imu{
@@ -17,7 +17,7 @@ namespace sensor::imu{
 		Product() = default;
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual MotionParameter* get_val_ptr() = 0;
+		virtual parameter::Motion* get_val_ptr() = 0;
 		virtual ~Product() = default;//仮想デストラクタ（親クラス）
 	};
 }
