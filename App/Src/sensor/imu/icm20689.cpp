@@ -2,7 +2,7 @@
 
 namespace sensor::imu{
 	ICM20689::ICM20689(){
-		spi_ = std::make_unique<peripheral::spi::Driver>(&hspi3,GPIOD,CS_Pin);
+		spi_ = std::make_unique<peripheral::SPI>(&hspi3,GPIOD,CS_Pin);
 	}
 	void ICM20689::Init(){
 		uint8_t who_am_i = 0;

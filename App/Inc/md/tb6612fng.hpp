@@ -9,8 +9,8 @@ namespace  motor_driver{
     class TB6612FNG : public Product{
 
     private:
-        std::unique_ptr<peripheral::pwm::Driver> pwm_r_ ;
-        std::unique_ptr<peripheral::pwm::Driver> pwm_l_ ;
+        std::unique_ptr<peripheral::PWM> pwm_r_ ;
+        std::unique_ptr<peripheral::PWM> pwm_l_ ;
     public:
         TB6612FNG();//こいつの使ってるpinを割り当てる．in1,in2,stby,pwm,(pwmはmotordriverに与えるものかぁ．)
         void On() override;//stbyをh

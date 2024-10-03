@@ -9,7 +9,6 @@
 #include "osi3ca5111a.hpp"
 #include "wait.hpp"
 
-
 namespace sensor{
     class Wall{
         private:

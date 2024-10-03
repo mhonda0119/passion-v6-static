@@ -9,7 +9,7 @@
 //自作ヘッダファイル
 #include "stdout.h"
 #include "motion_parameter.hpp"
-#include "spi_driver.hpp"
+#include "spi.hpp"
 
 namespace sensor::imu{
 	class Product {

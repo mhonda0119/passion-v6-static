@@ -7,7 +7,7 @@ namespace sensor::imu{
 	class ICM20689 : public Product{
 	private:
 		MotionParameter* imu_;
-		std::unique_ptr<peripheral::spi::Driver> spi_;
+		std::unique_ptr<peripheral::SPI> spi_;
 		float AccelRead(uint8_t H_reg) ;
 		float OmegaRead(uint8_t H_reg) ;
 	public:

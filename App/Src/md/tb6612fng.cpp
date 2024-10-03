@@ -4,8 +4,8 @@ namespace motor_driver{
 
     TB6612FNG::TB6612FNG() {
         //コンストラクタの中_
-        pwm_r_ = std::make_unique<peripheral::pwm::Driver>(&htim2, TIM_CHANNEL_4);
-        pwm_l_ = std::make_unique<peripheral::pwm::Driver>(&htim2, TIM_CHANNEL_1);
+        pwm_r_ = std::make_unique<peripheral::PWM>(&htim2, TIM_CHANNEL_4);
+        pwm_l_ = std::make_unique<peripheral::PWM>(&htim2, TIM_CHANNEL_1);
     }
 
 

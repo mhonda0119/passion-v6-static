@@ -6,7 +6,7 @@
 #include <iostream>
 #include <memory>
 #include "tb6612fng.hpp"
-#include "pwm_driver.hpp"
+#include "pwm.hpp"
 #include "peripheral.h"
 #include "motor_driver_parameter.hpp"
 

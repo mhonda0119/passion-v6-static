@@ -1,7 +1,7 @@
 #ifndef _ENCODER_HPP_
 #define _ENCODER_HPP_
 
-#include "encoder_driver.hpp"
+#include "encoder.hpp"
 #include "peripheral.h"
 #include <motion_parameter.hpp>
 #include <cstdint>

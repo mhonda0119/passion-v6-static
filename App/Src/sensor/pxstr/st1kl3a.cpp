@@ -3,7 +3,7 @@
 namespace sensor::pxstr{
 
 	ST1KL3A::ST1KL3A(){
-		adc_ = std::make_unique<peripheral::adc::Driver>(&hadc1);
+		adc_ = std::make_unique<peripheral::ADC>(&hadc1);
 	}
 
 	void ST1KL3A::Init(){

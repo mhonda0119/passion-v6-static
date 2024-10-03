@@ -8,7 +8,7 @@ namespace sensor::pxstr{
 	class ST1KL3A : public Product{
 	private:
 		WallParameter* pxstr_;
-		std::unique_ptr<peripheral::adc::Driver> adc_;
+		std::unique_ptr<peripheral::ADC> adc_;
 	public:
 		ST1KL3A();
 		void Init() override ;

@@ -6,7 +6,7 @@
 namespace encoder{
 	class Creater{
 	private:
-		enum struct ENCODER_NAME{
+		enum struct NAME{
 			IEH2-4096 = 0,
 		};
 		ENCODER_NAME name_;

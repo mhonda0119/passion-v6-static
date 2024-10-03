@@ -8,7 +8,7 @@
 #include <cstring>
 //自作ヘッダファイル
 #include "stdout.h"
-#include "adc_driver.hpp"
+#include "adc.hpp"
 #include "wall_parameter.hpp"
 
 namespace sensor::pxstr {
