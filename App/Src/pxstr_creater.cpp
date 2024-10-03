@@ -1,10 +1,3 @@
-/*
- * phototransistor_creater.cpp
- *
- *  Created on: Sep 4, 2024
- *      Author: MasakatsuHonda
- */
-
 #include "pxstr_creater.hpp"
 
 namespace pxstr{
