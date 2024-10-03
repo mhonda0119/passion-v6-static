@@ -1,23 +1,23 @@
-#ifndef _ADC_DRIVER_HPP_
-#define _ADC_DRIVER_HPP_
+#ifndef _ADC_HPP_
+#define _ADC_HPP_
 
 #include <iostream>
 #include <stdint.h>
 #include "peripheral.h"
 #include "stdout.h"
 
-namespace peripheral::adc{
-	class Driver {
+namespace peripheral{
+	class ADC {
 	private:
 		ADC_HandleTypeDef* hadc_;
 		uint16_t buff_[10] ={0};
 		uint32_t channels_ = 5;
 	public:
-		Driver(ADC_HandleTypeDef* hadc);
+		ADC(ADC_HandleTypeDef* hadc);
 		void ReadVal();
 		uint16_t * get_val_ptr();
-		~Driver() = default;
+		~ADC() = default;
 	};
 }
 
-#endif /* _ADC_DRIVER_HPP_ */
+#endif /* _ADC_HPP_ */

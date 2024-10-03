@@ -1,13 +1,13 @@
-#ifndef _PWM_DRIVER_HPP_
-#define _PWM_DRIVER_HPP_
+#ifndef _PWM_HPP_
+#define _PWM_HPP_
 
 #include "peripheral.h"
 #include <memory>
 #include <iostream>
 #include <cstdint>
 
-namespace peripheral::pwm{
-    class Driver{
+namespace peripheral{
+    class PWM{
     private://duty比と周波数を決められるようなset関数をつくりたい．
         TIM_HandleTypeDef* htim_;  // タイマのハンドル
         uint32_t channel_;         // タイマのチャネル
@@ -18,13 +18,13 @@ namespace peripheral::pwm{
         uint32_t clock_;//timerのクロック
         uint32_t prescaler_; 
     public:
-        Driver(TIM_HandleTypeDef* htim,uint32_t channel);
+        PWM(TIM_HandleTypeDef* htim,uint32_t channel);
         void Start();
         void set_duty(float duty);
         void set_freq(uint32_t freq);
         void Stop();
-        ~Driver() = default;
+        ~PWM() = default;
     };
 }
 
-#endif //_PWM_DRIVER_HPP_
+#endif //_PWM_HPP_

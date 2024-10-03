@@ -1,23 +1,23 @@
-#ifndef _GPIO_DRIVER_HPP_
-#define _GPIO_DRIVER_HPP_
+#ifndef _GPIO_HPP_
+#define _GPIO_HPP_
 
 #include "peripheral.h"
 #include "main.h"
 #include "stdout.h"
 #include <iostream>
 
-namespace peripheral::gpio{
-    class Driver{
+namespace peripheral{
+    class GPIO{
     private:
         GPIO_TypeDef* port_;
         uint16_t pin_;
     public:
-        Driver(GPIO_TypeDef* port,uint16_t pin);
+        GPIO(GPIO_TypeDef* port,uint16_t pin);
         void On();
         void Off();
         void Toggle();
-        ~Driver() = default;
+        ~GPIO() = default;
     };
 }
 
-#endif //_GPIO_DRIVER_HPP_
+#endif //_GPIO_HPP_
