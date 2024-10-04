@@ -4,21 +4,22 @@
 
 #include "encoder.hpp"
 #include "peripheral.h"
-#include "motion_parameter.hpp"
+#include "motion.hpp"
 
 namespace sensor{
 	class IEH2_4096 : public Product{
 	private:
 	//encoderのpin設定のmember変数は持っとくべき,かも．
-		MotionParameter* encoder_;	//パラメータ
-		std::unique_ptr<peripheral::Encoder> encoder_;
+		parameter::Motion* encoder_;	//パラメータ
+		std::unique_ptr<peripheral::Encoder> count_;
 	public:
-		IEH2_4096();//encorder_driverのインスタンス化
+		IEH2_4096(TIM_HandleTypeDef* htim, uint32_t channel);//encorderのインスタンス化
 		void Init() override;//
 		void Start() override;//    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		void ReadVal() override;//MotionParameterへ読んだ値を入れます．
+		void Stop() override;
+		parameter::Motion* get_val_ptr() override ;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
         virtual ~IEH2_4096() = default;
-		MotionParameter* get_encoder_ptr() override ;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
 	};
 }
 
