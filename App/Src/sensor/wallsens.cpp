@@ -1,6 +1,6 @@
 #include "wallsens.hpp"
 namespace sensor{
-    WallParameter* Wall::thresh_ = nullptr;
+    parameter::Wall* Wall::thresh_ = nullptr;
 
     Wall::Wall(){
         if (!Wall::thresh_) {//なんか入ってたら
@@ -20,7 +20,7 @@ namespace sensor{
         tim1_ -> Us(20);//充電まつ
         pxstr_ -> ReadVal();//読む
         ir_ -> Off();//ir消す
-        WallParameter* temp = pxstr_ -> get_val_ptr();//代入
+        parameter::Wall* temp = pxstr_ -> get_val_ptr();//代入
         // for (int i = 0; i < 4; i++) {
         //     std::cout << "dir[" << i << "] = " << temp->dir[i] << std::endl;
         //     std::cout << "thresh[" << i << "] = " << thresh_->dir[i] << std::endl;
@@ -33,7 +33,7 @@ namespace sensor{
             }
         }//wp_とthresh_比べてwp_のがデカければ1,小さければ0.
     }
-    WallParameter* Wall::get_val_ptr(){
+    parameter::Wall* Wall::get_val_ptr(){
         return wp_;
     }
 }

@@ -2,7 +2,6 @@
 #define _WAIT_HPP_
 
 #include <stdio.h>
-#include "wall_parameter.hpp"
 #include "peripheral.h"
 #include "stdout.h"
 #include "stm32f4xx_hal.h"

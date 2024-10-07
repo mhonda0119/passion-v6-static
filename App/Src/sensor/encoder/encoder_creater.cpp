@@ -1,15 +1,14 @@
 #include "encoder_creater.hpp"
 
 namespace encoder{
-	Creater::Creater(){
-		name_ = ENCODER_NAME::IEH2_4096;
+	Creater::Creater(NAME name){
+		name_ = NAME::IEH24096;
 	}
-	std::unique_ptr<Product> Creater::Create(){
-		std::unique_ptr<Product> encoder;
+	std::unique_ptr<Product> Creater::Create(TIM_HandleTypeDef* htim, uint32_t channel){
 		switch(name_){
-			case ENCODER_NAME::IEH2_4096:
-				encoder = std::make_unique<IEH2_4096>();
-				return encoder;
+			case NAME::IEH24096:
+				encoder_ = std::make_unique<IEH2_4096>();
+				return std::move(encoder_);
 			default:
 				return nullptr;
 		}

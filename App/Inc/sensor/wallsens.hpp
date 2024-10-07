@@ -12,15 +12,15 @@
 namespace sensor{
     class Wall{
         private:
-            WallParameter* wp_;
-            static WallParameter* thresh_;
+            parameter::Wall* wp_;
+            static parameter::Wall* thresh_;
             std::unique_ptr<sensor::pxstr::Product> pxstr_;
             std::unique_ptr<sensor::ir::OSI3CA5111A> ir_;
             std::unique_ptr<tim::Wait> tim1_;
         public:
             Wall();//インスタンス化とメンバ変数に代入
             void ReadVal();//カベのあるなしを01で
-            WallParameter* get_val_ptr();
+            parameter::Wall* get_val_ptr();
             ~Wall() = default;
     };
 }

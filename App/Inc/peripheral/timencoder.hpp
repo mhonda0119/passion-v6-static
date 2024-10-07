@@ -1,23 +1,23 @@
-#ifndef _ENCODER_HPP_
-#define _ENCODER_HPP_
+#ifndef _TIMENCODER_HPP_
+#define _TIMENCODER_HPP_
 
 #include "peripheral.h"
 #include <cstdint>
 
 namespace peripheral{
-	class Encoder{
+	class TimEncoder{
     private:
 	TIM_HandleTypeDef* htim_;
 	uint32_t channel_;
 	uint32_t count_ = 0;
 	public:
-		Encoder(TIM_HandleTypeDef* htim, uint32_t channel);
+		TimEncoder(TIM_HandleTypeDef* htim, uint32_t channel);
 		void Start();
 		void ReadVal();
         void Stop();
         uint32_t get_val();
-        ~Encoder() = default;
+        ~TimEncoder() = default;
 	};
 }
 
-#endif /* _ENCODER_HPP_ */
+#endif /* _TIMENCODER_HPP_ */
