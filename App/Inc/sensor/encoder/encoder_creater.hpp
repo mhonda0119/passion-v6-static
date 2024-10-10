@@ -1,11 +1,11 @@
 #ifndef _ENCODER_CREATER_HPP_
 #define _ENCODER_CREATER_HPP_
 
-#include "ie24096.hpp"
+#include "ieh24096.hpp"
 
 namespace sensor::encoder{
 	enum struct NAME{
-		IEH2-4096 = 0,
+		IEH24096 = 0,
 	};
 	class Creater{
 	private:
