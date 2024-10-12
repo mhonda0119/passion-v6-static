@@ -19,6 +19,10 @@ namespace sensor::encoder {
         cnt_->ReadVal();
     }
 
+    void IEH24096::Stop(){
+        cnt_ -> Stop();
+    }
+
     parameter::Motion* IEH24096::get_val_ptr() {
         return encoder_;
         // エンコーダのポインタを取得する実装

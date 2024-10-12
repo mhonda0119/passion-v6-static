@@ -22,15 +22,9 @@ namespace peripheral{
 
     void IT::PeriodElapsedCallback(){
         if (wall_ != nullptr)
-        {   // 
+        {
             wall_->ReadVal();
             wp_ = wall_->get_val_ptr();
-            // ここまで
-            // std::cout << "WallParameter: " << std::endl;
-            // for (int i = 0; i < 4; i++) {
-            // std::cout <<"[" << i << "]" << wp_->dir[i] << " " << std::endl;
-            // }
-            // std::cout << std::endl;
         }else{}
     }
     
