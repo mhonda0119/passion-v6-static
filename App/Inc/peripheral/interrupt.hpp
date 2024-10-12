@@ -6,7 +6,7 @@
 #include "pxstr_creater.hpp"
 #include "peripheral.h"
 #include "stdout.h"
-#include "wall_parameter.hpp"
+#include "wall.hpp"
 #include "wait.hpp"
 #include "pxstr_creater.hpp"
 #include "wallsens.hpp"
