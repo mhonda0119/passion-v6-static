@@ -11,10 +11,10 @@
 #include "pxstr_creater.hpp"
 #include "wallsens.hpp"
 
-namespace tim{
+namespace peripheral{
 	class IT{
 		private:
-		static WallParameter* wp_;
+		static parameter::Wall* wp_;
 		static TIM_HandleTypeDef* htim_;
 		static std::unique_ptr<sensor::Wall> wall_;
 

@@ -1,6 +1,6 @@
 #include "wait.hpp"
 
-namespace tim{
+namespace peripheral{
     Wait::Wait(TIM_HandleTypeDef* htim){
         htim_ = htim;
     }

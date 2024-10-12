@@ -6,7 +6,7 @@
 #include "stdout.h"
 #include "stm32f4xx_hal.h"
 
-namespace tim{
+namespace peripheral{
     class Wait{
     private:
         TIM_HandleTypeDef* htim_;

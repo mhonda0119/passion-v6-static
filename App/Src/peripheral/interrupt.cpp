@@ -1,17 +1,18 @@
 #include "interrupt.hpp"
 
-namespace tim{
-        //staticなメンバ変数の初期化
-		WallParameter* IT::wp_ = nullptr;
-        //タイマー5を使用
+namespace peripheral{
+        //　staticなメンバ変数の初期化
+		parameter::Wall* IT::wp_ = nullptr;
+        //　タイマー5を使用
         TIM_HandleTypeDef* IT::htim_ = &htim5;
-        //wall_sensの
+        // wall_sensの
         std::unique_ptr<sensor::Wall> IT::wall_ = nullptr;
 
-    void IT::Init(TIM_HandleTypeDef* htim){ // 戻り値の型を追加
-        //ITのタイマー決定
+    void IT::Init(TIM_HandleTypeDef* htim){ 
+        //　戻り値の型を追加
+        //　ITのタイマー決定
         htim_ = htim;
-        //wallsensのインスタンス化　
+        //　wallsensのインスタンス化
         wall_ = std::make_unique<sensor::Wall>();
     }
 
@@ -21,17 +22,15 @@ namespace tim{
 
     void IT::PeriodElapsedCallback(){
         if (wall_ != nullptr)
-        {   
-            //実質ここから
+        {   // 
             wall_->ReadVal();
             wp_ = wall_->get_val_ptr();
-            //ここまで
+            // ここまで
             // std::cout << "WallParameter: " << std::endl;
             // for (int i = 0; i < 4; i++) {
-            //     std::cout <<"[" << i << "]" << wp_->dir[i] << " " << std::endl;
+            // std::cout <<"[" << i << "]" << wp_->dir[i] << " " << std::endl;
             // }
             // std::cout << std::endl;
-
         }else{}
     }
     
