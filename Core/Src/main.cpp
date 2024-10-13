@@ -86,8 +86,6 @@ int main(int argc, char** argv)
   std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
   //waitのインスタンス化
   std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
-  
-
   /* USER CODE END 3 */
 }
 
