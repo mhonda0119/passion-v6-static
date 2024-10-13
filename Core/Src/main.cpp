@@ -41,10 +41,7 @@
 int main(int argc, char** argv)
 {
 
-
-
   HAL_Init();
-
 
   SystemClock_Config();
 
@@ -64,7 +61,6 @@ int main(int argc, char** argv)
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
-
   //imuのインスタンス化
   std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
   std::unique_ptr<sensor::imu::Product> imu = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
