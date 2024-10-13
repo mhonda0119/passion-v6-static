@@ -29,6 +29,9 @@
 #include "led.hpp"
 #include "md_creater.hpp"
 #include "encoder_creater.hpp"
+#include "wallsens.hpp"
+#include "interrupt.hpp"
+#include "wait.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -77,6 +80,13 @@ int main(int argc, char** argv)
   std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
   //buzzerのインスタンス化
   std::unique_ptr<indicator::Buzzer> buzzer = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
+  //wallsensのインスタンス化
+  std::unique_ptr<sensor::Wall> wallsens = std::make_unique<sensor::Wall>();
+  //interruptのインスタンス化
+  std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
+  //waitのインスタンス化
+  std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
+  
 
   /* USER CODE END 3 */
 }

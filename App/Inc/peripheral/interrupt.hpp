@@ -19,7 +19,7 @@ namespace peripheral{
 		static std::unique_ptr<sensor::Wall> wall_;
 
 		public:
-		IT() = delete;
+		IT() = default;
 		static void Init(TIM_HandleTypeDef* htim); // 修正: 戻り値の型を追加
 		static HAL_StatusTypeDef Start();
         static void PeriodElapsedCallback(); // 修正: 戻り値の型を追加
