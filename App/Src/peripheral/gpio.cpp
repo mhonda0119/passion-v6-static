@@ -16,4 +16,8 @@ namespace peripheral{
         HAL_GPIO_TogglePin(port_,pin_);
     }
 
+    bool GPIO::ReadVal(){
+        return (HAL_GPIO_ReadPin(port_, pin_) == GPIO_PIN_SET);
+    }
+
 }

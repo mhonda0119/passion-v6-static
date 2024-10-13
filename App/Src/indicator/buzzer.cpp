@@ -1,10 +1,9 @@
 #include "buzzer.hpp"
 
 namespace indicator{
-    Buzzer::Buzzer(){
-        pwm_ = std::make_unique<peripheral::PWM>(&htim3, TIM_CHANNEL_2);
-    }
-
+    Buzzer::Buzzer(TIM_HandleTypeDef* htim,uint32_t channel)
+     : pwm_(std::make_unique<peripheral::PWM>(htim, channel)) {}
+     
     void Buzzer::Start(uint32_t freq, float duty){
         pwm_->Start();
         pwm_->set_freq(freq);

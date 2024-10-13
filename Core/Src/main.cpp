@@ -75,6 +75,8 @@ int main(int argc, char** argv)
   std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
   std::unique_ptr<sensor::encoder::Product> encoder_R = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
   std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
+  //buzzerのインスタンス化
+  std::unique_ptr<indicator::Buzzer> buzzer = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
 
   /* USER CODE END 3 */
 }

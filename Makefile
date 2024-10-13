@@ -67,6 +67,7 @@ $(wildcard App/Src/c/*.c) \
 CPP_SOURCES = \
 $(wildcard Core/Src/*.cpp) \
 $(wildcard App/Src/indicator/*.cpp)\
+$(wildcard App/Src/input/*.cpp) \
 $(wildcard App/Src/md/*.cpp) \
 $(wildcard App/Src/peripheral/*.cpp) \
 $(wildcard App/Src/sensor/*.cpp) \
@@ -151,6 +152,7 @@ CPP_INCLUDES = $(C_INCLUDES)
 CPP_INCLUDES += \
 -ICore/Inc \
 -IApp/Inc/indicator\
+-IApp/Inc/input\
 -IApp/Inc/md \
 -IApp/Inc/parameter \
 -IApp/Inc/peripheral \

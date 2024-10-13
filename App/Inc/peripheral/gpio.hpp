@@ -16,6 +16,7 @@ namespace peripheral{
         void On();
         void Off();
         void Toggle();
+        bool ReadVal();
         ~GPIO() = default;
     };
 }
