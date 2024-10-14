@@ -1,7 +1,7 @@
 #include "wallsens.hpp"
 namespace sensor{
     parameter::Wall* Wall::thresh_ = nullptr;
-
+    
     Wall::Wall(){
         if (!Wall::thresh_) {//なんか入ってたら
         Wall::thresh_ = nullptr;  // 動的メモリ割り当て（スマートポインタを使って）

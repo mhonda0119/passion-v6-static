@@ -24,6 +24,7 @@ namespace sensor::encoder {
     }
 
     parameter::Motion* IEH24096::get_val_ptr() {
+        encoder_->spd = static_cast<float>(cnt_->get_val()); // get_val()を呼び出して値を取得し、floatにキャスト
         return encoder_;
         // エンコーダのポインタを取得する実装
     }

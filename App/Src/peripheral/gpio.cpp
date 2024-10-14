@@ -17,7 +17,7 @@ namespace peripheral{
     }
 
     bool GPIO::ReadVal(){
-        return (HAL_GPIO_ReadPin(port_, pin_) == GPIO_PIN_SET);
+        return (HAL_GPIO_ReadPin(port_, pin_) == GPIO_PIN_RESET);
     }
 
 }

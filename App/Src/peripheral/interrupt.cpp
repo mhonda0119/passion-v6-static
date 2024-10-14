@@ -4,7 +4,7 @@ namespace peripheral{
         //　staticなメンバ変数の初期化
 		parameter::Wall* IT::wp_ = nullptr;
         //　タイマー5を使用
-        TIM_HandleTypeDef* IT::htim_ = &htim5;
+        TIM_HandleTypeDef* IT::htim_ = nullptr; //&htim5
         // wall_sensの
         std::unique_ptr<sensor::Wall> IT::wall_ = nullptr;
 
@@ -27,8 +27,6 @@ namespace peripheral{
             wp_ = wall_->get_val_ptr();
         }else{}
     }
-    
-
 
     extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         if (htim->Instance == htim5.Instance) {

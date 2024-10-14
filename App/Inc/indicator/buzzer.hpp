@@ -8,7 +8,7 @@ namespace indicator{
     class Buzzer{
     private:
         uint32_t freq_;
-        uint32_t duration;
+        uint32_t duration;//ms
         std::unique_ptr<peripheral::PWM> pwm_;
     public:
         Buzzer(TIM_HandleTypeDef* htim,uint32_t channel);//pwm_driverのインスタンス化
