@@ -88,6 +88,9 @@ int main(int argc, char** argv)
   std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
   //SWのインスタンス化
   std::unique_ptr<input::SW> sw = std::make_unique<input::SW>(PUSH_IN_1_GPIO_Port, PUSH_IN_1_Pin);
+  //timencoderのインスタンス化
+  // std::unique_ptr<peripheral::TimEncoder> timencoder_r = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
+  // std::unique_ptr<peripheral::TimEncoder> timencoder_l = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
 
   //led->Toggle();
   //buzzer->Play(440, 100, 0.5);
@@ -105,25 +108,25 @@ int main(int argc, char** argv)
     //   buzzer->Play(523, 100, 0.5); // シ
     //   buzzer->Play(587, 100, 0.5); // ド
     // }
-    md->On();
-    md->Dir(parameter::MOTOR::LEFT,parameter::MOTOR::CW);
-    md->Dir(parameter::MOTOR::RIGHT,parameter::MOTOR::CW);
-    md->Duty(0.2,0.2);
+    // md->On();
+    // md->Dir(parameter::MOTOR::LEFT,parameter::MOTOR::CW);
+    // md->Dir(parameter::MOTOR::RIGHT,parameter::MOTOR::CW);
+    // md->Duty(0.2,0.2);
     encoder_R->Init();
     encoder_R->Start();
     encoder_L->Init();
     encoder_L->Start();
     while(true){
-    md->Start();
+    // md->Start();
     encoder_R->ReadVal();
     encoder_L->ReadVal();
     parameter::Motion* encoder_val_R = encoder_R->get_val_ptr();
     parameter::Motion* encoder_val_L = encoder_L->get_val_ptr();
-    std::cout << "右エンコーダの値: " << encoder_val_R->spd << std::endl;
-    std::cout << "左エンコーダの値: " << encoder_val_L->spd << std::endl;
+    std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
+    std::cout << "encoder_l: " << encoder_val_L->spd << std::endl;
     wait->Ms(1000);
-    md->Stop();
-    wait->Ms(1000);
+    // md->Stop();
+    // wait->Ms(1000);
     }
 
   }

@@ -6,6 +6,7 @@
 #include <cstring>
 #include <stdint.h>
 
+#include "peripheral.h"
 #include "motion.hpp"
 #include "stdout.h"
 #include "timencoder.hpp"
@@ -18,7 +19,7 @@ namespace sensor::encoder{
 		virtual void Start() = 0;//    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		virtual void ReadVal() = 0;//MotionParameterへ読んだ値を入れます．
 		virtual void Stop() = 0;
-		virtual parameter::Motion* get_val_ptr() = 0 ;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
+		virtual parameter::Motion* get_val_ptr() = 0;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
         virtual ~Product() = default;
 	};
 }

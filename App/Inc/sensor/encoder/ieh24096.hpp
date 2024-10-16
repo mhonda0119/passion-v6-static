@@ -7,8 +7,10 @@ namespace sensor::encoder{
 	class IEH24096 : public Product{
 	private:
 	//encoderのpin設定のmember変数は持っとくべき,かも．
+		#define D_TIRE 23.8F 
 		parameter::Motion* encoder_;	//パラメータ
 		std::unique_ptr<peripheral::TimEncoder> cnt_;
+		TIM_HandleTypeDef* htim_;
 	public:
 		IEH24096(TIM_HandleTypeDef* htim, uint32_t channel);//encorderのインスタンス化
 		void Init() override;//

@@ -4,6 +4,7 @@
 #include "peripheral.h"
 #include <cstdint>
 
+#include <iostream>
 namespace peripheral{
 	class TimEncoder{
     private:
@@ -16,6 +17,7 @@ namespace peripheral{
 		void ReadVal();
         void Stop();
         uint32_t get_val();
+		void set_val(uint32_t count);
         ~TimEncoder() = default;
 	};
 }
