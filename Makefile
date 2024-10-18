@@ -181,6 +181,8 @@ CPPFLAGS = $(MCU) $(CPP_DEFS) $(CPP_INCLUDES) $(OPT) -Wall -fdata-sections -ffun
 # Generate dependency information
 CPPFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
+CPPFLAGS += -std=c++17 -Wall -Wextra -Werror -pedantic
+
 #######################################
 # LDFLAGS
 #######################################

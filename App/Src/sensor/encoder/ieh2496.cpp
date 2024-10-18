@@ -26,8 +26,8 @@ namespace sensor::encoder {
     }
 
     parameter::Motion* IEH24096::get_val_ptr() {
-        static_cast<parameter::Motion*>(encoder_)->spd = 100;
-        std::cout << "spd: " << encoder_->spd << std::endl;
+        encoder_->spd = static_cast<float>(100);
+        std::cout << "spd: " << static_cast<float>(encoder_->spd) << std::endl;
         std::cout << "pos" << encoder_->pos[0] << std::endl;
         return encoder_;
     }

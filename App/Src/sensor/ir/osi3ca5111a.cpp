@@ -6,7 +6,7 @@ namespace sensor::ir{
         l_ = std::make_unique<peripheral::GPIO>(IR_L_GPIO_Port, IR_L_Pin);
         fr_ = std::make_unique<peripheral::GPIO>(IR_FR_GPIO_Port, IR_FR_Pin);
         fl_ = std::make_unique<peripheral::GPIO>(IR_FL_GPIO_Port, IR_FL_Pin);
-    };
+    }
 
     void OSI3CA5111A::On(parameter::DIR dir){
         switch(dir){

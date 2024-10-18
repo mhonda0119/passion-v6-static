@@ -40,7 +40,7 @@
   * @brief  The application entry point.
   * @retval int
   */
-int main(int argc, char** argv)
+int main()
 {
 
   HAL_Init();

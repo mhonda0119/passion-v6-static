@@ -1,9 +1,8 @@
 #include "md_creater.hpp"
 
 namespace md{
-	Creater::Creater(NAME name){
-		name_ = NAME::TB6612FNG;
-	}
+	Creater::Creater(NAME name)
+	:name_(name){}
 	std::unique_ptr<Product> Creater::Create(TIM_HandleTypeDef* htim,uint32_t channel_r,uint32_t channel_l){
 		switch(name_){
 			case NAME::TB6612FNG:

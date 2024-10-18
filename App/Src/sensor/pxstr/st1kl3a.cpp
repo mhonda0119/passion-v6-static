@@ -19,6 +19,6 @@ namespace sensor::pxstr{
 
 	parameter::Wall* ST1KL3A::get_val_ptr(){
 		return pxstr_; // 修正: アドレスを返すように変更
-	};
+	}
 
 }
