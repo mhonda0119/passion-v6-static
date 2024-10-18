@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstring>
 #include <stdint.h>
+#include <iostream>
 
 #include "peripheral.h"
 #include "motion.hpp"

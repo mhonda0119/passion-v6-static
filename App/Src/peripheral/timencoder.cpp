@@ -10,6 +10,7 @@ namespace peripheral{
 
     void TimEncoder::ReadVal(){
         count_ = __HAL_TIM_GET_COUNTER(htim_);
+        //std::cout << "Encoder Value: " << count_ << std::endl;
     }
 
     void TimEncoder::Stop(){
@@ -17,7 +18,6 @@ namespace peripheral{
     }
 
     uint32_t TimEncoder::get_val(){
-        //std::cout << count_ << std::endl;
         return count_;
     }
 
