@@ -4,8 +4,9 @@
 
 namespace sensor::encoder {
     IEH24096::IEH24096(TIM_HandleTypeDef* htim, uint32_t channel)
-        :timencoder_(std::make_unique<peripheral::TimEncoder>(htim, channel)) ,
-        htim_(htim){}
+    :   timencoder_(std::make_unique<peripheral::TimEncoder>(htim, channel)),  // timencoder_を初期化
+        encoder_(std::make_unique<parameter::Motion>()) ,
+        htim_(htim) {}
 
 
     void IEH24096::Init() {
@@ -25,11 +26,11 @@ namespace sensor::encoder {
         timencoder_ -> Stop();
     }
 
-    parameter::Motion* IEH24096::get_val_ptr() {
+    std::unique_ptr<parameter::Motion> IEH24096::get_val_ptr() {
         encoder_->spd = static_cast<float>(100);
         std::cout << "spd: " << static_cast<float>(encoder_->spd) << std::endl;
         std::cout << "pos" << encoder_->pos[0] << std::endl;
-        return encoder_;
+        return std::move(encoder_);
     }
 }
 

@@ -126,7 +126,7 @@ int main()
     encoder_R->ReadVal();
     // encoder_L->ReadVal();
     //std::cout << "1" << std::endl;
-    parameter::Motion* encoder_val_R = encoder_R->get_val_ptr();
+    std::unique_ptr<parameter::Motion> encoder_val_R = encoder_R->get_val_ptr();
     //parameter::Motion* encoder_val_L = encoder_L->get_val_ptr();
     std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
     // std::cout << "encoder_l: " << encoder_val_L->spd << std::endl;
