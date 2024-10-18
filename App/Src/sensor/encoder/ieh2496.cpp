@@ -26,7 +26,11 @@ namespace sensor::encoder {
     }
 
     parameter::Motion* IEH24096::get_val_ptr() {
+        std::cout << "1-0" << std::endl;
         encoder_->spd = 100;
+        std::cout << "1-1" << std::endl;
+        std::cout << "spd: " << encoder_->spd << std::endl;
+        std::cout << "pos" << encoder_->pos[0] << std::endl;
         return encoder_;
     }
 }

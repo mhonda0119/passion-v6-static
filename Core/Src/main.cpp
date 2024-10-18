@@ -70,12 +70,12 @@ int main(int argc, char** argv)
   //std::unique_ptr<sensor::pxstr::Creater> pxstr_creater = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
   //std::unique_ptr<sensor::pxstr::Product> pxstr = pxstr_creater->Create(&hadc1);
   //mdのインスタンス化
-  std::unique_ptr<md::Creater> md_creater = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
-  std::unique_ptr<md::Product> md = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
+  // std::unique_ptr<md::Creater> md_creater = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
+  // std::unique_ptr<md::Product> md = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
   //encoderのインスタンス化
   std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
   std::unique_ptr<sensor::encoder::Product> encoder_R = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
-  std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
+  //std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
   //buzzerのインスタンス化
   //std::unique_ptr<indicator::Buzzer> buzzer = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
   //ledのインスタンス化
@@ -112,23 +112,27 @@ int main(int argc, char** argv)
     // md->Dir(parameter::MOTOR::LEFT,parameter::MOTOR::CW);
     // md->Dir(parameter::MOTOR::RIGHT,parameter::MOTOR::CW);
     // md->Duty(0.2,0.2);
+    std::cout << "0" << std::endl;
     encoder_R->Init();
     encoder_R->Start();
-    encoder_L->Init();
-    encoder_L->Start();
+    // encoder_L->Init();
+    // encoder_L->Start();
+    //timencoder_r->Start();
     while(true){
     // md->Start();
-    std::cout << "0" << std::endl;
+    // std::cout << "0" << std::endl;
     encoder_R->ReadVal();
-    encoder_L->ReadVal();
+    // encoder_L->ReadVal();
     std::cout << "1" << std::endl;
     parameter::Motion* encoder_val_R = encoder_R->get_val_ptr();
-    parameter::Motion* encoder_val_L = encoder_L->get_val_ptr();
+    // parameter::Motion* encoder_val_L = encoder_L->get_val_ptr();
     std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
-    std::cout << "encoder_l: " << encoder_val_L->spd << std::endl;
-    wait->Ms(1000);
-    // md->Stop();
+    // std::cout << "encoder_l: " << encoder_val_L->spd << std::endl;
+    // timencoder_r->ReadVal();
+    // std::cout << "Encoder Value: " << timencoder_r->get_val() << std::endl;
     // wait->Ms(1000);
+    // md->Stop();
+    wait->Ms(1000);
     }
   }
   /* USER CODE END 3 */
