@@ -118,8 +118,10 @@ int main(int argc, char** argv)
     encoder_L->Start();
     while(true){
     // md->Start();
+    std::cout << "0" << std::endl;
     encoder_R->ReadVal();
     encoder_L->ReadVal();
+    std::cout << "1" << std::endl;
     parameter::Motion* encoder_val_R = encoder_R->get_val_ptr();
     parameter::Motion* encoder_val_L = encoder_L->get_val_ptr();
     std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
@@ -128,7 +130,6 @@ int main(int argc, char** argv)
     // md->Stop();
     // wait->Ms(1000);
     }
-
   }
   /* USER CODE END 3 */
 }
