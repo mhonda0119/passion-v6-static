@@ -27,9 +27,14 @@ namespace sensor::encoder {
     }
 
     parameter::Motion* IEH24096::get_val_ptr() {
-        encoder_->spd = static_cast<float>(100);
-        std::cout << "spd: " << static_cast<float>(encoder_->spd) << std::endl;
-        std::cout << "pos" << encoder_->pos[0] << std::endl;
+        float cnt = static_cast<float>(timencoder_->get_val());
+        encoder_->spd = cnt - 30000;
+        timencoder_->set_val(30000);
+        // 速度の換算 →[mm/s]
+        // encoder_speed_r = (encoder_speed_r / 4096*4) * (13 / 42) * DIST_ONE_ROT *
+        // 1000; encoder_speed_l = (encoder_speed_l / 4096*4) * (13 / 42) *
+        // DIST_ONE_ROT * 1000;
+        encoder_->spd = -(encoder_->spd *  0.018892 * 23.8F  * 3.1415);
         return encoder_.get();
     }
 }

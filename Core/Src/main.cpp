@@ -119,7 +119,7 @@ int main()
     // encoder_L->Start();
     //timencoder_r->Start();
     imu->Init();
-    parameter::Motion* mp;
+    // parameter::Motion* mp;
     while(true){
     // md->Start();
     // std::cout << "0" << std::endl;
@@ -134,9 +134,9 @@ int main()
     //std::cout << "Encoder Value: " << timencoder_r->get_val() << std::endl;
     // wait->Ms(1000);
     // md->Stop();
-    imu->ReadVal();
-    mp = imu->get_val_ptr();
-     std::cout <<"omega:"<< mp->omega[0] << std::endl; 
+    // imu->ReadVal();
+    // mp = imu->get_val_ptr();
+    //  std::cout <<"omega:"<< mp->omega[0] << std::endl; 
     wait->Ms(1000);
     }
   }
