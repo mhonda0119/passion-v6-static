@@ -2,7 +2,8 @@
 
 namespace sensor::imu{
 	ICM20689::ICM20689(SPI_HandleTypeDef* hspi,GPIO_TypeDef* port,uint16_t cs_pin)
-	 : spi_(std::make_unique<peripheral::SPI>(hspi,port,cs_pin)){}
+	 : spi_(std::make_unique<peripheral::SPI>(hspi,port,cs_pin)),
+	 	imu_(std::make_unique<parameter::Motion>()){}
 
 	void ICM20689::Init(){
 		uint8_t who_am_i = 0;
@@ -60,7 +61,7 @@ namespace sensor::imu{
 	}
 
 	parameter::Motion* ICM20689::get_val_ptr(){
-			return imu_;
+			return imu_.get();
 		}
 }
 

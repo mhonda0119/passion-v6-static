@@ -22,7 +22,7 @@ namespace peripheral{
     }
 
     void TimEncoder::set_val(uint32_t count){
-        count_ = count;
+        __HAL_TIM_SET_COUNTER(htim_,count);
     }
 
 }

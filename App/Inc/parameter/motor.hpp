@@ -6,8 +6,8 @@ namespace parameter {
     enum struct MOTOR {
     LEFT,
     RIGHT,
-    CW,
-    CCW
+    FWD,
+    BWD
     };
 }
 #endif /* _MD_HPP_ */

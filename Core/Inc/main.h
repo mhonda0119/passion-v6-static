@@ -86,9 +86,9 @@ void Error_Handler(void);
 #define LED_4_GPIO_Port GPIOA
 #define SPI1_MOSI_Pin GPIO_PIN_7
 #define SPI1_MOSI_GPIO_Port GPIOA
-#define MOTOR_L_CCW_Pin GPIO_PIN_4
+#define MOTOR_L_CCW_Pin GPIO_PIN_5
 #define MOTOR_L_CCW_GPIO_Port GPIOC
-#define MOTOR_L_CW_Pin GPIO_PIN_5
+#define MOTOR_L_CW_Pin GPIO_PIN_4
 #define MOTOR_L_CW_GPIO_Port GPIOC
 #define MOTOR_STBY_Pin GPIO_PIN_0
 #define MOTOR_STBY_GPIO_Port GPIOB

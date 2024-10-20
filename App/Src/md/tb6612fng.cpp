@@ -2,13 +2,9 @@
 
 namespace md{
 
-    TB6612FNG::TB6612FNG(TIM_HandleTypeDef* htim,uint32_t channel_l,uint32_t channel_r) {
-        //コンストラクタの中_
-        pwm_r_ = std::make_unique<peripheral::PWM>(htim, channel_r);
-        pwm_l_ = std::make_unique<peripheral::PWM>(htim, channel_l);
-        // pwm_r_ = std::make_unique<peripheral::PWM>(&htim2, TIM_CHANNEL_4);
-        // pwm_l_ = std::make_unique<peripheral::PWM>(&htim2, TIM_CHANNEL_1);
-    }
+    TB6612FNG::TB6612FNG(TIM_HandleTypeDef* htim,uint32_t channel_l,uint32_t channel_r) : 
+        pwm_r_(std::make_unique<peripheral::PWM>(htim, channel_r)),
+        pwm_l_(std::make_unique<peripheral::PWM>(htim, channel_l)){}
 
     void TB6612FNG::On(){
         HAL_GPIO_WritePin(MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin, GPIO_PIN_SET);
@@ -16,24 +12,24 @@ namespace md{
 
     void TB6612FNG::Dir(parameter::MOTOR motor ,parameter::MOTOR dir){
         if (motor == parameter::MOTOR::LEFT) {
-            if (dir == parameter::MOTOR::CW) {
+            if (dir == parameter::MOTOR::FWD) {
                 // 左モーターを前進方向に設定
                 HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_SET);
                 HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_RESET);
-            } else if (dir == parameter::MOTOR::CCW) {
+            } else if (dir == parameter::MOTOR::BWD) {
                 // 左モーターを後進方向に設定
                 HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_SET);
             }
         } else if (motor == parameter::MOTOR::RIGHT) {
-            if (dir == parameter::MOTOR::CW) {
+            if (dir == parameter::MOTOR::FWD) {
                 // 右モーターを前進方向に設定
-                HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_RESET);
-            } else if (dir == parameter::MOTOR::CCW) {
-                // 右モーターを後進方向に設定
                 HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_SET);
+            } else if (dir == parameter::MOTOR::BWD) {
+                // 右モーターを後進方向に設定
+                HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_RESET);
             }
         }
     }

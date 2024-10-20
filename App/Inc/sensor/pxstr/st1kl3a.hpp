@@ -7,7 +7,7 @@ namespace sensor::pxstr{
 
 	class ST1KL3A : public Product{
 	private:
-		parameter::Wall* pxstr_;
+		std::unique_ptr<parameter::Wall> pxstr_;
 		std::unique_ptr<peripheral::ADC> adc_;
 	public:
 		ST1KL3A(ADC_HandleTypeDef* hadc);

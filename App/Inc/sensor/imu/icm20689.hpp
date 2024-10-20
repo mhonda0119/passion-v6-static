@@ -9,8 +9,8 @@ namespace sensor::imu{
 		// SPI_HandleTypeDef* hspi_;
 		// GPIO_TypeDef* port_;
 		// uint16_t cs_pin_;
-		parameter::Motion* imu_;
 		std::unique_ptr<peripheral::SPI> spi_;
+		std::unique_ptr<parameter::Motion> imu_;
 		float AccelRead(uint8_t H_reg) ;
 		float OmegaRead(uint8_t H_reg) ;
 	public:
