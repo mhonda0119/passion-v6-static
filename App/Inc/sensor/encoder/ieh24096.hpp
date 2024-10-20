@@ -3,12 +3,15 @@
 
 #include "encoder.hpp"
 #include "timencoder.hpp"
+#include "hardware.hpp"
+
 namespace sensor::encoder{
 	class IEH24096 : public Product{
 	private:
 		std::unique_ptr<peripheral::TimEncoder> timencoder_ = nullptr; // timencoderを先に宣言
 		std::unique_ptr<parameter::Motion> encoder_;	//パラメータ
 		TIM_HandleTypeDef* htim_;
+		constexpr static uint32_t resolution_ = 4096;//分解能
 	public:
 		IEH24096(TIM_HandleTypeDef* htim, uint32_t channel);//encorderのインスタンス化
 		void Init() override;//

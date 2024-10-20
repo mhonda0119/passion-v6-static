@@ -1,9 +1,23 @@
 #include "timencoder.hpp"
 
+
 namespace peripheral{
     TimEncoder::TimEncoder(TIM_HandleTypeDef* htim, uint32_t channel)
-     : htim_(htim), channel_(channel) {}
+     : htim_(htim), channel_(channel) ,period_(htim_->Init.Period + 1){
 
+        std::unique_ptr<TIM_Encoder_InitTypeDef> sConfig = std::make_unique<TIM_Encoder_InitTypeDef>();
+                std::cout << "1" << std::endl;
+        if(sConfig->EncoderMode == TIM_ENCODERMODE_TI1){
+            edge_ = 2;
+        }else if(sConfig->EncoderMode == TIM_ENCODERMODE_TI2){
+            edge_ = 2;
+        }else if(sConfig->EncoderMode == TIM_ENCODERMODE_TI12){
+            edge_ = 4;
+        }else{
+            edge_ = 5;
+            }
+                std::cout << "2" << std::endl;
+     }
     void TimEncoder::Start(){
         HAL_TIM_Encoder_Start(htim_, channel_);
     }

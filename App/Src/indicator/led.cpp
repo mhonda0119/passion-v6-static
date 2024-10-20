@@ -9,7 +9,7 @@ namespace indicator{
         led_[4] = std::make_unique<peripheral::GPIO>(LED_5_GPIO_Port, LED_5_Pin);
         led_[5] = std::make_unique<peripheral::GPIO>(LED_6_GPIO_Port, LED_6_Pin);
         led_[6] = std::make_unique<peripheral::GPIO>(LED_7_GPIO_Port, LED_7_Pin);
-    }
+}
 
     void LED::On(uint8_t num){
         switch(num){
