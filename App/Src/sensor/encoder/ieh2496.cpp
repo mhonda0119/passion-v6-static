@@ -37,8 +37,8 @@ namespace sensor::encoder {
         // encoder_speed_r = (encoder_speed_r / 4096*4) * (13 / 42) * DIST_ONE_ROT *
         // 1000; encoder_speed_l = (encoder_speed_l / 4096*4) * (13 / 42) *
         // DIST_ONE_ROT * 1000;
-        std::cout << timencoder_->edge_ << std::endl;
-        std::cout << timencoder_->period_ << std::endl;
+        //std::cout << timencoder_->edge_ << std::endl;
+        //std::cout << timencoder_->period_ << std::endl;
         encoder_->spd = (encoder_->spd/resolution_*timencoder_->edge_) * parameter::Hardware::DIST_ONE_ROT;
         return encoder_.get();
     }
