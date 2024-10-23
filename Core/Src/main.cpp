@@ -113,6 +113,7 @@ int main()
     md->Dir(parameter::MOTOR::LEFT,parameter::MOTOR::FWD);
     md->Dir(parameter::MOTOR::RIGHT,parameter::MOTOR::FWD);
     md->Duty(0.2,0.2);
+    //aaaa
     //std::cout << "0" << std::endl;
     //encoder_R->Init();
 
