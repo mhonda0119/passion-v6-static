@@ -17,5 +17,5 @@ void Vol::ReadVal() {
 }
 
 void Vol::get_val() {
-    uint32_t value = vol_->GetValue();
+    return vol_;
 }
