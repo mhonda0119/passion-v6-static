@@ -8,18 +8,19 @@
 #include "stdout.h"
 #include "adc.hpp"
 
-namespace sensor{
-	class Vol : public Elec{
+namespace sensor::elec{
+	class Vol{
 	private:
+		ADC_HandleTypeDef* hadc_ = nullptr;
 		std::unique_ptr<peripheral::Adc> adc_ = nullptr;
-		std::unique_ptr<parameter::Motion> vol_;
-		ADC_HandleTypeDef* hadc_;
-		uint32_t channel_;
+		uint16_t vol_ = 0;
+		
 	public:
-		Vol(ADC_HandleTypeDef* hadc, uint32_t channel);
-		void Init() override;
-		void ReadVal() override;
-        virtual ~Vol() = default;
+		Vol(ADC_HandleTypeDef* hadc);
+		void Init() ;
+		void ReadVal() ;
+		void get_val();
+        void  ~Vol() = default;
 	};
 }
 
