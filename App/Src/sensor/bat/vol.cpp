@@ -1,6 +1,6 @@
 #include "vol.hpp"
 
-namespace sensor::elec {
+namespace sensor::bat {
 
 Vol::Vol(ADC_HandleTypeDef* hadc)
     : hadc_(hadc),

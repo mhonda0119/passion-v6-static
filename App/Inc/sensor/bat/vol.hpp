@@ -8,7 +8,7 @@
 #include "stdout.h"
 #include "adc.hpp"
 
-namespace sensor::elec{
+namespace sensor::bat{
 	class Vol{
 	private:
 		ADC_HandleTypeDef* hadc_ = nullptr;
