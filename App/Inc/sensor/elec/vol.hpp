@@ -3,8 +3,8 @@
 
 #include <cstdint>
 #include <memory>
-#include <cstring>
 
+#include "peripheral"
 #include "stdout.h"
 #include "adc.hpp"
 
@@ -16,10 +16,10 @@ namespace sensor::elec{
 		uint16_t vol_ = 0;
 	public:
 		Vol(ADC_HandleTypeDef* hadc);
-		void Init() ;
+		Init() ;
 		void ReadVal() ;
 		uint16_t get_val();
-        void  ~Vol() = default;
+        ~Vol() = default;
 	};
 }
 
