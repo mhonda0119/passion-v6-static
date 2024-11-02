@@ -16,7 +16,7 @@ namespace sensor::elec{
 		uint16_t vol_ = 0;
 	public:
 		Vol(ADC_HandleTypeDef* hadc);
-		Init() ;
+		void Init() ;
 		void ReadVal() ;
 		uint16_t get_val();
         ~Vol() = default;
