@@ -18,6 +18,8 @@ namespace sensor::imu{
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
 		virtual parameter::Motion* get_val_ptr() = 0;
+		void Offset();
+		void Update();
 		virtual ~Product() = default;//仮想デストラクタ（親クラス）
 	};
 }
