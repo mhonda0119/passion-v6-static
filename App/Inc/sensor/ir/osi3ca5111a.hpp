@@ -2,7 +2,7 @@
 #define _IR_HPP_
 
 #include "peripheral.h"
-#include "wall.hpp"
+#include "state.hpp"
 #include "gpio.hpp"
 #include "main.h"
 #include <memory>
@@ -11,15 +11,15 @@
 namespace sensor::ir{
     class OSI3CA5111A{
     private:
-    parameter::DIR dir_;
+    state::Wall dir_;
     std::unique_ptr<peripheral::GPIO> r_;
     std::unique_ptr<peripheral::GPIO> l_;
     std::unique_ptr<peripheral::GPIO> fr_;
     std::unique_ptr<peripheral::GPIO> fl_;
     public:
         OSI3CA5111A();
-        void On(parameter::DIR dir = parameter::DIR::ALL);
-        void Off(parameter::DIR dir = parameter::DIR::ALL);
+        void On(state::Wall::DIR dir = state::Wall::DIR::ALL);
+        void Off(state::Wall::DIR dir = state::Wall::DIR::ALL);
         ~OSI3CA5111A() = default;
     };
 }

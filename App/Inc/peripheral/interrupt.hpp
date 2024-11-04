@@ -6,17 +6,15 @@
 #include "pxstr_creater.hpp"
 #include "peripheral.h"
 #include "stdout.h"
-#include "wall.hpp"
+#include "state.hpp"
 #include "wait.hpp"
 #include "pxstr_creater.hpp"
-#include "wallsens.hpp"
 
 namespace peripheral{
 	class IT{
 		private:
-		static parameter::Wall* wp_;
+		static state::Wall* wp_;
 		static TIM_HandleTypeDef* htim_;
-		static std::unique_ptr<sensor::Wall> wall_;
 
 		public:
 		IT() = default;

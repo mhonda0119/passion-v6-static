@@ -75,6 +75,7 @@ $(wildcard App/Src/sensor/encoder/*.cpp) \
 $(wildcard App/Src/sensor/imu/*.cpp) \
 $(wildcard App/Src/sensor/ir/*.cpp) \
 $(wildcard App/Src/sensor/pxstr/*.cpp) \
+$(wildcard App/Src/filter/*.cpp) \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -162,6 +163,7 @@ CPP_INCLUDES += \
 -IApp/Inc/sensor/imu\
 -IApp/Inc/sensor/ir\
 -IApp/Inc/sensor/pxstr\
+-IApp/Inc/filter\
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections

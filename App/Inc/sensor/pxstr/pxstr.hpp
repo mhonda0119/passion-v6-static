@@ -9,7 +9,7 @@
 //自作ヘッダファイル
 #include "stdout.h"
 #include "adc.hpp"
-#include "wall.hpp"
+#include "state.hpp"
 
 namespace sensor::pxstr {
 
@@ -20,7 +20,7 @@ namespace sensor::pxstr {
 		Product() = default;
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual parameter::Wall* get_val_ptr() = 0;
+		virtual state::Wall* get_val_ptr() = 0;
 		virtual ~Product() = default;
 	};
 

@@ -126,7 +126,7 @@ int main()
 
     encoder_R->ReadVal();
 
-    parameter::Motion* encoder_val_R = encoder_R->get_val_ptr();
+    std::unique_ptr<parameter::Motion>& encoder_val_R = encoder_R->get_val_ptr();
     std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
     
     wait->Ms(100);

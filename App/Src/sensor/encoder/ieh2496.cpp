@@ -7,7 +7,7 @@ namespace sensor::encoder {
 
     IEH24096::IEH24096(TIM_HandleTypeDef* htim, uint32_t channel)
     :   timencoder_(std::make_unique<peripheral::TimEncoder>(htim, channel)),  // timencoder_を初期化
-        encoder_(std::make_unique<parameter::Motion>()) ,
+        raw_(std::make_unique<state::Motion>()) ,
         htim_(htim){}
 
 
@@ -28,12 +28,12 @@ namespace sensor::encoder {
         timencoder_ -> Stop();
     }
 
-    parameter::Motion* IEH24096::get_val_ptr() {
-        float cnt = static_cast<float>(timencoder_->get_val());
-        encoder_->spd = cnt - static_cast<float>(timencoder_->period_/2);
-        timencoder_->set_val(static_cast<float>(timencoder_->period_/2));
-        encoder_->spd = (encoder_->spd/resolution_*timencoder_->edge_) * parameter::Hardware::DIST_ONE_ROT;
-        return encoder_.get();
+    std::unique_ptr<state::Motion>& IEH24096::get_raw_ptr() {
+        float cnt = static_cast< float>(timencoder_->get_val());
+        raw_->spd = cnt - static_cast< float>(timencoder_->period_/2);
+        timencoder_->set_val(static_cast< float>(timencoder_->period_/2));
+        raw_->spd = (raw_->spd/resolution_*timencoder_->edge_) * parameter::hardware::DIST_ONE_ROT;
+        return raw_;
     }
 }
 

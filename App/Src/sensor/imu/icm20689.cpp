@@ -3,7 +3,7 @@
 namespace sensor::imu{
 	ICM20689::ICM20689(SPI_HandleTypeDef* hspi,GPIO_TypeDef* port,uint16_t cs_pin)
 	 : spi_(std::make_unique<peripheral::SPI>(hspi,port,cs_pin)),
-	 	imu_(std::make_unique<parameter::Motion>()){}
+	 	raw_(std::make_unique<state::Motion>()){}
 
 	void ICM20689::Init(){
 		uint8_t who_am_i = 0;
@@ -38,7 +38,7 @@ namespace sensor::imu{
 	float ICM20689::AccelRead(uint8_t H_reg) {
 		int16_t data = (int16_t)(((uint8_t)spi_->ReadByte(H_reg) << 8) |
 								 (uint8_t)spi_->ReadByte(H_reg + 1));
-		float accel = (float)(data / 2048.0f);
+		float accel = (float)(data / 2048.0f)*parameter::physics::G*parameter::physics::m2mm; //[mm/s^2] FS_SEL=3-> Scale Factor=2048[LSB/(g)]
 		return accel;
 	}
 
@@ -52,16 +52,16 @@ namespace sensor::imu{
 
 
 	void ICM20689::ReadVal(){
-		imu_->accel[static_cast<int>(parameter::COORD::X)] = -1 * this->AccelRead(0x3B);
-		imu_->accel[static_cast<int>(parameter::COORD::Y)] = this->AccelRead(0x3D);
-		imu_->accel[static_cast<int>(parameter::COORD::Z)] = this->AccelRead(0x3F);
-		imu_->omega[static_cast<int>(parameter::COORD::X)] = this->OmegaRead(0x43);
-		imu_->omega[static_cast<int>(parameter::COORD::Y)] = this->OmegaRead(0x45);
-		imu_->omega[static_cast<int>(parameter::COORD::Z)] = this->OmegaRead(0x47);
+		raw_->accel[static_cast<int>(state::Motion::COORD::X)] = -1 * this->AccelRead(0x3B);
+		raw_->accel[static_cast<int>(state::Motion::COORD::Y)] = this->AccelRead(0x3D);
+		raw_->accel[static_cast<int>(state::Motion::COORD::Z)] = this->AccelRead(0x3F);
+		raw_->omega[static_cast<int>(state::Motion::COORD::X)] = this->OmegaRead(0x43);
+		raw_->omega[static_cast<int>(state::Motion::COORD::Y)] = this->OmegaRead(0x45);
+		raw_->omega[static_cast<int>(state::Motion::COORD::Z)] = this->OmegaRead(0x47);
 	}
 
-	parameter::Motion* ICM20689::get_val_ptr(){
-			return imu_.get();
+	std::unique_ptr<state::Motion>& ICM20689::get_raw_ptr(){
+			return raw_;
 		}
 }
 

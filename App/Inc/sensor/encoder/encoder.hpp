@@ -11,16 +11,26 @@
 #include "motion.hpp"
 #include "stdout.h"
 #include "timencoder.hpp"
+#include "const.hpp"
+#include "sieve.hpp"
+
 
 namespace sensor::encoder{
 	class Product{
+	private:
+		std::unique_ptr<state::Motion> offset_;
+		std::unique_ptr<state::Motion> val_;
+		std::unique_ptr<filter::Sieve> sieve_;
 	public:
-		Product() = default;//encorderのインスタンス化
+		Product();//encorderのインスタンス化
 		virtual void Init() = 0;//
 		virtual void Start() = 0;//    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		virtual void ReadVal() = 0;//MotionParameterへ読んだ値を入れます．
 		virtual void Stop() = 0;
-		virtual parameter::Motion* get_val_ptr() = 0;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
+		void GetOffset();
+		void Update();
+		virtual std::unique_ptr<state::Motion>& get_raw_ptr() = 0;
+		std::unique_ptr<state::Motion>& get_val_ptr();
         virtual ~Product() = default;
 	};
 }
