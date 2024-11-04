@@ -26,4 +26,3 @@ namespace sensor::encoder{
 }
 
 #endif /* _ENCODER_HPP_ */
-

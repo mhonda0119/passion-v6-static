@@ -4,7 +4,7 @@ namespace sensor::bat {
 
 Vol::Vol(ADC_HandleTypeDef* hadc)
     : hadc_(hadc),
-      adc_(std::make_unique<peripheral::Adc>(hadc_)){}
+      adc_(std::make_unique<peripheral::ADC>(hadc_)){}
 
 void Vol::Init() {
     

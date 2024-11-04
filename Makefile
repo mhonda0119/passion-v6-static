@@ -157,6 +157,7 @@ CPP_INCLUDES += \
 -IApp/Inc/parameter \
 -IApp/Inc/peripheral \
 -IApp/Inc/sensor\
+-IApp/Inc/sensor/bat\
 -IApp/Inc/sensor/encoder\
 -IApp/Inc/sensor/imu\
 -IApp/Inc/sensor/ir\
