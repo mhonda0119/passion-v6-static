@@ -3,13 +3,13 @@
 
 namespace parameter{
 // 座標の列挙型
-    enum struct COORD
-    {
-        X = 0, Y, Z
-    };
 
     // MotionParameter 構造体の定義
     struct Motion {
+        enum struct COORD
+        {
+            X = 0, Y, Z
+        };
         float pos[3] = {0};       // 位置
         float vel[3] = {0};       // 速度
         float accel[3] = {0};       // 加速度
