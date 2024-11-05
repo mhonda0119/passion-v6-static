@@ -30,10 +30,9 @@ namespace sensor::encoder {
 
     std::unique_ptr<state::Motion>& IEH24096::get_raw_ptr() {
         float cnt = static_cast< float>(timencoder_->get_val());
-        raw_->spd = cnt - static_cast< float>(timencoder_->period_/2);
+        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = cnt - static_cast< float>(timencoder_->period_/2);
         timencoder_->set_val(static_cast< float>(timencoder_->period_/2));
-        raw_->spd = (raw_->spd/resolution_*timencoder_->edge_) * parameter::hardware::DIST_ONE_ROT;
+        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = (raw_->spd[static_cast<int>(state::Motion::DIR::C)]/resolution_*timencoder_->edge_) * parameter::hardware::DIST_ONE_ROT;
         return raw_;
     }
 }
-

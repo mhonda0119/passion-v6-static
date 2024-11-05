@@ -17,7 +17,7 @@ namespace sensor::imu{
 		ICM20689(SPI_HandleTypeDef* hspi,GPIO_TypeDef* port,uint16_t cs_pin);//コンストラクタの定義はとりあえず全部した方がいいらしい
 		void Init() override ;
 		void ReadVal() override ;
-		std::unique_ptr<state::Motion>& get_raw_ptr() override ;
+		std::unique_ptr<state::Motion>& get_raw_ptr();
 		virtual ~ICM20689() = default;//デストラクタ（子クラス）
 	};
 }

@@ -10,14 +10,14 @@ namespace sensor::encoder{
         //オフセットの実装
         this->ReadVal();
         std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
-        offset_->spd = raw->spd;
+        offset_->spd[static_cast<int>(state::Motion::DIR::C)] = raw->spd[static_cast<size_t>(state::Motion::DIR::C)];
     }
     
     void Product::Update(){
         //更新の実装
         this->ReadVal();
         std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
-        val_->spd = raw->spd - offset_->spd;
+        val_->spd[static_cast<int>(state::Motion::DIR::C)] = raw->spd[static_cast<int>(state::Motion::DIR::C)] - offset_->spd[static_cast<int>(state::Motion::DIR::C)];
         sieve_->Filter(parameter::software::SENSOR_FREQ,val_);
     }
 

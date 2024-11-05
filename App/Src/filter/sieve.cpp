@@ -11,6 +11,8 @@ namespace filter{
         motion->angle[static_cast<int>(state::Motion::COORD::X)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::COORD::X)];
         motion->angle[static_cast<int>(state::Motion::COORD::Y)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::COORD::Y)];
         motion->angle[static_cast<int>(state::Motion::COORD::Z)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::COORD::Z)];
-        motion->dist += motion->spd/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::R)] += motion->spd[static_cast<int>(state::Motion::DIR::R)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::L)] += motion->spd[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::C)] += motion->spd[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
     }
 }

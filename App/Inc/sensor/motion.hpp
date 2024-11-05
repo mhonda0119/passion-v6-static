@@ -16,8 +16,10 @@ namespace sensor{
     std::unique_ptr<sensor::encoder::Product> encoder_l_ = nullptr;
     std::unique_ptr<sensor::encoder::Product> encoder_r_ = nullptr;
     public:
-        Motion() = default;
-        void Fusion(std::unique_ptr<state::Motion>& imu, std::unique_ptr<state::Motion>& encoder_l , std::unique_ptr<state::Motion>& encoder_r);
+        Motion();
+        void Init();
+        void GetOffset();
+        void Update();
         std::unique_ptr<state::Motion>& get_val_ref();
         ~Motion() = default;
     };
