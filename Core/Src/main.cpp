@@ -29,7 +29,6 @@
 #include "led.hpp"
 #include "md_creater.hpp"
 #include "encoder_creater.hpp"
-#include "wallsens.hpp"
 #include "interrupt.hpp"
 #include "wait.hpp"
 #include "sw.hpp"
