@@ -12,6 +12,7 @@
 #include "spi.hpp"
 #include "const.hpp"
 #include "sieve.hpp"
+#include "peripheral.h"
 
 namespace sensor::imu{
 	class Product {

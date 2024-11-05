@@ -12,9 +12,9 @@ namespace sensor{
     class Motion{
     private:
     std::unique_ptr<state::Motion> val_ = nullptr;
-    std::unique_ptr<sensor::imu::Product> imu_ = nullptr;
-    std::unique_ptr<sensor::encoder::Product> encoder_l_ = nullptr;
-    std::unique_ptr<sensor::encoder::Product> encoder_r_ = nullptr;
+    std::unique_ptr<sensor::imu::Product> imu_;
+    std::unique_ptr<sensor::encoder::Product> encoder_l_; 
+    std::unique_ptr<sensor::encoder::Product> encoder_r_;
     public:
         Motion();
         void Init();
