@@ -1,5 +1,5 @@
-#ifndef _SIEVE_HPP_
-#define _SIEVE_HPP_
+#ifndef _FILTER_HPP_
+#define _FILTER_HPP_
 
 #include <iostream>
 #include <memory>
@@ -15,4 +15,4 @@ namespace filter{
     };
 }
 
-#endif // _SIEVE_HPP_
+#endif // _FILTER_HPP_
