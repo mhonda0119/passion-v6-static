@@ -50,7 +50,6 @@ namespace sensor::imu{
 		return omega;
 	}
 
-
 	void ICM20689::ReadVal(){
 		imu_->accel[static_cast<int>(parameter::Motion::COORD::X)] = -1 * this->AccelRead(0x3B);
 		imu_->accel[static_cast<int>(parameter::Motion::COORD::Y)] = this->AccelRead(0x3D);
@@ -64,7 +63,3 @@ namespace sensor::imu{
 			return imu_.get();
 		}
 }
-
-
-
-
