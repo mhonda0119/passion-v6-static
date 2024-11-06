@@ -18,7 +18,7 @@ namespace sensor::encoder{
 		void Start() override;//    HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		void ReadVal() override;//MotionParameterへ読んだ値を入れます．
 		void Stop() override;
-		std::unique_ptr<state::Motion>& get_raw_ptr() override ;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
+		std::unique_ptr<state::Motion>& get_raw_ref() override ;//ポインターをゲットします．こういうのも全部uniqptr使ったほうがいいかもね．
         virtual ~IEH24096() = default;
 	};
 }

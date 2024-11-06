@@ -6,7 +6,7 @@
 namespace state{
         // Motion
         struct Motion {
-            enum struct COORD
+            enum struct AXIS
             {
                 X = 0, Y, Z
             };
@@ -32,6 +32,7 @@ namespace state{
             };
             uint16_t dir[4] = {0};// 方向
         };
+        //Maze
 }
 
 #endif // _STATE_HPP_

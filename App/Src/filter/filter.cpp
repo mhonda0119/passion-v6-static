@@ -1,0 +1,18 @@
+#include "filter.hpp"
+
+namespace filter{
+    void Sieve::Filter(float samplingfreq, std::unique_ptr<state::Motion>& motion){
+        motion->vel[static_cast<int>(state::Motion::AXIS::X)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::X)];
+        motion->vel[static_cast<int>(state::Motion::AXIS::Y)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::Y)];
+        motion->vel[static_cast<int>(state::Motion::AXIS::Z)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::Z)];
+        motion->pos[static_cast<int>(state::Motion::AXIS::X)] += (1/samplingfreq) * motion->vel[static_cast<int>(state::Motion::AXIS::X)];
+        motion->pos[static_cast<int>(state::Motion::AXIS::Y)] += (1/samplingfreq) * motion->vel[static_cast<int>(state::Motion::AXIS::Y)];
+        motion->pos[static_cast<int>(state::Motion::AXIS::Z)] += (1/samplingfreq) * motion->vel[static_cast<int>(state::Motion::AXIS::Z)];
+        motion->angle[static_cast<int>(state::Motion::AXIS::X)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::AXIS::X)];
+        motion->angle[static_cast<int>(state::Motion::AXIS::Y)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::AXIS::Y)];
+        motion->angle[static_cast<int>(state::Motion::AXIS::Z)] += (1/samplingfreq) * motion->omega[static_cast<int>(state::Motion::AXIS::Z)];
+        motion->dist[static_cast<int>(state::Motion::DIR::R)] += motion->spd[static_cast<int>(state::Motion::DIR::R)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::L)] += motion->spd[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::C)] += motion->spd[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
+    }
+}

@@ -63,8 +63,8 @@ int main()
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
   //imuのインスタンス化
-  // std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
-  // std::unique_ptr<sensor::imu::Product> imu = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
+  std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
+  std::unique_ptr<sensor::imu::Product> imu = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
   //pxstrのインスタンス化
   //std::unique_ptr<sensor::pxstr::Creater> pxstr_creater = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
   //std::unique_ptr<sensor::pxstr::Product> pxstr = pxstr_creater->Create(&hadc1);
@@ -72,9 +72,9 @@ int main()
   std::unique_ptr<md::Creater> md_creater = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
   std::unique_ptr<md::Product> md = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
   //encoderのインスタンス化
-  // std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
-  // std::unique_ptr<sensor::encoder::Product> encoder_R = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
-  //std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
+  std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
+  std::unique_ptr<sensor::encoder::Product> encoder_R = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
+  std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
   //buzzerのインスタンス化
   std::unique_ptr<indicator::Buzzer> buzzer = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
   //ledのインスタンス化
@@ -90,50 +90,54 @@ int main()
   //timencoderのインスタンス化
   //std::unique_ptr<peripheral::TimEncoder> timencoder_r = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
   //std::unique_ptr<peripheral::TimEncoder> timencoder_l = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
-  //Motionのインスタンス化
-  std::unique_ptr<sensor::Motion> motion = std::make_unique<sensor::Motion>();
   //led->Toggle();
   //buzzer->Play(440, 100, 0.5);
 
   // encoder_R->Start();
+  imu->Init();
+  imu->GetOffset();
+  
+  encoder_R->Init();
+  encoder_L->Init();
+  encoder_R->Start();
+  encoder_L->Start();
+  wait->Ms(100);
+  // encoder_R->ReadVal();
+  // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
+  // std::cout << "main_offset: " << main_offset->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+  encoder_R->GetOffset();
+  encoder_L->GetOffset();
+
+  encoder_R->Update();
+  encoder_L->Update();
 
   wait->Ms(100);
-  motion->Init();
-  motion->GetOffset();
+
   md->On();
   while(true){
-    motion->Update();
-    motion->get_val_ref();
     //   led->Toggle();
-    buzzer->Play(294, 100, 0.5); // ド
-    buzzer->Play(330, 100, 0.5); // レ
-    buzzer->Play(349, 100, 0.5); // ミ
-    buzzer->Play(392, 100, 0.5); // ファ
-    buzzer->Play(440, 100, 0.5); // ソ
-    buzzer->Play(494, 100, 0.5); // ラ
-    buzzer->Play(523, 100, 0.5); // シ
-    buzzer->Play(587, 100, 0.5); // ド
-    
+
+    //buzzer->Play(261.63, 100, 0.1);
+
     md->Dir(parameter::MOTOR::LEFT,parameter::MOTOR::FWD);
     md->Dir(parameter::MOTOR::RIGHT,parameter::MOTOR::FWD);
     md->Duty(0.2,0.2);
-    //aaaa
-    //std::cout << "0" << std::endl;
-    //encoder_R->Init();
-
-    // encoder_L->Init();
-    // encoder_L->Start();
-    //timencoder_r->Start();
-    // parameter::Motion* mp;
 
     md->Start();
 
-    // encoder_R->ReadVal();
-
-    // std::unique_ptr<parameter::Motion>& encoder_val_R = encoder_R->get_val_ptr();
-    // std::cout << "encoder_r: " << encoder_val_R->spd << std::endl;
+    encoder_R->Update();
+    encoder_L->Update();
+    imu->Update();
+    //std::unique_ptr<state::Motion>& val_imu = imu->get_val_ref();
+    std::unique_ptr<state::Motion>& val_R = encoder_R->get_val_ref();
+    std::unique_ptr<state::Motion>& val_L = encoder_L->get_val_ref();
+    std::cout << "val_encoder_R: " << val_R->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    std::cout << "val_encoder_L: " << val_L->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    // std::cout << "val_imu_x: " << val_imu->omega[static_cast<int>(state::Motion::COORD::X)] << std::endl;
+    // std::cout << "val_imu_y: " << val_imu->omega[static_cast<int>(state::Motion::COORD::Y)] << std::endl;
+    // std::cout << "val_imu_z: " << val_imu->omega[static_cast<int>(state::Motion::COORD::Z)] << std::endl;
     
-    wait->Ms(100);
+    //wait->Ms(100);
   }
   /* USER CODE END 3 */
 }

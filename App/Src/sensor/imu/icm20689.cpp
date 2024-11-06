@@ -38,7 +38,7 @@ namespace sensor::imu{
 	float ICM20689::AccelRead(uint8_t H_reg) {
 		int16_t data = (int16_t)(((uint8_t)spi_->ReadByte(H_reg) << 8) |
 								 (uint8_t)spi_->ReadByte(H_reg + 1));
-		float accel = (float)(data / 2048.0f)*parameter::physics::G*parameter::physics::m2mm; //[mm/s^2] FS_SEL=3-> Scale Factor=2048[LSB/(g)]
+		float accel = (float)(data / 2048.0f)*parameter::physics::G*parameter::physics::M2MM; //[mm/s^2] FS_SEL=3-> Scale Factor=2048[LSB/(g)]
 		return accel;
 	}
 
@@ -52,12 +52,12 @@ namespace sensor::imu{
 
 
 	void ICM20689::ReadVal(){
-		raw_->accel[static_cast<int>(state::Motion::COORD::X)] = -1 * this->AccelRead(0x3B);
-		raw_->accel[static_cast<int>(state::Motion::COORD::Y)] = this->AccelRead(0x3D);
-		raw_->accel[static_cast<int>(state::Motion::COORD::Z)] = this->AccelRead(0x3F);
-		raw_->omega[static_cast<int>(state::Motion::COORD::X)] = this->OmegaRead(0x43);
-		raw_->omega[static_cast<int>(state::Motion::COORD::Y)] = this->OmegaRead(0x45);
-		raw_->omega[static_cast<int>(state::Motion::COORD::Z)] = this->OmegaRead(0x47);
+		raw_->accel[static_cast<int>(state::Motion::AXIS::X)] = -1 * this->AccelRead(0x3B);
+		raw_->accel[static_cast<int>(state::Motion::AXIS::Y)] = this->AccelRead(0x3D);
+		raw_->accel[static_cast<int>(state::Motion::AXIS::Z)] = this->AccelRead(0x3F);
+		raw_->omega[static_cast<int>(state::Motion::AXIS::X)] = this->OmegaRead(0x43);
+		raw_->omega[static_cast<int>(state::Motion::AXIS::Y)] = this->OmegaRead(0x45);
+		raw_->omega[static_cast<int>(state::Motion::AXIS::Z)] = this->OmegaRead(0x47);
 	}
 
 	std::unique_ptr<state::Motion>& ICM20689::get_raw_ptr(){

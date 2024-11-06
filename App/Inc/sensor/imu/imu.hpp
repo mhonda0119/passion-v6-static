@@ -8,10 +8,9 @@
 #include <stdint.h>
 //自作ヘッダファイル
 #include "stdout.h"
-#include "motion.hpp"
 #include "spi.hpp"
 #include "const.hpp"
-#include "sieve.hpp"
+#include "filter.hpp"
 #include "peripheral.h"
 
 namespace sensor::imu{
@@ -19,7 +18,7 @@ namespace sensor::imu{
 	private:
 		std::unique_ptr<state::Motion> offset_;
 		std::unique_ptr<state::Motion> val_;
-		std::unique_ptr<filter::Sieve> sieve_;
+		std::unique_ptr<filter::Sieve> filter_;
 	public:
 		Product();
 		virtual void Init() = 0;
@@ -27,7 +26,7 @@ namespace sensor::imu{
 		virtual std::unique_ptr<state::Motion>& get_raw_ptr() = 0;
 		void GetOffset();
 		void Update();
-		std::unique_ptr<state::Motion>& get_val_ptr();
+		std::unique_ptr<state::Motion>& get_val_ref();
 		virtual ~Product() = default;//仮想デストラクタ（親クラス）
 	};
 }

@@ -8,20 +8,21 @@ namespace sensor::encoder{
     
     void Product::GetOffset(){
         //オフセットの実装
+        this->ReadVal();//なんでかわからんけど一発目の値がおかしい
         this->ReadVal();
-        std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
+        std::unique_ptr<state::Motion>& raw = this->get_raw_ref();
         offset_->spd[static_cast<int>(state::Motion::DIR::C)] = raw->spd[static_cast<size_t>(state::Motion::DIR::C)];
     }
     
     void Product::Update(){
         //更新の実装
         this->ReadVal();
-        std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
+        std::unique_ptr<state::Motion>& raw = this->get_raw_ref();
         val_->spd[static_cast<int>(state::Motion::DIR::C)] = raw->spd[static_cast<int>(state::Motion::DIR::C)] - offset_->spd[static_cast<int>(state::Motion::DIR::C)];
         sieve_->Filter(parameter::software::SENSOR_FREQ,val_);
     }
 
-    std::unique_ptr<state::Motion>& Product::get_val_ptr(){
+    std::unique_ptr<state::Motion>& Product::get_val_ref(){
         return val_;
     }
 }

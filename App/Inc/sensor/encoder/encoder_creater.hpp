@@ -9,7 +9,7 @@ namespace sensor::encoder{
 	};
 	class Creater{
 	private:
-		std::unique_ptr<sensor::encoder::Product> encoder_;
+		std::unique_ptr<Product> encoder_;
 		NAME name_;
 	public:
 		Creater(NAME name);

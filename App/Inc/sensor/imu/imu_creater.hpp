@@ -10,11 +10,11 @@ namespace sensor::imu{
 	};
 	class Creater{
 	private:
-		std::unique_ptr<imu::Product> imu_;
+		std::unique_ptr<Product> imu_;
 		NAME name_;
 	public:
 		Creater(NAME name);
-		std::unique_ptr<imu::Creater> Create(SPI_HandleTypeDef* hspi,GPIO_TypeDef* port,uint16_t cs_pin);
+		std::unique_ptr<Product> Create(SPI_HandleTypeDef* hspi,GPIO_TypeDef* port,uint16_t cs_pin);
 		~Creater() = default;
 	};
 }

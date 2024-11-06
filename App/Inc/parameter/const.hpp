@@ -4,7 +4,7 @@
 namespace parameter::physics{
     static constexpr float G = 9.8F;
     static constexpr float PI = 3.1415F;
-    static constexpr float m2mm = 1000.0F;
+    static constexpr float M2MM = 1000.0F;
 }
 
 namespace parameter::software{
@@ -13,6 +13,8 @@ namespace parameter::software{
 
 namespace parameter::hardware{
     static constexpr float D_TIRE = 23.8F;
+    static constexpr float SUPER = 42;
+    static constexpr float PINION = 13;
     static constexpr float DIST_ONE_ROT = D_TIRE * parameter::physics::PI;
 }
 

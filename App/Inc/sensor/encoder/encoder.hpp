@@ -8,11 +8,10 @@
 #include <iostream>
 
 #include "peripheral.h"
-#include "motion.hpp"
 #include "stdout.h"
 #include "timencoder.hpp"
 #include "const.hpp"
-#include "sieve.hpp"
+#include "filter.hpp"
 
 
 namespace sensor::encoder{
@@ -29,8 +28,8 @@ namespace sensor::encoder{
 		virtual void Stop() = 0;
 		void GetOffset();
 		void Update();
-		virtual std::unique_ptr<state::Motion>& get_raw_ptr() = 0;
-		std::unique_ptr<state::Motion>& get_val_ptr();
+		virtual std::unique_ptr<state::Motion>& get_raw_ref() = 0;
+		std::unique_ptr<state::Motion>& get_val_ref();
         virtual ~Product() = default;
 	};
 }
