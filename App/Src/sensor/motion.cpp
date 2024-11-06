@@ -73,7 +73,7 @@ namespace sensor {
         imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)];
         //spd
         val_->spd[static_cast<int>(state::Motion::DIR::R)] =
-        encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
+        -(encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
         val_->spd[static_cast<int>(state::Motion::DIR::L)] =
         encoder_l_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
         val_->spd[static_cast<int>(state::Motion::DIR::C)] =
