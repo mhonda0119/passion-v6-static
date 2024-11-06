@@ -1,0 +1,29 @@
+#ifndef _MOTION_HPP_
+#define _MOTION_HPP_
+
+#include <iostream>
+#include <memory>
+#include <cstdint>
+
+#include "encoder_creater.hpp"
+#include "imu_creater.hpp"
+
+namespace sensor {
+    class Motion {
+    private:
+        std::unique_ptr<state::Motion> val_;
+        std::unique_ptr<sensor::encoder::Product> encoder_l_;
+        std::unique_ptr<sensor::encoder::Product> encoder_r_;
+        std::unique_ptr<sensor::imu::Product> imu_;
+    public:
+        Motion(sensor::encoder::NAME encoder_name, sensor::imu::NAME imu_name);
+        void Init();
+        void ReadVal();
+        void GetOffset();
+        void Update();
+        std::unique_ptr<state::Motion>& get_val_ref();
+        virtual ~Motion() = default;
+    };
+}
+
+#endif //_MOTION_HPP_
