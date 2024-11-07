@@ -16,5 +16,8 @@ namespace ctrl{
     void PID::Reset(){
         pre_e_ = 0;
         u_ = 0;
+        p_ = 0;
+        i_ = 0;
+        d_ = 0;
     }
 }
