@@ -77,15 +77,15 @@ namespace sensor {
         val_->spd[static_cast<int>(state::Motion::DIR::L)] =
         encoder_l_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
         val_->spd[static_cast<int>(state::Motion::DIR::C)] =
-        (encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] +
+        (-(encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]) +
         encoder_l_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)])/2;
         //dist
         val_->dist[static_cast<int>(state::Motion::DIR::R)] =
-        encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)];
+        -(encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)]);
         val_->dist[static_cast<int>(state::Motion::DIR::L)] =
         encoder_l_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)];
         val_->dist[static_cast<int>(state::Motion::DIR::C)] =
-        (encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] +
+        (-(encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]) +
         encoder_l_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)])/2;
 
         return val_;
