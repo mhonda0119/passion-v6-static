@@ -36,6 +36,7 @@
 #include "states.hpp"
 #include "motion.hpp"
 #include "objects.hpp"
+#include "wall.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -87,7 +88,7 @@ int main()
   //interruptのインスタンス化
   //std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
   //waitのインスタンス化
-  std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
+  //  std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
   //SWのインスタンス化
   // std::unique_ptr<input::SW> sw = std::make_unique<input::SW>(PUSH_IN_1_GPIO_Port, PUSH_IN_1_Pin);
   //timencoderのインスタンス化
@@ -96,21 +97,26 @@ int main()
   //motionのインスタンス化
   //motionのインスタンス化
   //objectsのインスタンス化
+
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
   std::unique_ptr<sensor::Motion> motion = 
   std::make_unique<sensor::Motion>(objects->encoder_l_, objects->encoder_r_, objects->imu_);
+  std::unique_ptr<sensor::Wall> wall = 
+  std::make_unique<sensor::Wall>(objects->pxstr_, objects->osi3ca5111a_, objects->wait_);
 
-  wait->Ms(100);
+  //wait->Ms(100);
 
   motion->Init();
   motion->ReadVal();
   motion->GetOffset();
 
+  wall->Init();
+
   // encoder_R->ReadVal();
   // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
   // std::cout << "main_offset: " << main_offset->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
 
-  wait->Ms(100);
+  //wait->Ms(100);
 
   md->On();
 
@@ -124,7 +130,16 @@ int main()
     
     //buzzer->Play(261.63, 100, 0.1);
     motion->Update();
-    std::unique_ptr<state::Motion>& motion_val = motion->get_val_ref();
+    wall->ReadVal();
+    std::cout << "wall:L " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
+    std::cout << "wall:R " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
+    std::cout << "wall:F " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] << std::endl;
+    std::cout << "raw:L " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
+    std::cout << "raw:R " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
+    std::cout << "raw:FR " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << std::endl;
+    std::cout << "raw:FL " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << std::endl;
+    //std::unique_ptr<state::Motion>& motion_val = motion->get_val_ref();
+    objects->wait_->Ms(1000);
   }
   /* USER CODE END 3 */
 }

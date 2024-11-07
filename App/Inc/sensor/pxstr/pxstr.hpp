@@ -20,7 +20,7 @@ namespace sensor::pxstr {
 		Product() = default;
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual state::Wall* get_val_ptr() = 0;
+		virtual std::unique_ptr<state::Wall>& get_val_ref() = 0;
 		virtual ~Product() = default;
 	};
 

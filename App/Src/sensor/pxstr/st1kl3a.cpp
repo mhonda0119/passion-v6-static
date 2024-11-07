@@ -3,7 +3,7 @@
 namespace sensor::pxstr{
 
 	ST1KL3A::ST1KL3A(ADC_HandleTypeDef* hadc)
-	 : pxstr_(std::make_unique<state::Wall>()),
+	 : val_(std::make_unique<state::Wall>()),
 	 adc_(std::make_unique<peripheral::ADC>(hadc)) {}
 
 	void ST1KL3A::Init(){
@@ -13,13 +13,14 @@ namespace sensor::pxstr{
 	void ST1KL3A::ReadVal(){
 		adc_->ReadVal();
 		uint16_t* buff = adc_->get_val_ptr();
-		for (int i = 0; i < 4; i++) {
-			pxstr_->dir[i] = buff[i];
-		}
+		val_->dir[static_cast<int>(state::Wall::DIR::R)] = buff[0];
+		val_->dir[static_cast<int>(state::Wall::DIR::L)] = buff[1];//ok
+		val_->dir[static_cast<int>(state::Wall::DIR::FR)] = buff[2];//ok
+		val_->dir[static_cast<int>(state::Wall::DIR::FL)] = buff[3];//
 	}
 
-	state::Wall* ST1KL3A::get_val_ptr(){
-		return pxstr_.get(); // 修正:unique_ptrの生ポインタを渡す．
+	std::unique_ptr<state::Wall>& ST1KL3A::get_val_ref(){
+		return val_;
 	}
 
 }

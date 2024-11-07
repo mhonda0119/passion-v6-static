@@ -27,6 +27,8 @@ namespace sensor::ir{
             case state::Wall::DIR::FL:
                 fl_->On();
                 break;
+            default:
+                break;
         }
     }
 
@@ -49,6 +51,8 @@ namespace sensor::ir{
                 break;
             case state::Wall::DIR::FL:
                 fl_->Off();
+                break;
+            default:
                 break;
         }
 

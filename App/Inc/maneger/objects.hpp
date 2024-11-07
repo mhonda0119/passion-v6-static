@@ -8,15 +8,22 @@
 #include "peripheral.h"
 #include "imu_creater.hpp"
 #include "encoder_creater.hpp"
+#include "pxstr_creater.hpp"
+#include "osi3ca5111a.hpp"
+#include "wait.hpp"
 
 struct Objects{
     private:
     std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
     std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
+    std::unique_ptr<sensor::pxstr::Creater> pxstr_creater = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
     public:
     std::unique_ptr<sensor::imu::Product> imu_ = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
     std::unique_ptr<sensor::encoder::Product> encoder_r_ = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
     std::unique_ptr<sensor::encoder::Product> encoder_l_ = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
+    std::unique_ptr<sensor::pxstr::Product> pxstr_ = pxstr_creater->Create(&hadc1);
+    std::unique_ptr<sensor::ir::OSI3CA5111A> osi3ca5111a_ = std::make_unique<sensor::ir::OSI3CA5111A>();
+    std::unique_ptr<peripheral::Wait> wait_ = std::make_unique<peripheral::Wait>(&htim1);
 };
 
 

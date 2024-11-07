@@ -9,6 +9,10 @@ namespace consts::physics{
 
 namespace consts::software{
     static constexpr float SENSOR_FREQ = 1000.0F;
+    static constexpr float WALL_TH_L = 100.0F;
+    static constexpr float WALL_TH_FL = 100.0F;
+    static constexpr float WALL_TH_FR = 100.0F;
+    static constexpr float WALL_TH_R = 100.0F;
 }
 
 namespace consts::hardware{

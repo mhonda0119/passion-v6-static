@@ -27,9 +27,9 @@ namespace state{
         struct Wall {
             enum struct DIR
             {
-                R = 0, L , FR , FL , ALL
+                L = 0, FL , F , FR , R , BR , B , BL , ALL
             };
-            uint16_t dir[4] = {0};// 方向
+            uint16_t dir[9] = {0};// 方向
         };
         //MOTOR
         enum struct MOTOR {
