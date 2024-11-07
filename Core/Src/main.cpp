@@ -115,7 +115,7 @@ int main()
   // encoder_R->ReadVal();
   // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
   // std::cout << "main_offset: " << main_offset->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-
+  
   //wait->Ms(100);
 
   md->On();
