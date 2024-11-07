@@ -102,7 +102,7 @@ int main()
   std::unique_ptr<sensor::Motion> motion = 
   std::make_unique<sensor::Motion>(objects->encoder_l_, objects->encoder_r_, objects->imu_);
   std::unique_ptr<sensor::Wall> wall = 
-  std::make_unique<sensor::Wall>(objects->pxstr_, objects->osi3ca5111a_, objects->wait_);
+  std::make_unique<sensor::Wall>(objects->pxstr_, objects->osi3ca5111a_, objects->wait_,objects->led);
 
   //wait->Ms(100);
 

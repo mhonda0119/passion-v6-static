@@ -14,9 +14,9 @@ namespace sensor::pxstr{
 		adc_->ReadVal();
 		uint16_t* buff = adc_->get_val_ptr();
 		val_->dir[static_cast<int>(state::Wall::DIR::R)] = buff[0];
-		val_->dir[static_cast<int>(state::Wall::DIR::L)] = buff[1];//ok
-		val_->dir[static_cast<int>(state::Wall::DIR::FR)] = buff[2];//ok
-		val_->dir[static_cast<int>(state::Wall::DIR::FL)] = buff[3];//
+		val_->dir[static_cast<int>(state::Wall::DIR::L)] = buff[1];
+		val_->dir[static_cast<int>(state::Wall::DIR::FR)] = buff[2];
+		val_->dir[static_cast<int>(state::Wall::DIR::FL)] = buff[3];
 	}
 
 	std::unique_ptr<state::Wall>& ST1KL3A::get_val_ref(){

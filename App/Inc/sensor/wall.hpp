@@ -17,10 +17,12 @@ namespace sensor {
         std::unique_ptr<sensor::pxstr::Product>& pxstr_;
         std::unique_ptr<sensor::ir::OSI3CA5111A>& ir_;
         std::unique_ptr<peripheral::Wait>& wait_;
+        std::unique_ptr<indicator::LED>& led_;
     public:
         Wall(std::unique_ptr<sensor::pxstr::Product>& pxstr,
         std::unique_ptr<sensor::ir::OSI3CA5111A>& ir,
-        std::unique_ptr<peripheral::Wait>& wait);
+        std::unique_ptr<peripheral::Wait>& wait,
+        std::unique_ptr<indicator::LED>& led);
         void Init();
         void ReadVal();
         std::unique_ptr<state::Wall>& get_raw_ref();
