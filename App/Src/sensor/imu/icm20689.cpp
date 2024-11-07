@@ -38,7 +38,7 @@ namespace sensor::imu{
 	float ICM20689::AccelRead(uint8_t H_reg) {
 		int16_t data = (int16_t)(((uint8_t)spi_->ReadByte(H_reg) << 8) |
 								 (uint8_t)spi_->ReadByte(H_reg + 1));
-		float accel = (float)(data / 2048.0f)*parameter::physics::G*parameter::physics::M2MM; //[mm/s^2] FS_SEL=3-> Scale Factor=2048[LSB/(g)]
+		float accel = (float)(data / 2048.0f)*consts::physics::G*consts::physics::M2MM; //[mm/s^2] FS_SEL=3-> Scale Factor=2048[LSB/(g)]
 		return accel;
 	}
 

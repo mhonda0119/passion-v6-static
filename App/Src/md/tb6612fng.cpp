@@ -10,23 +10,23 @@ namespace md{
         HAL_GPIO_WritePin(MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin, GPIO_PIN_SET);
     }
 
-    void TB6612FNG::Dir(parameter::MOTOR motor ,parameter::MOTOR dir){
-        if (motor == parameter::MOTOR::LEFT) {
-            if (dir == parameter::MOTOR::FWD) {
+    void TB6612FNG::Dir(state::MOTOR motor ,state::MOTOR dir){
+        if (motor == state::MOTOR::LEFT) {
+            if (dir == state::MOTOR::FWD) {
                 // 左モーターを前進方向に設定
                 HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_SET);
                 HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_RESET);
-            } else if (dir == parameter::MOTOR::BWD) {
+            } else if (dir == state::MOTOR::BWD) {
                 // 左モーターを後進方向に設定
                 HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_SET);
             }
-        } else if (motor == parameter::MOTOR::RIGHT) {
-            if (dir == parameter::MOTOR::FWD) {
+        } else if (motor == state::MOTOR::RIGHT) {
+            if (dir == state::MOTOR::FWD) {
                 // 右モーターを前進方向に設定
                 HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_RESET);
                 HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_SET);
-            } else if (dir == parameter::MOTOR::BWD) {
+            } else if (dir == state::MOTOR::BWD) {
                 // 右モーターを後進方向に設定
                 HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_SET);
                 HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_RESET);

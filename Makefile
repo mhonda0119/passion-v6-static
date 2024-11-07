@@ -155,7 +155,7 @@ CPP_INCLUDES += \
 -IApp/Inc/indicator\
 -IApp/Inc/input\
 -IApp/Inc/md \
--IApp/Inc/parameter \
+-IApp/Inc/maneger\
 -IApp/Inc/peripheral \
 -IApp/Inc/sensor\
 -IApp/Inc/sensor/bat\

@@ -6,7 +6,7 @@
 #include "pxstr_creater.hpp"
 #include "peripheral.h"
 #include "stdout.h"
-#include "state.hpp"
+#include "states.hpp"
 #include "wait.hpp"
 #include "pxstr_creater.hpp"
 

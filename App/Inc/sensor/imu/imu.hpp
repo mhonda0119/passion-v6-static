@@ -9,7 +9,7 @@
 //自作ヘッダファイル
 #include "stdout.h"
 #include "spi.hpp"
-#include "const.hpp"
+#include "consts.hpp"
 #include "filter.hpp"
 #include "peripheral.h"
 

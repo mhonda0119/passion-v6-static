@@ -3,7 +3,7 @@
 
 #include "encoder.hpp"
 #include "timencoder.hpp"
-#include "const.hpp"
+#include "consts.hpp"
 
 namespace sensor::encoder{
 	class IEH24096 : public Product{

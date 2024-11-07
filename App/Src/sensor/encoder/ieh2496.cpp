@@ -29,12 +29,12 @@ namespace sensor::encoder {
         timencoder_->set_val(static_cast< float>(timencoder_->period_/2));
         //速度の換算(mm/s)
         raw_->spd[static_cast<int>(state::Motion::DIR::C)] = (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /
-        (resolution_*timencoder_->edge_)) * (parameter::hardware::PINION/parameter::hardware::SUPER) *
-        parameter::hardware::DIST_ONE_ROT * parameter::software::SENSOR_FREQ;
+        (resolution_*timencoder_->edge_)) * (consts::hardware::PINION/consts::hardware::SUPER) *
+        consts::hardware::DIST_ONE_ROT * consts::software::SENSOR_FREQ;
     }
 
     void IEH24096::Stop(){
-        timencoder_ -> Stop();
+        timencoder_->Stop();
     }
 
     std::unique_ptr<state::Motion>& IEH24096::get_raw_ref() {

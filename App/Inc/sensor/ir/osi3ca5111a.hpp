@@ -2,7 +2,7 @@
 #define _IR_HPP_
 
 #include "peripheral.h"
-#include "state.hpp"
+#include "states.hpp"
 #include "gpio.hpp"
 #include "main.h"
 #include <memory>

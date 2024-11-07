@@ -4,7 +4,7 @@
 #include <iostream>
 #include <memory>
 
-#include "state.hpp"
+#include "states.hpp"
 
 namespace filter{
     class Sieve{

@@ -1,14 +1,13 @@
 #include "motion.hpp"
 
 namespace sensor {
-    Motion::Motion(sensor::encoder::NAME encoder_name, sensor::imu::NAME imu_name)
-    :val_(std::make_unique<state::Motion>()){
-        std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(encoder_name);
-        std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(imu_name);
-        encoder_l_ = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
-        encoder_r_ = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
-        imu_ = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
-    }
+    Motion::Motion(std::unique_ptr<sensor::encoder::Product>& encoder_l,
+    std::unique_ptr<sensor::encoder::Product>& encoder_r,
+    std::unique_ptr<sensor::imu::Product>& imu)
+    :val_(std::make_unique<state::Motion>()),
+    encoder_l_(encoder_l),
+    encoder_r_(encoder_r),
+    imu_(imu){}
 
     void Motion::Init(){
         encoder_l_->Init();
@@ -87,6 +86,8 @@ namespace sensor {
         val_->dist[static_cast<int>(state::Motion::DIR::C)] =
         (-(encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]) +
         encoder_l_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)])/2;
+
+        //std::cout << "a" << std::endl;
 
         return val_;
     }

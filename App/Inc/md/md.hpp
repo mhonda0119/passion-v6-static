@@ -8,7 +8,7 @@
 #include "tb6612fng.hpp"
 #include "pwm.hpp"
 #include "peripheral.h"
-#include "motor.hpp"
+#include "states.hpp"
 
 namespace md{
 
@@ -17,7 +17,7 @@ namespace md{
 	public:
 		Product() = default;
         virtual void On() = 0;//stbyをh
-        virtual void Dir(parameter::MOTOR motor ,parameter::MOTOR dir) = 0;//SetDirする
+        virtual void Dir(state::MOTOR motor ,state::MOTOR dir) = 0;//SetDirする
         virtual void Start() = 0;//pwmスタート
         virtual void Duty(float duty_l,float duty_r) = 0;//モタドラによって，同時に二つ動かしたり一つだったりするのでこの辺はオーバーロードで対応
         virtual void Freq(uint32_t freq_l,uint32_t freq_r) = 0;

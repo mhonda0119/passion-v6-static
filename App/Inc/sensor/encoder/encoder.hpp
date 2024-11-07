@@ -10,7 +10,7 @@
 #include "peripheral.h"
 #include "stdout.h"
 #include "timencoder.hpp"
-#include "const.hpp"
+#include "consts.hpp"
 #include "filter.hpp"
 
 

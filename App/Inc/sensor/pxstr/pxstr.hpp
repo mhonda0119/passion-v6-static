@@ -9,7 +9,7 @@
 //自作ヘッダファイル
 #include "stdout.h"
 #include "adc.hpp"
-#include "state.hpp"
+#include "states.hpp"
 
 namespace sensor::pxstr {
 

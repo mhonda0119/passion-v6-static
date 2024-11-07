@@ -23,7 +23,6 @@ namespace state{
             float spd[3] = {0};            // 速さ mm/s
             float dist[3] = {0};           // 距離 mm
         };
-
         //Wall
         struct Wall {
             enum struct DIR
@@ -32,7 +31,13 @@ namespace state{
             };
             uint16_t dir[4] = {0};// 方向
         };
-        //Maze
+        //MOTOR
+        enum struct MOTOR {
+            LEFT,
+            RIGHT,
+            FWD,
+            BWD
+        };
 }
 
 #endif // _STATE_HPP_
