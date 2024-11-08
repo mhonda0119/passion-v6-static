@@ -16,20 +16,15 @@
 //いろんなパターンを自由に使い分けられるような設計にしたい．
 
 //なんかのデザインパターンが使えそう．．．．strategyパターンかな？
-//strategyパターンではなくて，templateを使用した静的ポリモーフィズムを使う．
-
+//古典制御は1対1対応の原則
 namespace regulator{
-    class Motion{
-    private:
-        std::unique_ptr<state::Motion> r_;
-        std::unique_ptr<state::Motion> y_;
-        float u_;
-        std::unique_ptr<ctrl::PID> pid_;
-    public:
-        Motion() = default;
-        void Gen(std::unique_ptr<state::Motion> r);
-        float get_u();
-        ~Motion() = default;
+    class Motor{
+        private:
+        public:
+        //センサーの値取得オブジェクト，制御器オブジェクト，操作量を格納する変数．
+        Motor();
+
+        ~Motor() = default;
     };
 }
 
