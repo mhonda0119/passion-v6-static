@@ -9,6 +9,9 @@
 #include "consts.hpp"
 #include "objects.hpp"
 #include "motion.hpp"
+#include "wall.hpp"
+#include "filter.hpp"
+#include "correction.hpp"
 
 //regulator名前空間のクラスは，指令値から目標値を生成し，センサー値(制御量)との偏差を計算し
 //制御器につっこみ，操作量を吐き出す仕事をみんな受け持っている．
@@ -20,10 +23,38 @@
 namespace regulator{
     class Motor{
         private:
+        //壁の閾値
+        float wall_th_l_;
+        float wall_th_fl_;
+        float wall_th_fr_;
+        float wall_th_r_;
+        //Objectsクラスのインスタンス化
+        std::unique_ptr<Objects> objects_;
+        //Motionクラスのインスタンス化
+        std::unique_ptr<sensor::Motion> motion_;
+        //Wallクラスのインスタンス化
+        std::unique_ptr<sensor::Wall> wall_;
+        //制御器のインスタンス化
+        std::unique_ptr<ctrl::PID> pid_dist_;
+        std::unique_ptr<ctrl::PID> pid_spd_;
+        std::unique_ptr<ctrl::PID> pid_omega_;
+        std::unique_ptr<ctrl::PID> pid_angle_;
+        std::unique_ptr<ctrl::PID> pid_wall_;
+        //壁切れのインスタンス化
+        std::unique_ptr<correction::WallGap> wall_gap_r_;
+        std::unique_ptr<correction::WallGap> wall_gap_l_;
+        //なにもしないフィルタ
+        std::unique_ptr<filter::Sieve> sieve_;
+        //指令値
+        std::unique_ptr<state::Motion> r_;
+        //操作量
+        float u_;
         public:
         //センサーの値取得オブジェクト，制御器オブジェクト，操作量を格納する変数．
         Motor();
-
+        void Init();
+        void Regulate(float accel,float omega );
+        float get_u();
         ~Motor() = default;
     };
 }

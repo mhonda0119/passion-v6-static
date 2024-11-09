@@ -20,7 +20,8 @@ namespace ctrl{
         float u_;//制御量
     public:
         PID(float kp, float ki = 0, float kd = 0 ,float freq = consts::software::CTRL_FREQ);//defaultの値を設定しとくといいかも
-        float Update(float r, float y);//r:目標値 y:制御量
+        void Update(float r, float y);//r:目標値 y:制御量
+        float get_u();
         void Reset();
         ~PID() = default;
     };
@@ -40,7 +41,8 @@ namespace ctrl{
     public:
         //比例微分先行型PID
         I_PD(float kp, float ki, float kd,float freq = consts::software::CTRL_FREQ);//defaultの値を設定しとくといいかも
-        float Update(float r, float y);//r:目標値 y:制御量
+        void Update(float r, float y);//r:目標値 y:制御量
+        float get_u();
         void Reset();
         ~I_PD() = default;
     };

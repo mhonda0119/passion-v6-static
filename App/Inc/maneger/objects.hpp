@@ -12,6 +12,7 @@
 #include "osi3ca5111a.hpp"
 #include "wait.hpp"
 #include "led.hpp"
+#include "states.hpp"
 
 struct Objects{
     private:
@@ -25,7 +26,8 @@ struct Objects{
     std::unique_ptr<sensor::pxstr::Product> pxstr_ = pxstr_creater->Create(&hadc1);
     std::unique_ptr<sensor::ir::OSI3CA5111A> osi3ca5111a_ = std::make_unique<sensor::ir::OSI3CA5111A>();
     std::unique_ptr<peripheral::Wait> wait_ = std::make_unique<peripheral::Wait>(&htim1);
-    std::unique_ptr<indicator::LED> led = std::make_unique<indicator::LED>();
+    std::unique_ptr<indicator::LED> led_ = std::make_unique<indicator::LED>();
+    std::unique_ptr<state::FLAG>flag_ = std::make_unique<state::FLAG>();
 };
 
 

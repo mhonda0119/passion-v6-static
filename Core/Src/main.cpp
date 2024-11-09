@@ -98,11 +98,7 @@ int main()
   //motionのインスタンス化
   //objectsのインスタンス化
 
-  std::unique_ptr<Objects> objects = std::make_unique<Objects>();
-  std::unique_ptr<sensor::Motion> motion = 
-  std::make_unique<sensor::Motion>(objects->encoder_l_, objects->encoder_r_, objects->imu_);
-  std::unique_ptr<sensor::Wall> wall = 
-  std::make_unique<sensor::Wall>(objects->pxstr_, objects->osi3ca5111a_, objects->wait_,objects->led);
+
 
   //wait->Ms(100);
 
@@ -115,7 +111,7 @@ int main()
   // encoder_R->ReadVal();
   // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
   // std::cout << "main_offset: " << main_offset->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-  
+
   //wait->Ms(100);
 
   md->On();

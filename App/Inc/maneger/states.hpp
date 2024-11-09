@@ -38,6 +38,10 @@ namespace state{
             FWD,
             BWD
         };
+        //FLAG
+        struct FLAG {
+            bool WALL_CTRL = false;
+        };
 }
 
 #endif // _STATE_HPP_
