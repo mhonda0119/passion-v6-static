@@ -11,7 +11,7 @@
 #include "motion.hpp"
 #include "wall.hpp"
 #include "filter.hpp"
-#include "correction/correction.hpp"
+#include "adjust.hpp"
 
 //regulator名前空間のクラスは，指令値から目標値を生成し，センサー値(制御量)との偏差を計算し
 //制御器につっこみ，操作量を吐き出す仕事をみんな受け持っている．

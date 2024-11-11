@@ -77,7 +77,7 @@ $(wildcard App/Src/sensor/ir/*.cpp) \
 $(wildcard App/Src/sensor/pxstr/*.cpp) \
 $(wildcard App/Src/filter/*.cpp) \
 $(wildcard App/Src/regulator/*.cpp) \
-$(wildcard App/Src/correction/*.cpp) \
+$(wildcard App/Src/adjust/*.cpp) \
 $(wildcard App/Src/ctrl/*.cpp) \
 
 # ASM sources
@@ -168,7 +168,7 @@ CPP_INCLUDES += \
 -IApp/Inc/sensor/pxstr\
 -IApp/Inc/filter\
 -IApp/Inc/regulator\
--IApp/Inc/correction\
+-IApp/Inc/adjust\
 -IApp/Inc/ctrl\
 
 # compile gcc flags

@@ -1,4 +1,4 @@
-#include "correction/correction.hpp"//なんでこれだけファイル指定しなきゃならんの
+#include "adjust.hpp"//なんでこれだけファイル指定しなきゃならんの
 
 namespace correction{
     WallGap::WallGap(float wall_gap_th) : pre_ad_(0),e_(0),wall_gap_th_(wall_gap_th){}

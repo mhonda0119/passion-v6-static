@@ -3,17 +3,15 @@
 
 #include <iostream>
 #include <memory>
-#include "pxstr_creater.hpp"
-#include "peripheral.h"
-#include "stdout.h"
-#include "states.hpp"
-#include "wait.hpp"
-#include "pxstr_creater.hpp"
+#include "regulator.hpp"
+#include "objects.hpp"
 
 namespace peripheral{
 	class IT{
 		private:
 		static TIM_HandleTypeDef* htim_;
+		static std::unique_ptr<regulator::Motor> reg_motor_;
+		static std::unique_ptr<Objects> md_;
 		public:
 		IT() = default;
 		static void Init(TIM_HandleTypeDef* htim); // 修正: 戻り値の型を追加
