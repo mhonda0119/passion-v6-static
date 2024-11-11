@@ -25,7 +25,6 @@ namespace peripheral{
         reg_motor_->Regulate(0,0);
         md_->led_->Off();
         //i++;
-        // md_->md_->Duty(reg_motor_->get_u_l(),reg_motor_->get_u_r());
     }
 
     extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
