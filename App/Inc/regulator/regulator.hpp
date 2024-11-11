@@ -48,7 +48,8 @@ namespace regulator{
         //指令値
         std::unique_ptr<state::Motion> r_;
         //操作量
-        float u_;
+        float u_r_;
+        float u_l_;
         public:
         //センサーの値取得オブジェクト，制御器オブジェクト，操作量を格納する変数．
         Motor();

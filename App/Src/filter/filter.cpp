@@ -15,4 +15,18 @@ namespace filter{
         motion->dist[static_cast<int>(state::Motion::DIR::L)] += motion->spd[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
         motion->dist[static_cast<int>(state::Motion::DIR::C)] += motion->spd[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
     }
+    void Sieve::C_ff(float samplingfreq, std::unique_ptr<state::Motion>& motion){
+        motion->spd[static_cast<int>(state::Motion::DIR::R)] += motion->maccel[static_cast<int>(state::Motion::DIR::R)]/samplingfreq;
+        motion->spd[static_cast<int>(state::Motion::DIR::L)] += motion->maccel[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
+        motion->spd[static_cast<int>(state::Motion::DIR::C)] += motion->maccel[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::R)] += motion->spd[static_cast<int>(state::Motion::DIR::R)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::L)] += motion->spd[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
+        motion->dist[static_cast<int>(state::Motion::DIR::C)] += motion->spd[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
+        motion->omega[static_cast<int>(state::Motion::AXIS::X)] += motion->alpha[static_cast<int>(state::Motion::AXIS::X)]/samplingfreq;
+        motion->omega[static_cast<int>(state::Motion::AXIS::Y)] += motion->alpha[static_cast<int>(state::Motion::AXIS::Y)]/samplingfreq;
+        motion->omega[static_cast<int>(state::Motion::AXIS::Z)] += motion->alpha[static_cast<int>(state::Motion::AXIS::Z)]/samplingfreq;
+        motion->angle[static_cast<int>(state::Motion::AXIS::X)] += motion->omega[static_cast<int>(state::Motion::AXIS::X)]/samplingfreq;
+        motion->angle[static_cast<int>(state::Motion::AXIS::Y)] += motion->omega[static_cast<int>(state::Motion::AXIS::Y)]/samplingfreq;
+        motion->angle[static_cast<int>(state::Motion::AXIS::Z)] += motion->omega[static_cast<int>(state::Motion::AXIS::Z)]/samplingfreq;
+    }
 }

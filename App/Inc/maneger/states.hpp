@@ -8,7 +8,7 @@ namespace state{
         struct Motion {
             enum struct AXIS
             {
-                X = 0, Y, Z
+                X = 0, Y, Z 
             };
             enum struct DIR
             {
@@ -20,8 +20,9 @@ namespace state{
             float angle[3] = {0};     // 角度deg
             float omega[3] = {0};     // 角速度 deg/s
             float alpha[3] = {0};     // 角加速度 deg/s^2
+            float maccel[3] = {0};    // 加速度の大きさ mm/s^2
             float spd[3] = {0};            // 速さ mm/s
-            float dist[3] = {0};           // 距離 mm
+            float dist[3] = {0};           // みちのり mm
         };
         //Wall
         struct Wall {

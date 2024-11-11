@@ -28,7 +28,9 @@ namespace regulator{
         //指令値
         r_ = std::make_unique<state::Motion>();
         //操作量
-        u_ = 0;    
+        u_r_ = 0;
+        u_l_ = 0;
+            
     }
 
     void Motor::Init(){
@@ -38,28 +40,22 @@ namespace regulator{
         wall_->GetOffset();
     }
 
-    void Motor::Regulate(float r_accel ,float r_alpha){
+    void Motor::Regulate(float r_accel ,float r_alpha){ //指令値はr_accelからspdに変換なのにfilterではspdからdistを出してるのでfilter使えなくて無理すぎる
         //設定された加速度，角速度を代入
-        r_->accel[static_cast<int>(state::Motion::AXIS::X)] = r_accel;
+        r_->maccel[static_cast<int>(state::Motion::DIR::C)] = r_maccel;
         r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] = r_alpha;
         //指令値にfilterかけて目標値生成
-        sieve_->Filter(consts::software::CTRL_FREQ,r_);
+        sieve_->C_ff(consts::software::CTRL_FREQ,r_);
         //センサー値取得
         motion_->ReadVal();
         wall_->ReadVal(wall_th_l_,wall_th_fl_,wall_th_fr_,wall_th_r_);
         //PID制御(距離)
-        pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::AXIS::X)],
-        motion_->get_val_ref()->dist[static_cast<int>(state::Motion::AXIS::X)]);
+        pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
+        motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //PID制御(速さ)
         pid_spd_->Update(pid_dist_->get_u(),
-        motion_->get_val_ref()->spd[static_cast<int>(state::Motion::AXIS::X)]);
-        //PID制御(角度)
-        // pid_angle_->Update(r_->angle[static_cast<int>(state::Motion::AXIS::Z)],
-        // motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)]);
-        //PID制御(角速度)
-        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
-        motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
-
+        motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
+        //壁制御
         if(objects_->flag_->WALL_CTRL){
             //PIDの偏差
             pid_wall_->Reset();
@@ -103,9 +99,16 @@ namespace regulator{
             //操作量の計算
 
         }
+        //PID制御(角度)
+        // pid_angle_->Update(r_->angle[static_cast<int>(state::Motion::AXIS::Z)],
+        // motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)]);
+        //PID制御(角速度)
+        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(), //なぜか壁制御の値を足す
+        motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //操作量の計算
+        u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
+        u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
         
-        //PID制御(壁)
     }
     
 }
