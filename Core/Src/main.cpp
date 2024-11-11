@@ -102,11 +102,7 @@ int main()
 
   //wait->Ms(100);
 
-  motion->Init();
-  motion->ReadVal();
-  motion->GetOffset();
 
-  wall->Init();
 
   // encoder_R->ReadVal();
   // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
@@ -114,28 +110,10 @@ int main()
 
   //wait->Ms(100);
 
-  md->On();
-
-  md->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
-  md->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
-  md->Duty(0.2,0.2);
-  md->Start();
 
   while(true){
     //   led->Toggle();
-    
-    //buzzer->Play(261.63, 100, 0.1);
-    motion->Update();
-    wall->ReadVal();
-    std::cout << "wall:L " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
-    std::cout << "wall:R " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
-    std::cout << "wall:F " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] << std::endl;
-    std::cout << "raw:L " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
-    std::cout << "raw:R " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
-    std::cout << "raw:FR " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << std::endl;
-    std::cout << "raw:FL " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << std::endl;
-    //std::unique_ptr<state::Motion>& motion_val = motion->get_val_ref();
-    objects->wait_->Ms(1000);
+
   }
   /* USER CODE END 3 */
 }

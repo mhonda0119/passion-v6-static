@@ -40,7 +40,8 @@ namespace regulator{
         wall_->GetOffset();
     }
 
-    void Motor::Regulate(float r_accel ,float r_alpha){ //指令値はr_accelからspdに変換なのにfilterではspdからdistを出してるのでfilter使えなくて無理すぎる
+    void Motor::Regulate(float r_maccel ,float r_alpha){ 
+        //指令値はr_accelからspdに変換なのにfilterではspdからdistを出してるのでfilter使えなくて無理すぎる.
         //設定された加速度，角速度を代入
         r_->maccel[static_cast<int>(state::Motion::DIR::C)] = r_maccel;
         r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] = r_alpha;
@@ -109,6 +110,12 @@ namespace regulator{
         u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
         u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
         
+    }
+    float Motor::get_u_l(){
+        return u_l_;
+    }
+    float Motor::get_u_r(){
+        return u_r_;
     }
     
 }

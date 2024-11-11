@@ -2,7 +2,7 @@
 
 namespace ctrl{
     PID::PID(float kp, float ki, float kd,const float freq)
-    :kp_(kp),ki_(ki),kd_(kd),u_(0),pre_e_(0),freq_(freq){}
+    :kp_(kp),ki_(ki),kd_(kd),freq_(freq),pre_e_(0),u_(0){}
 
     void PID::Update(float r, float y){
         // r:目標値 y:制御量
@@ -26,7 +26,7 @@ namespace ctrl{
 
 namespace ctrl{
     I_PD::I_PD(float kp, float ki, float kd,const float freq)
-    :kp_(kp),ki_(ki),kd_(kd),u_(0),pre_e_(0),pre_y_(0),freq_(freq){}
+    :kp_(kp),ki_(ki),kd_(kd),freq_(freq),pre_e_(0),pre_y_(0),u_(0){}
 
     void I_PD::Update(float r, float y){
         // r:目標値 y:制御量

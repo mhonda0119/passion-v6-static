@@ -11,7 +11,7 @@
 #include "motion.hpp"
 #include "wall.hpp"
 #include "filter.hpp"
-#include "correction.hpp"
+#include "correction/correction.hpp"
 
 //regulator名前空間のクラスは，指令値から目標値を生成し，センサー値(制御量)との偏差を計算し
 //制御器につっこみ，操作量を吐き出す仕事をみんな受け持っている．
@@ -55,7 +55,8 @@ namespace regulator{
         Motor();
         void Init();
         void Regulate(float accel,float omega );
-        float get_u();
+        float get_u_l();
+        float get_u_r();
         ~Motor() = default;
     };
 }
