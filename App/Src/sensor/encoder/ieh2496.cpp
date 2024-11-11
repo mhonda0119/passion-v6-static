@@ -28,8 +28,9 @@ namespace sensor::encoder {
         //カウンタの真ん中の値を基準にする
         timencoder_->set_val(static_cast< float>(timencoder_->period_/2));
         //速度の換算(mm/s)
-        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /
-        (resolution_*timencoder_->edge_)) * (consts::hardware::PINION/consts::hardware::SUPER) *
+        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = 
+        (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /(resolution_*timencoder_->edge_)) *
+        (consts::hardware::PINION/consts::hardware::SUPER) *
         consts::hardware::DIST_ONE_ROT * consts::software::SENSOR_FREQ;
     }
 

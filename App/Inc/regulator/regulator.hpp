@@ -41,8 +41,8 @@ namespace regulator{
         std::unique_ptr<ctrl::PID> pid_angle_;
         std::unique_ptr<ctrl::PID> pid_wall_;
         //壁切れのインスタンス化
-        std::unique_ptr<correction::WallGap> wall_gap_r_;
-        std::unique_ptr<correction::WallGap> wall_gap_l_;
+        std::unique_ptr<adjust::WallGap> wall_gap_r_;
+        std::unique_ptr<adjust::WallGap> wall_gap_l_;
         //なにもしないフィルタ
         std::unique_ptr<filter::Sieve> sieve_;
         //指令値
@@ -51,6 +51,8 @@ namespace regulator{
         float u_r_;
         float u_l_;
         public:
+        //デバッグ用
+        std::unique_ptr<state::Motion> debug_;
         //センサーの値取得オブジェクト，制御器オブジェクト，操作量を格納する変数．
         Motor();
         void Init();

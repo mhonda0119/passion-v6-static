@@ -19,10 +19,10 @@ namespace regulator{
         pid_spd_ = std::make_unique<ctrl::PID>(consts::software::KP_SPD,consts::software::KI_SPD,consts::software::KD_SPD);
         pid_omega_ = std::make_unique<ctrl::PID>(consts::software::KP_OMEGA,consts::software::KI_OMEGA,consts::software::KD_OMEGA);
         pid_angle_ = std::make_unique<ctrl::PID>(consts::software::KP_ANGLE,consts::software::KI_ANGLE,consts::software::KD_ANGLE);
-        pid_wall_ = std::make_unique<ctrl::PID>(consts::software::KP_WALL,consts::software::KI_WALL,consts::software::KD_WALL);
+        pid_wall_ = std::make_unique<ctrl::PID>(consts::software::KP_WALL);
         //壁切れのインスタンス化
-        wall_gap_r_ = std::make_unique<correction::WallGap>(consts::software::WALL_GAP_TH);
-        wall_gap_l_ = std::make_unique<correction::WallGap>(consts::software::WALL_GAP_TH);
+        wall_gap_r_ = std::make_unique<adjust::WallGap>(consts::software::WALL_GAP_TH);
+        wall_gap_l_ = std::make_unique<adjust::WallGap>(consts::software::WALL_GAP_TH);
         //なにもしないフィルタ
         sieve_ = std::make_unique<filter::Sieve>();
         //指令値
@@ -30,6 +30,7 @@ namespace regulator{
         //操作量
         u_r_ = 0;
         u_l_ = 0;
+        debug_ = std::make_unique<state::Motion>();
             
     }
 
@@ -48,11 +49,20 @@ namespace regulator{
         //指令値にfilterかけて目標値生成
         sieve_->C_ff(consts::software::CTRL_FREQ,r_);
         //センサー値取得
-        motion_->ReadVal();
+        motion_->Update();
         wall_->ReadVal(wall_th_l_,wall_th_fl_,wall_th_fr_,wall_th_r_);
+        // std::cout << "motion_spd" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "motion_dist" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        //壁の状態取得
         //PID制御(距離)
+        debug_->dist[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];
+        debug_->spd[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
+        debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)];
+        debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+        
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
+        
         //PID制御(速さ)
         pid_spd_->Update(pid_dist_->get_u(),
         motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);

@@ -10,13 +10,14 @@
 #include "states.hpp"
 #include "consts.hpp"
 
-namespace correction{
+namespace adjust{
     class WallGap
     {
         private:
         float pre_ad_;
         float e_;
         float wall_gap_th_;
+        float wall_th_;
         public:
         WallGap(float wall_gap_th);
         float Update(float wall_th , float wall_e_th , float ad);
@@ -25,6 +26,5 @@ namespace correction{
 
     };
 }
-
 
 #endif

@@ -66,53 +66,37 @@ int main()
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
-  //imuのインスタンス化
-  // std::unique_ptr<sensor::imu::Creater> imu_creater = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
-  // std::unique_ptr<sensor::imu::Product> imu = imu_creater->Create(&hspi3,GPIOD,CS_Pin);
-  //pxstrのインスタンス化
-  //std::unique_ptr<sensor::pxstr::Creater> pxstr_creater = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
-  //std::unique_ptr<sensor::pxstr::Product> pxstr = pxstr_creater->Create(&hadc1);
-  //mdのインスタンス化
-  // std::unique_ptr<md::Creater> md_creater = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
-  // std::unique_ptr<md::Product> md = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
-  //encoderのインスタンス化
-  // std::unique_ptr<sensor::encoder::Creater> encoder_creater = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
-  // std::unique_ptr<sensor::encoder::Product> encoder_R = encoder_creater->Create(&htim8, TIM_CHANNEL_ALL);
-  // std::unique_ptr<sensor::encoder::Product> encoder_L = encoder_creater->Create(&htim4, TIM_CHANNEL_ALL);
-  //buzzerのインスタンス化
-  std::unique_ptr<indicator::Buzzer> buzzer = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
-  //ledのインスタンス化
-  //std::unique_ptr<indicator::LED> led = std::make_unique<indicator::LED>();
-  //wallsensのインスタンス化
-  //std::unique_ptr<sensor::Wall> wallsens = std::make_unique<sensor::Wall>();
-  //interruptのインスタンス化
-  //std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
-  //waitのインスタンス化
-  //  std::unique_ptr<peripheral::Wait> wait = std::make_unique<peripheral::Wait>(&htim1);
-  //SWのインスタンス化
-  // std::unique_ptr<input::SW> sw = std::make_unique<input::SW>(PUSH_IN_1_GPIO_Port, PUSH_IN_1_Pin);
-  //timencoderのインスタンス化
-  //std::unique_ptr<peripheral::TimEncoder> timencoder_r = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
-  //std::unique_ptr<peripheral::TimEncoder> timencoder_l = std::make_unique<peripheral::TimEncoder>(&htim8, TIM_CHANNEL_ALL);
-  //motionのインスタンス化
-  //motionのインスタンス化
-  //objectsのインスタンス化
 
+  //オブジェクトの生成
+  std::unique_ptr<Objects> objects = std::make_unique<Objects>();
 
+  std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
+  objects->wait_->Ms(1000);
+  it->Init(&htim5);
+  it->Start();
 
-  //wait->Ms(100);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
 
+  //it->Stop();
 
-
-  // encoder_R->ReadVal();
-  // std::unique_ptr<state::Motion>& main_offset = encoder_R->get_raw_ref();
-  // std::cout << "main_offset: " << main_offset->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-
-  //wait->Ms(100);
-
+  // std::unique_ptr<regulator::Motor> reg_motor = std::make_unique<regulator::Motor>();
+  // reg_motor->Init();
 
   while(true){
-    //   led->Toggle();
+    objects->wait_->Ms(400);
+    std::cout << "dist:" << peripheral::IT::reg_motor_->debug_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    // reg_motor->Regulate(40,0);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
+    // objects->buzzer_->Play(400,500);
+    // objects->wait_->Ms(500);
 
   }
   /* USER CODE END 3 */

@@ -15,6 +15,10 @@ namespace ctrl{
         u_ = p_ + i_ + d_;
     }
 
+    float PID::get_u(){
+        return u_;
+    }
+
     void PID::Reset(){
         pre_e_ = 0;
         u_ = 0;

@@ -14,6 +14,7 @@
 #include "wait.hpp"
 #include "led.hpp"
 #include "states.hpp"
+#include "buzzer.hpp"
 
 struct Objects{
     private:
@@ -32,6 +33,7 @@ struct Objects{
     std::unique_ptr<indicator::LED> led_ = std::make_unique<indicator::LED>();
     std::unique_ptr<state::FLAG>flag_ = std::make_unique<state::FLAG>();
     std::unique_ptr<md::Product> md_ = md_creater->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4);
+    std::unique_ptr<indicator::Buzzer> buzzer_ = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
 };
 
 
