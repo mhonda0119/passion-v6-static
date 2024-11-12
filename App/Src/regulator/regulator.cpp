@@ -39,6 +39,10 @@ namespace regulator{
         motion_->GetOffset();
         wall_->Init();
         wall_->GetOffset();
+        // std::cout << "motion_spd:" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "motion_dist:" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "motion_angle:" << motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+        // std::cout << "motion_omega:" << motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
     }
 
     void Motor::Regulate(float r_maccel ,float r_alpha){ 
@@ -59,6 +63,11 @@ namespace regulator{
         debug_->spd[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
         debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)];
         debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+
+        // std::cout << "debug_dist:" << debug_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "debug_spd:" << debug_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "debug_angle:" << debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+        // std::cout << "debug_omega:" << debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
         
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);

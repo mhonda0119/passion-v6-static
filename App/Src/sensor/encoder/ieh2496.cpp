@@ -26,7 +26,7 @@ namespace sensor::encoder {
         float cnt = static_cast< float>(timencoder_->get_val());
         raw_->spd[static_cast<int>(state::Motion::DIR::C)] = cnt - static_cast< float>(timencoder_->period_/2);
         //カウンタの真ん中の値を基準にする
-        timencoder_->set_val(static_cast< float>(timencoder_->period_/2));
+        timencoder_->set_val(static_cast<float>(timencoder_->period_/2));
         //速度の換算(mm/s)
         raw_->spd[static_cast<int>(state::Motion::DIR::C)] = 
         (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /(resolution_*timencoder_->edge_)) *

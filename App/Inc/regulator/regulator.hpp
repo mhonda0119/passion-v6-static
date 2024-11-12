@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <mutex>
 
 #include "states.hpp"
 #include "ctrl.hpp"

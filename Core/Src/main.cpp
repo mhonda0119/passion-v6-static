@@ -66,6 +66,8 @@ int main()
   /* USER CODE BEGIN 2 */
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
+  long version = __cplusplus;
+  std::cout << "C++ Version : " << version << "\n";
 
   //オブジェクトの生成
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
@@ -84,12 +86,16 @@ int main()
 
   //it->Stop();
 
-  // std::unique_ptr<regulator::Motor> reg_motor = std::make_unique<regulator::Motor>();
-  // reg_motor->Init();
+  std::unique_ptr<regulator::Motor> reg_motor = std::make_unique<regulator::Motor>();
+  reg_motor->Init();
+
 
   while(true){
-    objects->wait_->Ms(400);
-    std::cout << "dist:" << peripheral::IT::reg_motor_->debug_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    // objects->wait_->Ms(1);
+    // std::cout << "dist:" << peripheral::IT::reg_motor_->debug_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    // std::cout << "spd:" << peripheral::IT::reg_motor_->debug_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+    // std::cout << "angle:" << peripheral::IT::reg_motor_->debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+    // std::cout << "omega:" << peripheral::IT::reg_motor_->debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
     // reg_motor->Regulate(40,0);
     // objects->buzzer_->Play(400,500);
     // objects->wait_->Ms(500);
@@ -97,6 +103,7 @@ int main()
     // objects->wait_->Ms(500);
     // objects->buzzer_->Play(400,500);
     // objects->wait_->Ms(500);
+    
 
   }
   /* USER CODE END 3 */

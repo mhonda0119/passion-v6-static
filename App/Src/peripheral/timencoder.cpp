@@ -19,7 +19,10 @@ namespace peripheral{
     }
 
     void TimEncoder::ReadVal(){
-        count_ = __HAL_TIM_GET_COUNTER(htim_);
+        count_ = TIM8->CNT;
+        std::cout << "count_:" << count_ << std::endl;
+        //__HAL_TIM_GET_COUNTER(htim_);
+        
     }
 
     void TimEncoder::Stop(){

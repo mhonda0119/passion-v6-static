@@ -21,9 +21,9 @@ namespace peripheral{
     }
 
     void IT::PeriodElapsedCallback(){
-        md_->led_->On();
+        md_->buzzer_->Start(500,0.5);
         reg_motor_->Regulate(0,0);
-        md_->led_->Off();
+        //md_->buzzer_->Stop();
         //i++;
     }
 

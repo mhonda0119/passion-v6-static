@@ -17,8 +17,8 @@ namespace sensor::encoder{
     void Product::Update(){
         //更新の実装
         this->ReadVal();
-        std::unique_ptr<state::Motion>& raw = this->get_raw_ref();
-        val_->spd[static_cast<int>(state::Motion::DIR::C)] = raw->spd[static_cast<int>(state::Motion::DIR::C)] - offset_->spd[static_cast<int>(state::Motion::DIR::C)];
+        val_->spd[static_cast<int>(state::Motion::DIR::C)] = this->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]
+        - offset_->spd[static_cast<int>(state::Motion::DIR::C)];
         sieve_->Filter(consts::software::SENSOR_FREQ,val_);
     }
 
