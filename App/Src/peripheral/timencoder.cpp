@@ -29,7 +29,7 @@ namespace peripheral{
         }
         count_ = cnt_ - 30000;
         cnt_ = 30000;
-        // std::cout << "count_:" << count_ << std::endl;
+        std::cout << "count_:" << count_ << std::endl;
         //__HAL_TIM_GET_COUNTER(htim_);
         // std::cout << "period_:" << period_ << std::endl;
         // std::cout << "edge_::::" << edge_ << std::endl;
