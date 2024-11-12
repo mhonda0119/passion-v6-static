@@ -55,8 +55,8 @@ namespace regulator{
         //センサー値取得
         motion_->Update();
         wall_->ReadVal(wall_th_l_,wall_th_fl_,wall_th_fr_,wall_th_r_);
-        // std::cout << "motion_spd" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-        // std::cout << "motion_dist" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        //std::cout << "motion_spd" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        //std::cout << "motion_dist" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
         //壁の状態取得
         //PID制御(距離)
         debug_->dist[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];

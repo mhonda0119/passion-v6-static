@@ -13,15 +13,26 @@ namespace peripheral{
         }else if((htim_->Instance->SMCR & TIM_SMCR_SMS) == TIM_ENCODERMODE_TI12){
             edge_ = 4;
         }
+        // std::cout << "period_:" << period_ << std::endl;
+        // std::cout << "edge_::::" << edge_ << std::endl;
      }
     void TimEncoder::Start(){
         HAL_TIM_Encoder_Start(htim_, channel_);
     }
 
     void TimEncoder::ReadVal(){
-        count_ = TIM8->CNT;
-        std::cout << "count_:" << count_ << std::endl;
+        if(htim_ == &htim4){
+            cnt_ = TIM4->CNT;
+        }
+        else if(htim_ == &htim8){
+            cnt_ = TIM8->CNT;
+        }
+        count_ = cnt_ - 30000;
+        cnt_ = 30000;
+        // std::cout << "count_:" << count_ << std::endl;
         //__HAL_TIM_GET_COUNTER(htim_);
+        // std::cout << "period_:" << period_ << std::endl;
+        // std::cout << "edge_::::" << edge_ << std::endl;
         
     }
 
@@ -34,7 +45,8 @@ namespace peripheral{
     }
 
     void TimEncoder::set_val(uint32_t count){
-        __HAL_TIM_SET_COUNTER(htim_,count);
+        count_ = count;
+        //__HAL_TIM_SET_COUNTER(htim_,count);
     }
 
 }

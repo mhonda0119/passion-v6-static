@@ -23,15 +23,20 @@ namespace sensor::encoder {
     void IEH24096::ReadVal() {
         timencoder_->ReadVal();
         //パルスカウンタの増加量を速さとして取得
-        float cnt = static_cast< float>(timencoder_->get_val());
-        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = cnt - static_cast< float>(timencoder_->period_/2);
+        //std::cout << "cnt:" << cnt << std::endl;
+        // raw_->spd[static_cast<int>(state::Motion::DIR::C)] = static_cast< float>(timencoder_->get_val()) - 
+        // static_cast<float>(timencoder_->period_/2);
+        raw_->spd[static_cast<int>(state::Motion::DIR::C)] = static_cast<float>(timencoder_->get_val());
         //カウンタの真ん中の値を基準にする
-        timencoder_->set_val(static_cast<float>(timencoder_->period_/2));
+        //timencoder_->set_val(30000);
+        //timencoder_->set_val(static_cast<float>(timencoder_->period_/2));
         //速度の換算(mm/s)
         raw_->spd[static_cast<int>(state::Motion::DIR::C)] = 
-        (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /(resolution_*timencoder_->edge_)) *
+        (raw_->spd[static_cast<int>(state::Motion::DIR::C)] /(resolution_*4)) * //timencoder_->edge_ = 4
         (consts::hardware::PINION/consts::hardware::SUPER) *
         consts::hardware::DIST_ONE_ROT * consts::software::SENSOR_FREQ;
+        // std::cout << "edge_:" << timencoder_->edge_ << std::endl;
+         std::cout << "raw_spd::::::" << raw_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
     }
 
     void IEH24096::Stop(){

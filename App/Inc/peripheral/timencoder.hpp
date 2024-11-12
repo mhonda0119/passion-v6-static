@@ -12,9 +12,11 @@ namespace peripheral{
 	TIM_HandleTypeDef* htim_;
 	uint32_t channel_ = 0;
 	uint32_t count_ = 0;
+	
 	public:
-		uint32_t period_ = 0;
-		uint32_t edge_ = 0;
+		uint32_t cnt_;
+		uint32_t period_;
+		uint32_t edge_ ;
 		TimEncoder(TIM_HandleTypeDef* htim, uint32_t channel);
 		void Start();
 		void ReadVal();
