@@ -37,7 +37,7 @@ namespace sensor::encoder {
         // (consts::hardware::PINION/consts::hardware::SUPER) *
         // consts::hardware::DIST_ONE_ROT * consts::software::SENSOR_FREQ;
         // std::cout << "edge_:" << timencoder_->edge_ << std::endl;
-         std::cout << "raw_spd::::::" << raw_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+         //std::cout << "raw_spd::::::" << raw_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
     }
 
     void IEH24096::Stop(){
