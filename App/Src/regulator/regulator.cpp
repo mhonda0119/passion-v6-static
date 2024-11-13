@@ -31,7 +31,6 @@ namespace regulator{
         u_r_ = 0;
         u_l_ = 0;
         //debug_ = std::make_unique<state::Motion>();
-            
     }
 
     void Motor::Init(){
@@ -43,6 +42,27 @@ namespace regulator{
         // std::cout << "motion_dist:" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
         // std::cout << "motion_angle:" << motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
         // std::cout << "motion_omega:" << motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+    }
+
+    void Motor::Reset(){
+        motion_->Reset();
+    }
+
+    void Motor::PID_Reset(){
+        pid_dist_->Reset();
+        pid_spd_->Reset();
+        pid_omega_->Reset();
+        pid_angle_->Reset();
+        pid_wall_->Reset();
+    }
+
+    void Motor::r_Reset(){
+        r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->spd[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->angle[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] = 0;
     }
 
     void Motor::Regulate(float r_maccel ,float r_alpha){ 

@@ -22,6 +22,11 @@ namespace sensor::encoder{
         sieve_->Filter(consts::software::SENSOR_FREQ,val_);
     }
 
+    void Product::Reset(){
+        //カウンタの積算値リセットの実装
+        val_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+    }
+
     std::unique_ptr<state::Motion>& Product::get_val_ref(){
         return val_;
     }

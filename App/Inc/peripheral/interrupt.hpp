@@ -10,9 +10,12 @@ namespace peripheral{
 	class IT{
 		private:
 		static TIM_HandleTypeDef* htim_;
-		static std::unique_ptr<Objects> md_;
+		
 		static float i;
 		public:
+		static std::unique_ptr<Objects> md_;
+		static float r_maccel_;
+		static float r_alpha_;
 		static std::unique_ptr<regulator::Motor> reg_motor_;
 		IT() = default;
 		static void Init(TIM_HandleTypeDef* htim); // 修正: 戻り値の型を追加

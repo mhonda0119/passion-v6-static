@@ -13,7 +13,7 @@ namespace peripheral{
     }
 
     void PWM::set_duty(float duty){
-        duty_ = duty;
+        duty_ = duty/100;
         if(0 <= duty && duty <= 1){
             ccr_ = duty * (arr_ + 1);
         }else{}

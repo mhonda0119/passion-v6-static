@@ -5,6 +5,8 @@ namespace peripheral{
     TIM_HandleTypeDef* IT::htim_ = nullptr;
     std::unique_ptr<regulator::Motor> IT::reg_motor_ = std::make_unique<regulator::Motor>();
     std::unique_ptr<Objects> IT::md_ = std::make_unique<Objects>();
+    float IT::r_maccel_ = 0;
+    float IT::r_alpha_ = 0;
     //float IT::i = 0;
 
     void IT::Init(TIM_HandleTypeDef* htim){ 
@@ -22,8 +24,10 @@ namespace peripheral{
 
     void IT::PeriodElapsedCallback(){
         //md_->buzzer_->Start(500,0.5);
-        reg_motor_->Regulate(0,0);
-        std::cout << "u_l:" << reg_motor_->get_u_l() << std::endl;
+        reg_motor_->Regulate(r_maccel_,r_alpha_);
+        md_->md_->Duty(reg_motor_->get_u_l(),reg_motor_->get_u_r());
+        // std::cout << "u_l:" << reg_motor_->get_u_l() << std::endl;
+        // std::cout << "u_r:" << reg_motor_->get_u_r() << std::endl;
         //md_->buzzer_->Stop();
         //i++;
     }

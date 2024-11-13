@@ -28,6 +28,7 @@ namespace sensor::encoder{
 		virtual void Stop() = 0;
 		void GetOffset();
 		void Update();
+		void Reset();
 		virtual std::unique_ptr<state::Motion>& get_raw_ref() = 0;
 		std::unique_ptr<state::Motion>& get_val_ref();
         virtual ~Product() = default;

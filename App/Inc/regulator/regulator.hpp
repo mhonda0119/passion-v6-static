@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <memory>
-#include <mutex>
 
 #include "states.hpp"
 #include "ctrl.hpp"
@@ -31,8 +30,7 @@ namespace regulator{
         float wall_th_r_;
         //Objectsクラスのインスタンス化
         std::unique_ptr<Objects> objects_;
-        //Motionクラスのインスタンス化
-        std::unique_ptr<sensor::Motion> motion_;
+
         //Wallクラスのインスタンス化
         std::unique_ptr<sensor::Wall> wall_;
         //制御器のインスタンス化
@@ -47,17 +45,23 @@ namespace regulator{
         //なにもしないフィルタ
         std::unique_ptr<filter::Sieve> sieve_;
         //指令値
-        std::unique_ptr<state::Motion> r_;
+
         //操作量
         float u_r_;
         float u_l_;
         public:
+        std::unique_ptr<state::Motion> r_;
+        //Motionクラスのインスタンス化
+        std::unique_ptr<sensor::Motion> motion_;
         //デバッグ用
         std::unique_ptr<state::Motion> debug_;
         //センサーの値取得オブジェクト，制御器オブジェクト，操作量を格納する変数．
         Motor();
         void Init();
         void Regulate(float accel,float omega );
+        void Reset();
+        void PID_Reset();
+        void r_Reset();
         float get_u_l();
         float get_u_r();
         ~Motor() = default;

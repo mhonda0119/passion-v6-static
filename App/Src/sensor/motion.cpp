@@ -4,10 +4,9 @@ namespace sensor {
     Motion::Motion(std::unique_ptr<sensor::encoder::Product>& encoder_l,
     std::unique_ptr<sensor::encoder::Product>& encoder_r,
     std::unique_ptr<sensor::imu::Product>& imu)
-    :val_(std::make_unique<state::Motion>()),
-    encoder_l_(encoder_l),
+    :encoder_l_(encoder_l),
     encoder_r_(encoder_r),
-    imu_(imu){}
+    imu_(imu),val_(std::make_unique<state::Motion>()){}
 
     void Motion::Init(){
         encoder_l_->Init();
@@ -27,6 +26,32 @@ namespace sensor {
         encoder_l_->GetOffset();
         encoder_r_->GetOffset();
         imu_->GetOffset();
+    }
+
+    void Motion::Reset(){
+        val_->accel[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->accel[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+        val_->accel[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        //vel
+        val_->vel[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->vel[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+        val_->vel[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        //pos
+        val_->pos[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->pos[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+        val_->pos[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        //omega
+        val_->omega[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->omega[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+        val_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        //angle
+        val_->angle[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->angle[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+        val_->angle[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        //spd
+        val_->spd[static_cast<int>(state::Motion::DIR::R)] = 0;
+        val_->spd[static_cast<int>(state::Motion::DIR::L)] = 0;
+        val_->spd[static_cast<int>(state::Motion::DIR::C)] = 0;
     }
 
     void Motion::Update(){

@@ -79,6 +79,7 @@ $(wildcard App/Src/filter/*.cpp) \
 $(wildcard App/Src/regulator/*.cpp) \
 $(wildcard App/Src/adjust/*.cpp) \
 $(wildcard App/Src/ctrl/*.cpp) \
+$(wildcard App/Src/drive/*.cpp) \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -170,6 +171,7 @@ CPP_INCLUDES += \
 -IApp/Inc/regulator\
 -IApp/Inc/adjust\
 -IApp/Inc/ctrl\
+-IApp/Inc/drive\
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections

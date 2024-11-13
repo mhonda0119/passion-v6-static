@@ -37,6 +37,7 @@
 #include "motion.hpp"
 #include "objects.hpp"
 #include "wall.hpp"
+#include "drive.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -72,10 +73,29 @@ int main()
   //オブジェクトの生成
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
 
+  //待つ
+  objects->md_->On();
+  objects->md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
+  objects->md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
+  objects->md_->Duty(20,20);
+  objects->md_->Start();
+
+  objects->wait_->Ms(10000);
+
+  std::unique_ptr<drive::Core> drive = std::make_unique<drive::Core>();
+  drive->Init();
+
+  objects->buzzer_->Play(400,500);
+
   std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
-  objects->wait_->Ms(1000);
   it->Init(&htim5);
   it->Start();
+
+  drive->AD(500,0,100);
+  
+  objects->buzzer_->Play(400,500);
+  objects->md_->Stop();
+  
 
     // objects->buzzer_->Play(400,500);
     // objects->wait_->Ms(500);
@@ -91,8 +111,8 @@ int main()
 
 
   while(true){
-    
-
+    objects->wait_->Ms(300);
+    std::cout << "dist:" << peripheral::IT::reg_motor_->motion_->val_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
   }
   /* USER CODE END 3 */
 }
