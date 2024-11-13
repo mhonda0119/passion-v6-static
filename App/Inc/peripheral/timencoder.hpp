@@ -11,10 +11,9 @@ namespace peripheral{
     private:
 	TIM_HandleTypeDef* htim_;
 	uint32_t channel_ = 0;
-	uint32_t count_ = 0;
-	
+	float count_ = 0;
 	public:
-		uint32_t cnt_;
+		float cnt_;
 		uint32_t period_;
 		uint32_t edge_ ;
 		TimEncoder(TIM_HandleTypeDef* htim, uint32_t channel);
@@ -22,7 +21,7 @@ namespace peripheral{
 		void ReadVal();
         void Stop();
         uint32_t get_val();
-		void set_val(uint32_t count);
+		void set_val(float count);
         ~TimEncoder() = default;
 	};
 }
