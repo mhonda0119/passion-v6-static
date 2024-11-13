@@ -30,7 +30,7 @@ namespace regulator{
         //操作量
         u_r_ = 0;
         u_l_ = 0;
-        debug_ = std::make_unique<state::Motion>();
+        //debug_ = std::make_unique<state::Motion>();
             
     }
 
@@ -52,26 +52,19 @@ namespace regulator{
         r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] = r_alpha;
         //指令値にfilterかけて目標値生成
         sieve_->C_ff(consts::software::CTRL_FREQ,r_);
+        //std::cout << "r_dist:" << r_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
         //センサー値取得
         motion_->Update();
         wall_->ReadVal(wall_th_l_,wall_th_fl_,wall_th_fr_,wall_th_r_);
-        std::cout << "motion_spd" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-        std::cout << "motion_dist" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-        //壁の状態取得
+        // std::cout << "motion_spd" << motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+        // std::cout << "motion_dist" << motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl
         //PID制御(距離)
-        debug_->dist[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];
-        debug_->spd[static_cast<int>(state::Motion::DIR::C)] = motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
-        debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)];
-        debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] = motion_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-
-        // std::cout << "debug_dist:" << debug_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-        // std::cout << "debug_spd:" << debug_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
-        // std::cout << "debug_angle:" << debug_->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
-        // std::cout << "debug_omega:" << debug_->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
-        
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         motion_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
-        
+        // std::cout << "p_dist:" << pid_dist_->get_p() << std::endl;
+        // std::cout << "i_dist:" << pid_dist_->get_i() << std::endl;
+        // std::cout << "d_dist:" << pid_dist_->get_d() << std::endl;
+        // std::cout << "u_dist:" << pid_dist_->get_u() << std::endl;
         //PID制御(速さ)
         pid_spd_->Update(pid_dist_->get_u(),
         motion_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);

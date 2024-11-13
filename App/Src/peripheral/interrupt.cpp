@@ -21,8 +21,9 @@ namespace peripheral{
     }
 
     void IT::PeriodElapsedCallback(){
-        md_->buzzer_->Start(500,0.5);
+        //md_->buzzer_->Start(500,0.5);
         reg_motor_->Regulate(0,0);
+        std::cout << "u_l:" << reg_motor_->get_u_l() << std::endl;
         //md_->buzzer_->Stop();
         //i++;
     }

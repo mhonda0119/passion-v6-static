@@ -17,12 +17,12 @@ namespace consts::software{
     static constexpr float WALL_TH_R = 100.0F;
     //距離のPIDパラメータ
     static constexpr float KP_DIST = 2.80F;
-    static constexpr float KI_DIST = 0.1F;
-    static constexpr float KD_DIST = 2.80F;
+    static constexpr float KI_DIST = 0.0F;
+    static constexpr float KD_DIST = 0.0F;
     //速さのPIDパラメータ
     static constexpr float KP_SPD = 2.0F;
-    static constexpr float KI_SPD = 0.02F;
-    static constexpr float KD_SPD = 3.0F;
+    static constexpr float KI_SPD = 0.00F;
+    static constexpr float KD_SPD = 0.0F;
     //角速度のPIDパラメータ
     static constexpr float KP_OMEGA = 0.1F;
     static constexpr float KI_OMEGA = 0.1F;

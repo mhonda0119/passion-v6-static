@@ -2,14 +2,14 @@
 
 namespace ctrl{
     PID::PID(float kp, float ki, float kd,const float freq)
-    :kp_(kp),ki_(ki),kd_(kd),freq_(freq),pre_e_(0),u_(0){}
+    :kp_(kp),ki_(ki),kd_(kd),p_(0),i_(0),d_(0),freq_(freq),pre_e_(0),u_(0){}
 
     void PID::Update(float r, float y){
         // r:目標値 y:制御量
         //偏差eを計算
         float e = r - y;
         p_ = kp_ * e;
-        i_ = i_ +  ki_*(pre_e_ + e)*(1/freq_)/2;
+        i_ +=  ki_*(pre_e_ + e)*(1/freq_)/2;
         d_ = kd_ * (e - pre_e_)/freq_;
         pre_e_ = e;
         u_ = p_ + i_ + d_;
@@ -18,6 +18,18 @@ namespace ctrl{
     float PID::get_u(){
         return u_;
     }
+
+    float PID::get_p(){
+        return p_;
+    }
+
+    float PID::get_i(){
+        return i_;
+    }
+
+    float PID::get_d(){
+        return d_;
+    }  
 
     void PID::Reset(){
         pre_e_ = 0;
