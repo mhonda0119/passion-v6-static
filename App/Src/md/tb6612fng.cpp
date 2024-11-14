@@ -7,6 +7,7 @@ namespace md{
         pwm_l_(std::make_unique<peripheral::PWM>(htim, channel_l)){}
 
     void TB6612FNG::On(){
+        std::cout << "TB6612FNG::On" << std::endl;
         HAL_GPIO_WritePin(MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin, GPIO_PIN_SET);
     }
 
@@ -32,11 +33,13 @@ namespace md{
                 HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_RESET);
             }
         }
+    std::cout << "TB6612FNG::Dir" << std::endl;
     }
 
     void TB6612FNG::Duty(float duty_l,float duty_r){
         pwm_l_ -> set_duty(duty_l);
         pwm_r_ -> set_duty(duty_r);
+    std::cout << "TB6612FNG::Duty" << std::endl;
     }
 
     void TB6612FNG::Freq(uint32_t freq_l,uint32_t freq_r){
@@ -47,6 +50,7 @@ namespace md{
     void TB6612FNG::Start(){
         pwm_r_ -> Start();
         pwm_l_ -> Start();
+    std::cout << "TB6612FNG::Start" << std::endl;
     }
 
     void TB6612FNG::Stop(){

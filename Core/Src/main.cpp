@@ -70,10 +70,10 @@ int main()
   std::cout << "hello_c++" << std::endl;
   long version = __cplusplus;
   std::cout << "C++ Version : " << version << "\n";
-
+  
   //オブジェクトの生成
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
-
+  objects->buzzer_->Play(400,500);
   //待つ
   objects->md_->On();
   objects->md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
