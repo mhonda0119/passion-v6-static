@@ -2,35 +2,50 @@
 
 namespace md{
 
-    TB6612FNG::TB6612FNG(TIM_HandleTypeDef* htim,uint32_t channel_l,uint32_t channel_r) : 
+    TB6612FNG::TB6612FNG(TIM_HandleTypeDef* htim,uint32_t channel_l,uint32_t channel_r,
+        GPIO_TypeDef* stby_port,uint16_t stby_pin,
+        GPIO_TypeDef* l_cw_port,uint16_t l_cw_pin,
+        GPIO_TypeDef* l_ccw_port,uint16_t l_ccw_pin,
+        GPIO_TypeDef* r_cw_port,uint16_t r_cw_pin,
+        GPIO_TypeDef* r_ccw_port,uint16_t r_ccw_pin): 
         pwm_r_(std::make_unique<peripheral::PWM>(htim, channel_r)),
-        pwm_l_(std::make_unique<peripheral::PWM>(htim, channel_l)){}
+        pwm_l_(std::make_unique<peripheral::PWM>(htim, channel_l)),
+        stby_port_ (stby_port),
+        stby_pin_ (stby_pin),
+        l_cw_port_ (l_cw_port),
+        l_cw_pin_ (l_cw_pin),
+        l_ccw_port_ (l_ccw_port),
+        l_ccw_pin_ (l_ccw_pin),
+        r_cw_port_ (r_cw_port),
+        r_cw_pin_ (r_cw_pin),
+        r_ccw_port_ (r_ccw_port),
+        r_ccw_pin_ (r_ccw_pin){}
 
     void TB6612FNG::On(){
         std::cout << "TB6612FNG::On" << std::endl;
-        HAL_GPIO_WritePin(MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin, GPIO_PIN_SET);
+        HAL_GPIO_WritePin(stby_port_, stby_pin_, GPIO_PIN_SET);
     }
 
     void TB6612FNG::Dir(state::MOTOR motor ,state::MOTOR dir){
         if (motor == state::MOTOR::LEFT) {
             if (dir == state::MOTOR::FWD) {
                 // 左モーターを前進方向に設定
-                HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(l_cw_port_, l_cw_pin_, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(l_ccw_port_, l_ccw_pin_, GPIO_PIN_RESET);
             } else if (dir == state::MOTOR::BWD) {
                 // 左モーターを後進方向に設定
-                HAL_GPIO_WritePin(MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(l_cw_port_, l_cw_pin_, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(l_ccw_port_, l_ccw_pin_, GPIO_PIN_SET);
             }
         } else if (motor == state::MOTOR::RIGHT) {
             if (dir == state::MOTOR::FWD) {
                 // 右モーターを前進方向に設定
-                HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(r_cw_port_, r_cw_pin_, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(r_ccw_port_, r_ccw_pin_, GPIO_PIN_SET);
             } else if (dir == state::MOTOR::BWD) {
                 // 右モーターを後進方向に設定
-                HAL_GPIO_WritePin(MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin, GPIO_PIN_SET);
-                HAL_GPIO_WritePin(MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin, GPIO_PIN_RESET);
+                HAL_GPIO_WritePin(r_cw_port_, r_cw_pin_, GPIO_PIN_SET);
+                HAL_GPIO_WritePin(r_ccw_port_, r_ccw_pin_, GPIO_PIN_RESET);
             }
         }
     std::cout << "TB6612FNG::Dir" << std::endl;
@@ -59,7 +74,7 @@ namespace md{
     }
 
     void TB6612FNG::Off(){
-        HAL_GPIO_WritePin(MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin, GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(stby_port_, stby_pin_, GPIO_PIN_RESET);
     }
 
 }

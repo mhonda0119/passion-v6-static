@@ -17,7 +17,10 @@ namespace sensor::ir{
     std::unique_ptr<peripheral::GPIO> fr_;
     std::unique_ptr<peripheral::GPIO> fl_;
     public:
-        OSI3CA5111A();
+        OSI3CA5111A(GPIO_TypeDef* r_port,uint16_t r_pin,
+        GPIO_TypeDef* l_port,uint16_t l_pin,
+        GPIO_TypeDef* fr_port,uint16_t fr_pin,
+        GPIO_TypeDef* fl_port,uint16_t fl_pin);
         void On(state::Wall::DIR dir = state::Wall::DIR::ALL);
         void Off(state::Wall::DIR dir = state::Wall::DIR::ALL);
         ~OSI3CA5111A() = default;
