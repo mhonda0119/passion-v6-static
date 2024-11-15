@@ -16,8 +16,8 @@ namespace sensor::bat{
 		uint16_t vol_ = 0;
 	public:
 		Vol(ADC_HandleTypeDef* hadc);
-		void Init() ;
-		void ReadVal() ;
+		void Init();
+		void ReadVal();
 		uint16_t get_val();
         ~Vol() = default;
 	};

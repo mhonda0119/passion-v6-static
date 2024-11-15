@@ -70,50 +70,13 @@ int main()
   std::cout << "hello_c++" << std::endl;
   long version = __cplusplus;
   std::cout << "C++ Version : " << version << "\n";
+
   
-  //オブジェクトの生成
-  std::unique_ptr<Objects> objects = std::make_unique<Objects>();
-  objects->buzzer_->Play(400,500);
-  //待つ
-  objects->md_->On();
-  objects->md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
-  objects->md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
-  objects->md_->Duty(20,20);
-  objects->md_->Start();
-
-  objects->wait_->Ms(10000);
-
-  std::unique_ptr<drive::Core> drive = std::make_unique<drive::Core>();
-  drive->Init();
-
-  objects->buzzer_->Play(400,500);
-
-  std::unique_ptr<peripheral::IT> it = std::make_unique<peripheral::IT>();
-  it->Init(&htim5);
-  it->Start();
-
-  drive->AD(500,0,100);
   
-  objects->buzzer_->Play(400,500);
-  objects->md_->Stop();
-  
-
-    // objects->buzzer_->Play(400,500);
-    // objects->wait_->Ms(500);
-    // objects->buzzer_->Play(400,500);
-    // objects->wait_->Ms(500);
-    // objects->buzzer_->Play(400,500);
-    // objects->wait_->Ms(500);
-
-  //it->Stop();
-
-  //std::unique_ptr<regulator::Motor> reg_motor = std::make_unique<regulator::Motor>();
-  //reg_motor->Init();
 
 
   while(true){
-    objects->wait_->Ms(300);
-    std::cout << "dist:" << peripheral::IT::reg_motor_->motion_->val_->dist[static_cast<int>(state::Motion::DIR::C)] << std::endl;
+
   }
   /* USER CODE END 3 */
 }

@@ -1,16 +1,21 @@
 #include "led.hpp"
 
 namespace indicator{
-    LED::LED() {
-        led_[0] = std::make_unique<peripheral::GPIO>(LED_1_GPIO_Port, LED_1_Pin);
-        led_[1] = std::make_unique<peripheral::GPIO>(LED_2_GPIO_Port, LED_2_Pin);
-        led_[2] = std::make_unique<peripheral::GPIO>(LED_3_GPIO_Port, LED_3_Pin);
-        led_[3] = std::make_unique<peripheral::GPIO>(LED_4_GPIO_Port, LED_4_Pin);
-        led_[4] = std::make_unique<peripheral::GPIO>(LED_5_GPIO_Port, LED_5_Pin);
-        led_[5] = std::make_unique<peripheral::GPIO>(LED_6_GPIO_Port, LED_6_Pin);
-        led_[6] = std::make_unique<peripheral::GPIO>(LED_7_GPIO_Port, LED_7_Pin);
+    LED::LED(GPIO_TypeDef* led_1_port,uint16_t led_1_pin,
+            GPIO_TypeDef* led_2_port,uint16_t led_2_pin,
+            GPIO_TypeDef* led_3_port,uint16_t led_3_pin,
+            GPIO_TypeDef* led_4_port,uint16_t led_4_pin,
+            GPIO_TypeDef* led_5_port,uint16_t led_5_pin,
+            GPIO_TypeDef* led_6_port,uint16_t led_6_pin,
+            GPIO_TypeDef* led_7_port,uint16_t led_7_pin){
+        led_[0] = std::make_unique<peripheral::GPIO>(led_1_port, led_1_pin);
+        led_[1] = std::make_unique<peripheral::GPIO>(led_2_port, led_2_pin);
+        led_[2] = std::make_unique<peripheral::GPIO>(led_3_port, led_3_pin);
+        led_[3] = std::make_unique<peripheral::GPIO>(led_4_port, led_4_pin);
+        led_[4] = std::make_unique<peripheral::GPIO>(led_5_port, led_5_pin);
+        led_[5] = std::make_unique<peripheral::GPIO>(led_6_port, led_6_pin);
+        led_[6] = std::make_unique<peripheral::GPIO>(led_7_port, led_7_pin);
 }
-
     void LED::On(uint8_t num){
         switch(num){
             case 1:
@@ -38,6 +43,8 @@ namespace indicator{
                 for(int i = 0; i < 7; i++){
                     led_[i] -> On();
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -70,6 +77,8 @@ namespace indicator{
                     led_[i] -> Off();
                 }
                 break;
+            default:
+                break;
         }
     }
 
@@ -100,6 +109,8 @@ namespace indicator{
                 for(int i = 0; i < 7; i++){
                     led_[i] -> Toggle();
                 }
+                break;
+            default:
                 break;
         }
     }

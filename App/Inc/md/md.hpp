@@ -24,7 +24,6 @@ namespace md{
         virtual void Stop() = 0;//pwmストップ
         virtual void Off() = 0;//stbyをl
 		virtual ~Product() = default;
-
 	};
 
 }
