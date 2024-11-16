@@ -10,8 +10,8 @@ namespace filter{
     class Sieve{
     public:
         Sieve() = default;
-        void Filter(float samplingfreq, std::unique_ptr<state::Motion>& motion);//samplingfreq[hz]
-        void C_ff(float samplingfreq, std::unique_ptr<state::Motion>& motion); //目標値生成とセンサ値生成が違うので．．．最悪かも．
+        void C_1(float samplingfreq, std::unique_ptr<state::Motion>& motion);//samplingfreq[hz]//センサ値用
+        void C_2(float samplingfreq, std::unique_ptr<state::Motion>& motion); //目標値用
         ~Sieve() = default;
     };
 }

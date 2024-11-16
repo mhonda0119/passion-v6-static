@@ -19,10 +19,13 @@ namespace sensor::encoder{
         this->ReadVal();
         val_->spd[static_cast<int>(state::Motion::DIR::C)] = this->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]
         - offset_->spd[static_cast<int>(state::Motion::DIR::C)];
-        sieve_->Filter(consts::software::SENSOR_FREQ,val_);
+        sieve_->C_1(consts::software::SENSOR_FREQ,val_);
     }
 
     std::unique_ptr<state::Motion>& Product::get_val_ref(){
         return val_;
     }
 }
+
+
+

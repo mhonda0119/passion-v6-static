@@ -33,6 +33,7 @@ namespace sensor::encoder{
 		std::unique_ptr<state::Motion>& get_val_ref();
         virtual ~Product() = default;
 	};
+
 }
 
 #endif /* _ENCODER_HPP_ */

@@ -17,10 +17,10 @@ namespace correction{
         float pre_ad_;
         float e_;
         float wall_gap_th_;
-        float wall_th_;
         public:
         WallGap(float wall_gap_th);
-        float Update(float wall_th , float wall_e_th , float ad);
+        void Correct(float wall_th , float wall_e_th , float ad);
+        void Update(float& wall_th_r,float& wall_th_l , float wall_gap_c ,float ad_r,float ad_l);
         float get_wall_th();
         ~WallGap() = default;
 

@@ -9,8 +9,7 @@ namespace sensor::encoder {
     :   timencoder_(std::make_unique<peripheral::TimEncoder>(htim, channel)),  // timencoder_を初期化
         raw_(std::make_unique<state::Motion>()) ,
         htim_(htim){}
-
-
+        
     void IEH24096::Init() {
         // 初期化の実装;
     }

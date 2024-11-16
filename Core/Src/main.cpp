@@ -26,6 +26,8 @@
 #include "stdout.h"
 #include "objects.hpp"
 #include "interrupt.hpp"
+
+#include "wall.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -70,19 +72,21 @@ int main()
   //peripheral::IT::Init(&htim5);
   //-------------------------------------INIT-------------------------------------
   //peripheral::IT::Start();
-  Objects::imu_->Init();
-  Objects::imu_->GetOffset();
-  uint32_t i = 0;
+  std::unique_ptr<sensor::Wall> wall = std::make_unique<sensor::Wall>();
+
+  wall->Init();
+
   while(true){
-    Objects::wait_->Ms(100);
-    Objects::imu_->Update();
-    i ++ ;
-    if(i > 10){
-    Objects::imu_->Reset();
-    i = 0;
-    }
-    std::cout << "Omega " << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
-    std::cout << "Angle " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+    Objects::wait_->Ms(500);
+    wall->ReadVal();
+    // std::cout << "L " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
+    // std::cout << "FL " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << std::endl;
+    // std::cout << "FR " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << std::endl;
+    // std::cout << "R " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
+    std::cout << "L " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
+    std::cout << "F " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] << std::endl;
+    std::cout << "R " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
+
   }
   /* USER CODE END 3 */
 }

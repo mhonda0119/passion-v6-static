@@ -13,8 +13,6 @@ namespace peripheral{
         }else if((htim_->Instance->SMCR & TIM_SMCR_SMS) == TIM_ENCODERMODE_TI12){
             edge_ = 4;
         }
-        // std::cout << "period_:" << period_ << std::endl;
-        // std::cout << "edge_::::" << edge_ << std::endl;
      }
     void TimEncoder::Start(){
         HAL_TIM_Encoder_Start(htim_, channel_);
@@ -30,7 +28,7 @@ namespace peripheral{
     }
 
     void TimEncoder::Reset(){
-        this->set_val(0);
+        this->set_val(30000);
     }
 
     uint32_t TimEncoder::get_val(){

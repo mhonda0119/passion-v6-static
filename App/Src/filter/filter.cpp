@@ -1,7 +1,7 @@
 #include "filter.hpp"
 
 namespace filter{
-    void Sieve::Filter(float samplingfreq, std::unique_ptr<state::Motion>& motion){
+    void Sieve::C_1(float samplingfreq, std::unique_ptr<state::Motion>& motion){
         motion->vel[static_cast<int>(state::Motion::AXIS::X)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::X)];
         motion->vel[static_cast<int>(state::Motion::AXIS::Y)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::Y)];
         motion->vel[static_cast<int>(state::Motion::AXIS::Z)] += (1/samplingfreq) * motion->accel[static_cast<int>(state::Motion::AXIS::Z)];
@@ -15,7 +15,7 @@ namespace filter{
         motion->dist[static_cast<int>(state::Motion::DIR::L)] += motion->spd[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
         motion->dist[static_cast<int>(state::Motion::DIR::C)] += motion->spd[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
     }
-    void Sieve::C_ff(float samplingfreq, std::unique_ptr<state::Motion>& motion){
+    void Sieve::C_2(float samplingfreq, std::unique_ptr<state::Motion>& motion){
         motion->spd[static_cast<int>(state::Motion::DIR::R)] += motion->maccel[static_cast<int>(state::Motion::DIR::R)]/samplingfreq;
         motion->spd[static_cast<int>(state::Motion::DIR::L)] += motion->maccel[static_cast<int>(state::Motion::DIR::L)]/samplingfreq;
         motion->spd[static_cast<int>(state::Motion::DIR::C)] += motion->maccel[static_cast<int>(state::Motion::DIR::C)]/samplingfreq;
