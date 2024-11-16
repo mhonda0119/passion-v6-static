@@ -8,9 +8,9 @@ namespace sensor::pxstr{
 	class ST1KL3A : public Product{
 	private:
 		std::unique_ptr<state::Wall> val_;
-		std::unique_ptr<peripheral::ADC> adc_;
+		std::shared_ptr<peripheral::ADC> adc_;
 	public:
-		ST1KL3A(ADC_HandleTypeDef* hadc);
+		ST1KL3A(std::shared_ptr<peripheral::ADC> adc);
 		void Init() override ;
 		void ReadVal() override ;
 		std::unique_ptr<state::Wall>& get_val_ref() override;

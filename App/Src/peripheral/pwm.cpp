@@ -14,8 +14,8 @@ namespace peripheral{
 
     void PWM::set_duty(float duty){
         duty_ = duty/100;
-        if(0 <= duty && duty <= 1){
-            ccr_ = duty * (arr_ + 1);
+        if(0 <= duty_ && duty_ <= 1){
+            ccr_ = duty_ * (arr_ + 1);
         }else{}
         __HAL_TIM_SET_COMPARE(htim_,channel_,ccr_);
     }

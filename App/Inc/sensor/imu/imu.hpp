@@ -23,7 +23,7 @@ namespace sensor::imu{
 		Product();
 		virtual void Init() = 0;
 		virtual void ReadVal() = 0;
-		virtual std::unique_ptr<state::Motion>& get_raw_ptr() = 0;
+		virtual std::unique_ptr<state::Motion>& get_raw_ref() = 0;
 		void GetOffset();
 		void Update();
 		void Reset();//積算値のリセット

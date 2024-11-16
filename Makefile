@@ -75,11 +75,13 @@ $(wildcard App/Src/sensor/encoder/*.cpp) \
 $(wildcard App/Src/sensor/imu/*.cpp) \
 $(wildcard App/Src/sensor/ir/*.cpp) \
 $(wildcard App/Src/sensor/pxstr/*.cpp) \
+$(wildcard App/Src/sensor/bat/*.cpp) \
 $(wildcard App/Src/filter/*.cpp) \
 $(wildcard App/Src/regulator/*.cpp) \
-$(wildcard App/Src/adjust/*.cpp) \
+$(wildcard App/Src/correction/*.cpp) \
 $(wildcard App/Src/ctrl/*.cpp) \
 $(wildcard App/Src/drive/*.cpp) \
+$(wildcard App/Src/maneger/*.cpp) \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -169,7 +171,7 @@ CPP_INCLUDES += \
 -IApp/Inc/sensor/pxstr\
 -IApp/Inc/filter\
 -IApp/Inc/regulator\
--IApp/Inc/adjust\
+-IApp/Inc/correction\
 -IApp/Inc/ctrl\
 -IApp/Inc/drive\
 

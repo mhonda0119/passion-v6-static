@@ -2,9 +2,9 @@
 
 namespace sensor::pxstr{
 
-	ST1KL3A::ST1KL3A(ADC_HandleTypeDef* hadc)
+	ST1KL3A::ST1KL3A(std::shared_ptr<peripheral::ADC> adc)
 	 : val_(std::make_unique<state::Wall>()),
-	 adc_(std::make_unique<peripheral::ADC>(hadc)) {}
+	 adc_(adc) {}
 
 	void ST1KL3A::Init(){
 

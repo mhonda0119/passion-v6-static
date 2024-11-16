@@ -11,12 +11,10 @@
 namespace sensor::bat{
 	class Vol{
 	private:
-		ADC_HandleTypeDef* hadc_ = nullptr;
-		std::unique_ptr<peripheral::ADC> adc_ = nullptr;
-		uint16_t vol_ = 0;
+		std::shared_ptr<peripheral::ADC> adc_ ;
+		uint16_t vol_;
 	public:
-		Vol(ADC_HandleTypeDef* hadc);
-		void Init();
+		Vol(std::shared_ptr<peripheral::ADC> adc);
 		void ReadVal();
 		uint16_t get_val();
         ~Vol() = default;

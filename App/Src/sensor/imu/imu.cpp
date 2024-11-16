@@ -9,7 +9,7 @@ namespace sensor::imu{
     void Product::GetOffset(){
         //オフセットの実装
         this->ReadVal();
-        std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
+        std::unique_ptr<state::Motion>& raw = this->get_raw_ref();
         offset_->accel[static_cast<int>(state::Motion::AXIS::X)] = raw->accel[static_cast<int>(state::Motion::AXIS::X)];
         offset_->accel[static_cast<int>(state::Motion::AXIS::Y)] = raw->accel[static_cast<int>(state::Motion::AXIS::Y)];
         offset_->accel[static_cast<int>(state::Motion::AXIS::Z)] = raw->accel[static_cast<int>(state::Motion::AXIS::Z)];
@@ -20,7 +20,7 @@ namespace sensor::imu{
     void Product::Update(){
         //更新の実装
         this->ReadVal();
-        std::unique_ptr<state::Motion>& raw = this->get_raw_ptr();
+        std::unique_ptr<state::Motion>& raw = this->get_raw_ref();
         val_->accel[static_cast<int>(state::Motion::AXIS::X)] = raw->accel[static_cast<int>(state::Motion::AXIS::X)] - offset_->accel[static_cast<int>(state::Motion::AXIS::X)];
         val_->accel[static_cast<int>(state::Motion::AXIS::Y)] = raw->accel[static_cast<int>(state::Motion::AXIS::Y)] - offset_->accel[static_cast<int>(state::Motion::AXIS::Y)];
         val_->accel[static_cast<int>(state::Motion::AXIS::Z)] = raw->accel[static_cast<int>(state::Motion::AXIS::Z)] - offset_->accel[static_cast<int>(state::Motion::AXIS::Z)];

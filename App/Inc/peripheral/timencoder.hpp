@@ -19,6 +19,7 @@ namespace peripheral{
 		TimEncoder(TIM_HandleTypeDef* htim, uint32_t channel);
 		void Start();
 		void ReadVal();
+		void Reset();
         void Stop();
         uint32_t get_val();
 		void set_val(float count);

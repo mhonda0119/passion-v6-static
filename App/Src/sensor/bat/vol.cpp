@@ -2,13 +2,8 @@
 
 namespace sensor::bat {
 
-Vol::Vol(ADC_HandleTypeDef* hadc)
-    : hadc_(hadc),
-      adc_(std::make_unique<peripheral::ADC>(hadc_)){}
-
-void Vol::Init() {
-    
-}
+Vol::Vol(std::shared_ptr<peripheral::ADC> adc)
+    : adc_(adc),vol_(0){}
 
 void Vol::ReadVal() {
     adc_->ReadVal();

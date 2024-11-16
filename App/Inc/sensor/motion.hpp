@@ -12,7 +12,6 @@
 namespace sensor {
     class Motion {
     private:
-        
         std::unique_ptr<sensor::encoder::Product>& encoder_l_;
         std::unique_ptr<sensor::encoder::Product>& encoder_r_;
         std::unique_ptr<sensor::imu::Product>& imu_;

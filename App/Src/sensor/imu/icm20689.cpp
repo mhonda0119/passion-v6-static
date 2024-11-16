@@ -50,7 +50,6 @@ namespace sensor::imu{
 		return omega;
 	}
 
-
 	void ICM20689::ReadVal(){
 		raw_->accel[static_cast<int>(state::Motion::AXIS::X)] = -1 * this->AccelRead(0x3B);
 		raw_->accel[static_cast<int>(state::Motion::AXIS::Y)] = this->AccelRead(0x3D);
@@ -60,9 +59,10 @@ namespace sensor::imu{
 		raw_->omega[static_cast<int>(state::Motion::AXIS::Z)] = this->OmegaRead(0x47);
 	}
 
-	std::unique_ptr<state::Motion>& ICM20689::get_raw_ptr(){
-			return raw_;
-		}
+	std::unique_ptr<state::Motion>& ICM20689::get_raw_ref(){
+		return raw_;
+	}
+
 }
 
 

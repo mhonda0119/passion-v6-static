@@ -13,7 +13,7 @@ namespace sensor::pxstr{
 	NAME name_;
 	public:
 	Creater(NAME name);
-	std::unique_ptr<Product> Create(ADC_HandleTypeDef* hadc);
+	std::unique_ptr<Product> Create(std::shared_ptr<peripheral::ADC> adc);
 	~Creater() = default;
 	};
 }

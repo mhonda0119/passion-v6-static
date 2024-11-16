@@ -29,6 +29,10 @@ namespace peripheral{
         HAL_TIM_Encoder_Stop(htim_, channel_);
     }
 
+    void TimEncoder::Reset(){
+        this->set_val(0);
+    }
+
     uint32_t TimEncoder::get_val(){
         return count_;
     }

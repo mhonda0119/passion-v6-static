@@ -22,7 +22,6 @@ namespace md{
         r_ccw_pin_ (r_ccw_pin){}
 
     void TB6612FNG::On(){
-        std::cout << "TB6612FNG::On" << std::endl;
         HAL_GPIO_WritePin(stby_port_, stby_pin_, GPIO_PIN_SET);
     }
 
@@ -48,13 +47,11 @@ namespace md{
                 HAL_GPIO_WritePin(r_ccw_port_, r_ccw_pin_, GPIO_PIN_RESET);
             }
         }
-    std::cout << "TB6612FNG::Dir" << std::endl;
     }
 
     void TB6612FNG::Duty(float duty_l,float duty_r){
         pwm_l_ -> set_duty(duty_l);
         pwm_r_ -> set_duty(duty_r);
-    std::cout << "TB6612FNG::Duty" << std::endl;
     }
 
     void TB6612FNG::Freq(uint32_t freq_l,uint32_t freq_r){
@@ -65,7 +62,6 @@ namespace md{
     void TB6612FNG::Start(){
         pwm_r_ -> Start();
         pwm_l_ -> Start();
-    std::cout << "TB6612FNG::Start" << std::endl;
     }
 
     void TB6612FNG::Stop(){

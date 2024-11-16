@@ -1,5 +1,5 @@
-#ifndef _ADJUST_HPP_
-#define _ADJUST_HPP_
+#ifndef _CORRECTION_HPP_
+#define _CORRECTION_HPP_
 
 #include <iostream>
 #include <memory>
@@ -10,7 +10,7 @@
 #include "states.hpp"
 #include "consts.hpp"
 
-namespace adjust{
+namespace correction{
     class WallGap
     {
         private:

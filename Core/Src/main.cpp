@@ -19,27 +19,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "imu_creater.hpp"
-#include "pxstr_creater.hpp"
 #include <iostream>
 #include <memory>
+
 #include "peripheral.h"
 #include "stdout.h"
-#include "buzzer.hpp"
-#include "led.hpp"
-#include "md_creater.hpp"
-#include "encoder_creater.hpp"
-#include "interrupt.hpp"
-#include "wait.hpp"
-#include "sw.hpp"
-#include "led.hpp"
-#include "states.hpp"
-#include "motion.hpp"
 #include "objects.hpp"
-#include "wall.hpp"
-#include "drive.hpp"
+#include "interrupt.hpp"
 /* USER CODE END Includes */
-//aaa
 
 /**
   * @brief  The application entry point.
@@ -65,18 +52,37 @@ int main()
   MX_SPI3_Init();
   MX_TIM1_Init();
   MX_ADC2_Init();
-  /* USER CODE BEGIN 2 */
+
+  //hello_world
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
   long version = __cplusplus;
   std::cout << "C++ Version : " << version << "\n";
+  //hello_world
 
-  
-  
-
-
+  //-------------------------------------INIT-------------------------------------
+  //objectsのインスタンス化(本来，objectsはstaticなクラスであるが，ここではインスタンス化している)
+  std::unique_ptr<Objects> objects = std::make_unique<Objects>();
+  //objectsの初期化
+  //ここですべてのstaticなクラスのインスタンス化を行う．
+  objects->Init();
+  //ここで，interruputの初期化を行う．
+  //peripheral::IT::Init(&htim5);
+  //-------------------------------------INIT-------------------------------------
+  //peripheral::IT::Start();
+  Objects::imu_->Init();
+  Objects::imu_->GetOffset();
+  uint32_t i = 0;
   while(true){
-
+    Objects::wait_->Ms(100);
+    Objects::imu_->Update();
+    i ++ ;
+    if(i > 10){
+    Objects::imu_->Reset();
+    i = 0;
+    }
+    std::cout << "Omega " << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+    std::cout << "Angle " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
   }
   /* USER CODE END 3 */
 }
