@@ -21,6 +21,8 @@ namespace sensor::encoder{
 	private:
 	std::unique_ptr<sensor::encoder::Product> encoder_l_;
 	std::unique_ptr<sensor::encoder::Product> encoder_r_;
+	std::unique_ptr<state::Motion> raw_;
+	std::unique_ptr<state::Motion> val_;
 	public:
 	Combine();
 	void Init();
