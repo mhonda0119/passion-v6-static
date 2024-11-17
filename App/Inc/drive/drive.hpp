@@ -16,12 +16,19 @@ namespace drive{
 
     class Core{
         private:
-        //壁の閾値
-        std::unique_ptr<Objects> objects_;
+        //regulator
+        std::unique_ptr<regulator::Motor>& motor_reg_;
+        //imu
+        std::unique_ptr<sensor::imu::Product>& imu_;
+        //encoder
+        std::unique_ptr<sensor::encoder::Combine>& encoder_;
+        //md
+        std::unique_ptr<md::Product>& md_;
+        //軌道設計
         std::unique_ptr<drive::Design> design_;
         public:
-        Core();
-        void Init();
+        Core(std::unique_ptr<regulator::Motor>& motor_reg,std::unique_ptr<sensor::imu::Product>& imu,
+        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md);
         void AD(float dist , float spd_in , float spd_out);
         ~Core() = default;
     };

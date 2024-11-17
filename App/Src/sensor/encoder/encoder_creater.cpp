@@ -61,17 +61,17 @@ namespace sensor::encoder{
 
 	std::unique_ptr<state::Motion>& Combine::get_raw_ref(){
 		raw_->spd[static_cast<int>(state::Motion::DIR::L)] = encoder_l_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
-		raw_->spd[static_cast<int>(state::Motion::DIR::R)] = encoder_r_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
+		raw_->spd[static_cast<int>(state::Motion::DIR::R)] = -encoder_r_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)];//左右のエンコーダの向きが逆
 		raw_->spd[static_cast<int>(state::Motion::DIR::C)] = (raw_->spd[static_cast<int>(state::Motion::DIR::L)] + raw_->spd[static_cast<int>(state::Motion::DIR::R)])/2;
 		return raw_;
 	}
 
 	std::unique_ptr<state::Motion>& Combine::get_val_ref(){
 		val_->spd[static_cast<int>(state::Motion::DIR::L)] = encoder_l_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
-		val_->spd[static_cast<int>(state::Motion::DIR::R)] = encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];
+		val_->spd[static_cast<int>(state::Motion::DIR::R)] = -encoder_r_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)];//マイナスつけてるのは，右側は正方向が逆だから
 		val_->spd[static_cast<int>(state::Motion::DIR::C)] = (val_->spd[static_cast<int>(state::Motion::DIR::L)] + val_->spd[static_cast<int>(state::Motion::DIR::R)])/2;
 		val_->dist[static_cast<int>(state::Motion::DIR::L)] = encoder_l_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];
-		val_->dist[static_cast<int>(state::Motion::DIR::R)] = encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];
+		val_->dist[static_cast<int>(state::Motion::DIR::R)] = -encoder_r_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)];
 		val_->dist[static_cast<int>(state::Motion::DIR::C)] = (val_->dist[static_cast<int>(state::Motion::DIR::L)] + val_->dist[static_cast<int>(state::Motion::DIR::R)])/2;
 		return val_;
 	}

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <memory>
 
-#include "objects.hpp"
 #include "wall.hpp"
+#include "imu.hpp"
+#include "encoder_creater.hpp"
+#include "consts.hpp"
 #include "ctrl.hpp"
 #include "correction.hpp"
 #include "filter.hpp"
@@ -19,8 +21,18 @@ namespace regulator{
         float wall_th_fl_;
         float wall_th_fr_;
         float wall_th_r_;
+        //壁切れ制御の閾値
+        float wall_gap_th_l_;
+        float wall_gap_th_r_;
+        //操作量//左右のモータの操作量//duty比
+        float u_r_;
+        float u_l_;
         //wallクラスのインスタンス
-        std::unique_ptr<sensor::Wall> wall_;
+        std::unique_ptr<sensor::Wall>& wall_;
+        //imuクラスのインスタンス
+        std::unique_ptr<sensor::imu::Product>& imu_;
+        //エンコーダのインスタンス
+        std::unique_ptr<sensor::encoder::Combine>& encoder_;
         //制御器のインスタンス
         std::unique_ptr<ctrl::PID> pid_dist_;
         std::unique_ptr<ctrl::PID> pid_spd_;
@@ -31,14 +43,17 @@ namespace regulator{
         std::unique_ptr<correction::WallGap> wall_gap_;
         //なにもしないフィルター
         std::unique_ptr<filter::Sieve> sieve_;
-        //操作量//左右のモータの操作量//duty比
-        float u_r_;
-        float u_l_;
+
         public:
         //目標値
         std::unique_ptr<state::Motion> r_;
-        
-
+        Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
+        std::unique_ptr<sensor::encoder::Combine>& encoder);
+        void Regulate();
+        void PIDReset();
+        float get_u_l();
+        float get_u_r();
+        ~Motor() = default;
     };
 }
 

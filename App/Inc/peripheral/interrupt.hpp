@@ -9,7 +9,6 @@ namespace peripheral{
 	class IT{
 		private:
 		static TIM_HandleTypeDef* htim_;
-		static float i;
 		public:
 		IT() = default;
 		static void Init(TIM_HandleTypeDef* htim); // 修正: 戻り値の型を追加

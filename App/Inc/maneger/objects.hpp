@@ -16,14 +16,17 @@
 #include "states.hpp"
 #include "buzzer.hpp"
 #include "vol.hpp"
+#include "wall.hpp"
+#include "regulator.hpp"
 
 class Objects{
     public:
     static std::unique_ptr<sensor::imu::Product> imu_;
-    static std::unique_ptr<sensor::encoder::Product> encoder_r_;
-    static std::unique_ptr<sensor::encoder::Product> encoder_l_;
+    static std::unique_ptr<sensor::encoder::Combine> encoder_;
     static std::unique_ptr<sensor::pxstr::Product> pxstr_;
     static std::unique_ptr<sensor::ir::OSI3CA5111A> ir_;
+    static std::unique_ptr<sensor::Wall> wall_;
+    static std::unique_ptr<regulator::Motor> motor_reg_;
     static std::unique_ptr<md::Product> md_;
     static std::unique_ptr<peripheral::Wait> wait_;
     static std::unique_ptr<indicator::LED> led_;

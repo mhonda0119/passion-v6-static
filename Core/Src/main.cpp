@@ -26,8 +26,8 @@
 #include "stdout.h"
 #include "objects.hpp"
 #include "interrupt.hpp"
-
-#include "wall.hpp"
+#include "drive.hpp"
+#include "regulator.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -62,31 +62,53 @@ int main()
   std::cout << "C++ Version : " << version << "\n";
   //hello_world
 
-  //-------------------------------------INIT-------------------------------------
+  /*-------------------------------------INIT-------------------------------------*/
   //objectsのインスタンス化(本来，objectsはstaticなクラスであるが，ここではインスタンス化している)
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
   //objectsの初期化
-  //ここですべてのstaticなクラスのインスタンス化を行う．
+  //すべてのstaticなクラスのインスタンス化を行う．
   objects->Init();
-  //ここで，interruputの初期化を行う．
-  //peripheral::IT::Init(&htim5);
-  //-------------------------------------INIT-------------------------------------
-  //peripheral::IT::Start();
-  std::unique_ptr<sensor::Wall> wall = std::make_unique<sensor::Wall>();
+  //objectsを利用した初期化を行う．
+  std::unique_ptr<drive::Core> core = 
+  std::make_unique<drive::Core>(objects->motor_reg_,objects->imu_,objects->encoder_,objects->md_);
+  /*----------初期化シーケンス実行------------*/
+  Objects::buzzer_->Play(500,50,0.8);
+  Objects::wait_->Ms(100);
+  Objects::buzzer_->Play(500,50,0.8);
 
-  wall->Init();
+  Objects::imu_->Init();
+  Objects::encoder_->Init();
+  Objects::pxstr_->Init();
+  Objects::wall_->Init();
+  
+  Objects::md_->On();
+  Objects::md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
+  Objects::md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
+  Objects::md_->Duty(0,0);
+
+  Objects::wall_->GetOffset();
+  Objects::encoder_->GetOffset();
+  Objects::encoder_->Start();
+  Objects::imu_->GetOffset();
+
+  Objects::buzzer_->Play(500,50,0.8);
+  Objects::wait_->Ms(100);
+  Objects::buzzer_->Play(500,50,0.8);
+  /*------------初期化シーケンス終了------------*/
+  //interruputの初期化を行う．
+  peripheral::IT::Init(&htim5);
+  /*-------------------------------------INIT-------------------------------------*/
+  peripheral::IT::Start();
+
+  Objects::buzzer_->Play(500,500,0.8);
+  Objects::wait_->Ms(1000);
+
+  //core->AD(100,0,50);
 
   while(true){
-    Objects::wait_->Ms(500);
-    wall->ReadVal();
-    // std::cout << "L " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
-    // std::cout << "FL " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << std::endl;
-    // std::cout << "FR " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << std::endl;
-    // std::cout << "R " << wall->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
-    std::cout << "L " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << std::endl;
-    std::cout << "F " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] << std::endl;
-    std::cout << "R " << wall->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
-
+  std::cout << "imu_raw_omega:" << Objects::imu_->get_raw_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+  std::cout << "encoder_c:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)] << std::endl;
+  Objects::wait_->Ms(100);
   }
   /* USER CODE END 3 */
 }

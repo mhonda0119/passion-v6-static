@@ -2,10 +2,11 @@
 
 //全てnullptrで一旦初期化
 std::unique_ptr<sensor::imu::Product> Objects::imu_ = nullptr;
-std::unique_ptr<sensor::encoder::Product> Objects::encoder_r_ = nullptr;
-std::unique_ptr<sensor::encoder::Product> Objects::encoder_l_ = nullptr;
+std::unique_ptr<sensor::encoder::Combine> Objects::encoder_ = nullptr;
 std::unique_ptr<sensor::pxstr::Product> Objects::pxstr_ = nullptr;
 std::unique_ptr<sensor::ir::OSI3CA5111A> Objects::ir_ = nullptr;
+std::unique_ptr<sensor::Wall> Objects::wall_ = nullptr;
+std::unique_ptr<regulator::Motor> Objects::motor_reg_ = nullptr;
 std::unique_ptr<md::Product> Objects::md_ = nullptr;
 std::unique_ptr<peripheral::Wait> Objects::wait_ = nullptr;
 std::unique_ptr<indicator::LED> Objects::led_ = nullptr;
@@ -19,9 +20,7 @@ void Objects::Init(){
     std::unique_ptr<sensor::imu::Creater> imu_creater_ = std::make_unique<sensor::imu::Creater>(sensor::imu::NAME::ICM20689);
     Objects::imu_ = imu_creater_->Create(&hspi3,GPIOD,CS_Pin);
     //エンコーダの初期化
-    std::unique_ptr<sensor::encoder::Creater> encoder_creater_ = std::make_unique<sensor::encoder::Creater>(sensor::encoder::NAME::IEH24096);
-    Objects::encoder_r_ = encoder_creater_->Create(&htim8, TIM_CHANNEL_ALL);
-    Objects::encoder_l_ = encoder_creater_->Create(&htim4, TIM_CHANNEL_ALL);
+    Objects::encoder_ = std::make_unique<sensor::encoder::Combine>();
     //フォトトランジスタの初期化
     std::unique_ptr<sensor::pxstr::Creater> pxstr_creater_ = std::make_unique<sensor::pxstr::Creater>(sensor::pxstr::NAME::ST1KL3A);
     Objects::pxstr_ = pxstr_creater_->Create(adc);
@@ -30,14 +29,6 @@ void Objects::Init(){
                                                                         IR_L_GPIO_Port,IR_L_Pin,
                                                                         IR_FR_GPIO_Port,IR_FR_Pin,
                                                                         IR_FL_GPIO_Port,IR_FL_Pin);
-    //モタドラの初期化
-    std::unique_ptr<md::Creater> md_creater_ = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
-    Objects::md_ = md_creater_->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4, 
-                                        MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin,
-                                        MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin,
-                                        MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin,
-                                        MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin,
-                                        MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin);
     //waitの初期化
     Objects::wait_ = std::make_unique<peripheral::Wait>(&htim1);
     //ledの初期化
@@ -48,6 +39,19 @@ void Objects::Init(){
                                                     LED_5_GPIO_Port,LED_5_Pin,
                                                     LED_6_GPIO_Port,LED_6_Pin,
                                                     LED_7_GPIO_Port,LED_7_Pin);
+    //Wallの初期化
+    Objects::wall_ = std::make_unique<sensor::Wall>(Objects::pxstr_,Objects::ir_,Objects::wait_,Objects::led_);
+    //regulatorの初期化
+    Objects::motor_reg_ = std::make_unique<regulator::Motor>(Objects::wall_,Objects::imu_,Objects::encoder_);
+    //モタドラの初期化
+    std::unique_ptr<md::Creater> md_creater_ = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
+    Objects::md_ = md_creater_->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4, 
+                                        MOTOR_STBY_GPIO_Port, MOTOR_STBY_Pin,
+                                        MOTOR_L_CW_GPIO_Port, MOTOR_L_CW_Pin,
+                                        MOTOR_L_CCW_GPIO_Port, MOTOR_L_CCW_Pin,
+                                        MOTOR_R_CW_GPIO_Port, MOTOR_R_CW_Pin,
+                                        MOTOR_R_CCW_GPIO_Port, MOTOR_R_CCW_Pin);
+
     //buzzerの初期化
     Objects::buzzer_ = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
     //volの初期化

@@ -6,7 +6,6 @@
 #include <cstdint>
 
 #include "peripheral.h"
-#include "objects.hpp"
 #include "states.hpp"
 #include "consts.hpp"
 

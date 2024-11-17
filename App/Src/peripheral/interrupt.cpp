@@ -13,6 +13,11 @@ namespace peripheral{
     }
 
     void IT::PeriodElapsedCallback(){
+        Objects::encoder_->Update();
+        Objects::imu_->Update();
+        Objects::wall_->ReadVal();
+        Objects::motor_reg_->Regulate();
+        Objects::md_->Duty(Objects::motor_reg_->get_u_l(),Objects::motor_reg_->get_u_r());
     }
 
     extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
