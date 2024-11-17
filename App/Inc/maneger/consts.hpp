@@ -12,8 +12,8 @@ namespace consts::software{
     static constexpr float CTRL_FREQ = 1000.0F;
     //WALLセンサの閾値
     static constexpr float WALL_TH_L = 300.0F;
-    static constexpr float WALL_TH_FL = 300.0F;
-    static constexpr float WALL_TH_FR = 300.0F;
+    static constexpr float WALL_TH_FL = 100.0F;
+    static constexpr float WALL_TH_FR = 100.0F;
     static constexpr float WALL_TH_R = 300.0F;
     //距離のPIDパラメータ
     static constexpr float KP_DIST = 2.80F;

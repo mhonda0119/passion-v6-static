@@ -5,6 +5,7 @@ namespace drive{
     std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md)
     : motor_reg_(motor_reg), imu_(imu), encoder_(encoder),md_(md), design_(std::make_unique<drive::Design>()){}
 
+    //加減速走行
     void Core::AD(float dist,float spd_in, float spd_out){
         //加速度を取得
         design_->TrapeAccel(dist,spd_in,spd_out);
@@ -23,15 +24,10 @@ namespace drive{
             while(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] < dist
                 && motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] > 0){}
         }
-        //regulator内の変数をリセット
-        motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
-        motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] = 0;
-        motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
-        motor_reg_->r_->alpha[static_cast<int>(state::Motion::DIR::C)] = 0;
-        motor_reg_->r_->omega[static_cast<int>(state::Motion::DIR::C)] = 0;
-        motor_reg_->r_->angle[static_cast<int>(state::Motion::DIR::C)] = 0;
+        //目標値リセット
+        motor_reg_->Reset_r();
         //PIDのリセット
-        motor_reg_->PIDReset();
+        motor_reg_->Reset_PID();
         //走行距離カウンタをリセット
         encoder_->Reset();
     }

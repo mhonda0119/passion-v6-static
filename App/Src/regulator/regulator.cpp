@@ -22,7 +22,15 @@ namespace regulator{
     sieve_(std::make_unique<filter::Sieve>()),
     r_(std::make_unique<state::Motion>()){}
 
-    void Motor::PIDReset(){
+    void Motor::Reset_r(){
+        r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->spd[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->alpha[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->omega[static_cast<int>(state::Motion::DIR::C)] = 0;
+        r_->angle[static_cast<int>(state::Motion::DIR::C)] = 0;
+    }
+    void Motor::Reset_PID(){
         pid_dist_->Reset();
         pid_spd_->Reset();
         pid_omega_->Reset();

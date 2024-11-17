@@ -74,7 +74,7 @@ int main()
   /*----------初期化シーケンス実行------------*/
   Objects::buzzer_->Play(500,50,0.8);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,50,0.8);
+  Objects::buzzer_->Play(500,2000,0.8);//2秒//正しい位置に置く猶予
 
   Objects::imu_->Init();
   Objects::encoder_->Init();
@@ -100,15 +100,12 @@ int main()
   /*-------------------------------------INIT-------------------------------------*/
   peripheral::IT::Start();
 
-  Objects::buzzer_->Play(500,500,0.8);
   Objects::wait_->Ms(1000);
 
-  //core->AD(100,0,50);
+  core->AD(100,0,50);
 
   while(true){
-  std::cout << "imu_raw_omega:" << Objects::imu_->get_raw_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
-  std::cout << "encoder_c:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)] << std::endl;
-  Objects::wait_->Ms(100);
+
   }
   /* USER CODE END 3 */
 }
