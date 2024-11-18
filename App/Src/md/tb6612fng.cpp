@@ -50,6 +50,30 @@ namespace md{
     }
 
     void TB6612FNG::Duty(float duty_l,float duty_r){
+        if(duty_l > 0){
+            this->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
+        }else{
+            this->Dir(state::MOTOR::LEFT,state::MOTOR::BWD);
+        }
+
+        if(duty_r > 0){
+            this->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
+        }else{
+            this->Dir(state::MOTOR::RIGHT,state::MOTOR::BWD);
+        }
+
+        if(abs(duty_l) > 100.0f){
+            duty_l = 100.0f;
+        }else{
+            duty_l = abs(duty_l);
+        }
+
+        if(abs(duty_r) > 100.0f){
+            duty_r = 100.0f;
+        }else{
+            duty_r = abs(duty_r);
+        }
+
         pwm_l_ -> set_duty(duty_l);
         pwm_r_ -> set_duty(duty_r);
     }

@@ -102,10 +102,12 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  core->AD(100,0,50);
+  core->AD(100,0,1000);
+  core->AD(100,1000,1000);
+  core->AD(100,1000,0);
 
   while(true){
-
+    
   }
   /* USER CODE END 3 */
 }
