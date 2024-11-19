@@ -29,7 +29,7 @@ namespace sensor::imu{
         val_->omega[static_cast<int>(state::Motion::AXIS::Z)] = raw->omega[static_cast<int>(state::Motion::AXIS::Z)] - offset_->omega[static_cast<int>(state::Motion::AXIS::Z)];
         filter_->C_1(consts::software::SENSOR_FREQ,val_);
     }
-    void Product::Reset(){
+    void Product::ResetAngle(){
         val_->angle[static_cast<int>(state::Motion::AXIS::Z)] = 0;
         val_->angle[static_cast<int>(state::Motion::AXIS::X)] = 0;
         val_->angle[static_cast<int>(state::Motion::AXIS::Y)] = 0;

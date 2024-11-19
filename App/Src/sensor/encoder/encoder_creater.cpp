@@ -39,10 +39,15 @@ namespace sensor::encoder{
 		encoder_r_->ReadVal();
 	}
 
-	void Combine::Reset(){
-		encoder_l_->Reset();
-		encoder_r_->Reset();
+	void Combine::ResetDist(){
+		encoder_l_->ResetDist();
+		encoder_r_->ResetDist();
 	}
+
+	void Combine::ResetSpd(){
+		encoder_l_->ResetSpd();
+		encoder_r_->ResetSpd();
+	}	
 
 	void Combine::Stop(){
 		encoder_l_->Stop();

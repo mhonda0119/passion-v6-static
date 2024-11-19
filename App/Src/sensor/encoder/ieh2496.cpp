@@ -40,9 +40,12 @@ namespace sensor::encoder {
         //std::cout << "raw_spd::::::" << raw_->spd[static_cast<int>(state::Motion::DIR::C)] << std::endl;
     }
 
-    void IEH24096::Reset() {
-        timencoder_->Reset();
+    void IEH24096::ResetDist() {
         val_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+    }
+
+    void IEH24096::ResetSpd() {
+        timencoder_->Reset();
     }
 
     void IEH24096::Stop(){

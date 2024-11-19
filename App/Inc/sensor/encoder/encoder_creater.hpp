@@ -28,7 +28,8 @@ namespace sensor::encoder{
 	void Init();
 	void Start();
 	void ReadVal();
-	void Reset();
+	void ResetDist();
+	void ResetSpd();
 	void Stop();
 	void GetOffset();
 	void Update();

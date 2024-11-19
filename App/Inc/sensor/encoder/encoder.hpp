@@ -25,7 +25,8 @@ namespace sensor::encoder{
 		virtual void Init() = 0;//
 		virtual void Start() = 0;//HAL_TIM_Encoder_Start(&htim8, TIM_CHANNEL_ALL);この関数使う.
 		virtual void ReadVal() = 0;//MotionParameterへ読んだ値を入れます．
-		virtual void Reset() = 0;//積算値のリセット
+		virtual void ResetDist() = 0;//積算値のリセット
+		virtual void ResetSpd() = 0;//速度のリセット
 		virtual void Stop() = 0;
 		void GetOffset();
 		void Update();

@@ -50,7 +50,6 @@ namespace regulator{
         Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
         std::unique_ptr<sensor::encoder::Combine>& encoder);
         void Regulate();
-        void Reset_r();
         void Reset_PID();
         float get_u_l();
         float get_u_r();

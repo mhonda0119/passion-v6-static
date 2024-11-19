@@ -102,12 +102,10 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  core->AD(100,0,1000);
-  core->AD(100,1000,1000);
-  core->AD(100,1000,0);
+  core->AD(90,0,1000);
+  core->AD(90,Objects::encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)],0);
 
   while(true){
-    
   }
   /* USER CODE END 3 */
 }

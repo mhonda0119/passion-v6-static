@@ -8,7 +8,6 @@
 #include "ctrl.hpp"
 #include "consts.hpp"
 #include "objects.hpp"
-#include "motion.hpp"
 #include "design.hpp"
 #include "interrupt.hpp"
 

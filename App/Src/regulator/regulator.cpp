@@ -22,14 +22,6 @@ namespace regulator{
     sieve_(std::make_unique<filter::Sieve>()),
     r_(std::make_unique<state::Motion>()){}
 
-    void Motor::Reset_r(){
-        r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
-        r_->spd[static_cast<int>(state::Motion::DIR::C)] = 0;
-        r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
-        r_->alpha[static_cast<int>(state::Motion::DIR::C)] = 0;
-        r_->omega[static_cast<int>(state::Motion::DIR::C)] = 0;
-        r_->angle[static_cast<int>(state::Motion::DIR::C)] = 0;
-    }
     void Motor::Reset_PID(){
         pid_dist_->Reset();
         pid_spd_->Reset();
@@ -41,11 +33,13 @@ namespace regulator{
     void Motor::Regulate(){
         //指令値にfilterかけて目標値生成
         sieve_->C_2(consts::software::SENSOR_FREQ,r_);
+        //現在の値を取得して差分をとる
+
         //PID制御(距離)//encoderの値を使う
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //PID制御(速度)//PID制御(距離)の出力を使う
-        pid_spd_->Update(pid_dist_->get_u(),encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
+        //pid_spd_->Update(pid_dist_->get_u(),encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
         //壁制御
         //左右の壁がある場合
         if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] &&
@@ -79,8 +73,8 @@ namespace regulator{
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),//壁制御の出力を使う
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //操作量の計算
-        u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
-        u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
+        u_r_ = pid_dist_->get_u() + pid_omega_->get_u();
+        u_l_ = pid_dist_->get_u() - pid_omega_->get_u();
     }
     float Motor::get_u_l(){
         return u_l_;
