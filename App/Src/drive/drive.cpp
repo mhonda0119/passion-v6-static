@@ -82,7 +82,7 @@ namespace drive{
         //走行開始flag立てる
         Flag::Set(DRIVE_START);
         //壁制御ON
-        Flag::Set(WALL_CTRL);
+        Flag::Reset(WALL_CTRL);
     }
     //超信地旋回
     void Core::SpinTurn(float angle,float omega_in,float omega_out){

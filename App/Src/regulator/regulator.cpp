@@ -93,6 +93,7 @@ namespace regulator{
         if(Flag::Check(DRIVE_START)){
         //1.現在の時刻の目標距離を取得
         r_->dist[static_cast<int>(state::Motion::DIR::C)] = design_->x(t_cnt_);
+        r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
         // //現在の時刻を表示
         // std::cout << "\tt_cnt_ : " << t_cnt_;
         // //目標距離を表示
@@ -102,6 +103,7 @@ namespace regulator{
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //壁制御
+        if(Flag::Check(WALL_CTRL)){
         //左右の壁がある場合
         if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] &&
         wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
@@ -129,6 +131,7 @@ namespace regulator{
         //両方の壁ない
         else{
             pid_wall_->Reset();
+        }
         }
         //角速度pidかける
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),

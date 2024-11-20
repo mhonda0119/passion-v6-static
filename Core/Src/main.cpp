@@ -114,26 +114,18 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  //core->CurveAD(3000,0,0);
+  // Objects::accel_designer_->reset(consts::software::JERK_MAX,consts::software::ACCEL_MAX,consts::software::SPD_MAX,0,0,100);
+  //   for (float t = 0; t < Objects::accel_designer_->t_end(); t += 0.001f) {
+  //   printf("%f,%f,%f,%f,%f\n", t, Objects::accel_designer_->j(t), Objects::accel_designer_->a(t), Objects::accel_designer_->v(t), Objects::accel_designer_->x(t));
+  // }
+  core->CurveAD(100,0,0);
   // Objects::buzzer_->Play(500,50,0.8);
-  core->AD(100,0,1000);
-  
-  core->AD(100,1000,0);
+  //core->CurveAD(100,0,0);
   // Objects::wait_->Ms(100); 
-  std::cout << "imu_angle : " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-  std::cout << "imu_omega : " << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-  std::cout << "encoder_dist : " << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-  std::cout << "encoder_spd : " << Objects::encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
-  std::cout << "motor_r_accel : " << Objects::motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] << "\t";
-  std::cout << "motor_r_spd : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
-  std::cout << "motor_r_dist : " << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-  std::cout << "motor_r_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-  std::cout << "motor_r_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-  std::cout << "motor_r_alpha : " << Objects::motor_reg_->r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-  std::cout << "u_r_ : " << Objects::motor_reg_->get_u_r() << "\t";
-  std::cout << "u_l_ : " << Objects::motor_reg_->get_u_l() << std::endl;
-  core->SpinTurn(45,0,300);
-  core->SpinTurn(45,300,0);
+  // core->SpinTurn(110,0,500);
+  // core->SpinTurn(110,500,0);
+  //core->AD(90,0,500);
+  // core->AD(90,500,0);
 
   while(true){
 
