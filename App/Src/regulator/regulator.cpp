@@ -102,6 +102,7 @@ namespace regulator{
         encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //壁制御
         //左右の壁がある場合
+        if(Flag::Check(WALL_CTRL)){
         if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] &&
         wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
             pid_wall_->Update(
@@ -128,6 +129,7 @@ namespace regulator{
         //両方の壁ない
         else{
             pid_wall_->Reset();
+        }
         }
         //角速度pidかける
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
