@@ -35,7 +35,6 @@ namespace regulator{
         //指令値にfilterかけて目標値生成
         sieve_->C_2(consts::software::SENSOR_FREQ,r_);
         //現在の値を取得して差分をとる
-
         //PID制御(距離)//encoderの値を使う
         if(Flag::Check(DRIVE_SPIN)){
             r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
@@ -146,12 +145,12 @@ namespace regulator{
                 t_cnt_ = 0;
                 encoder_->ResetDist();
                 imu_->ResetAngle();
+                this->Reset_PID();
                 u_l_ = 0;
                 u_r_ = 0;
                 Flag::Reset(DRIVE_START);
                 Flag::Reset(WALL_CTRL);
-            }
-        t_cnt_ += 1/consts::software::CTRL_FREQ;
+            }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
         }
         
     }

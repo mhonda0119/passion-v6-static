@@ -77,12 +77,15 @@ namespace drive{
         motor_reg_->t_cnt_ = 0.0f;
         //走行開始
         md_->Start();
+        motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
         //目標値を設定
         design_->CurveAccel(dist,spd_in,spd_out);
+        std::cout << "v:::::" << Objects::accel_designer_->v(0.1) << std::endl;
+        std::cout << "x:::::" << Objects::accel_designer_->x(0.5) << std::endl;
         //走行開始flag立てる
         Flag::Set(DRIVE_START);
         //壁制御ON
-        Flag::Set(WALL_CTRL);
+        Flag::Reset(WALL_CTRL);
     }
     //超信地旋回
     void Core::SpinTurn(float angle,float omega_in,float omega_out){
