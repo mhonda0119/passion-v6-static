@@ -17,6 +17,7 @@ namespace peripheral{
         Objects::imu_->Update();
         Objects::wall_->ReadVal();
         Objects::motor_reg_->Regulate();
+        //Objects::motor_reg_->DesignRegulate();
         Objects::md_->Duty(Objects::motor_reg_->get_u_l(),Objects::motor_reg_->get_u_r());
     }
 

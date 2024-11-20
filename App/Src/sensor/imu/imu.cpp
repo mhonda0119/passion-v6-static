@@ -34,6 +34,11 @@ namespace sensor::imu{
         val_->angle[static_cast<int>(state::Motion::AXIS::X)] = 0;
         val_->angle[static_cast<int>(state::Motion::AXIS::Y)] = 0;
     }
+    void Product::ResetOmega(){
+        val_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
+        val_->omega[static_cast<int>(state::Motion::AXIS::X)] = 0;
+        val_->omega[static_cast<int>(state::Motion::AXIS::Y)] = 0;
+    }
     std::unique_ptr<state::Motion>& Product::get_val_ref(){
         return val_;
     }

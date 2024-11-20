@@ -28,6 +28,8 @@
 #include "interrupt.hpp"
 #include "drive.hpp"
 #include "regulator.hpp"
+#include "accel_designer.h"
+#include "flags.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -69,8 +71,11 @@ int main()
   //すべてのstaticなクラスのインスタンス化を行う．
   objects->Init();
   //objectsを利用した初期化を行う．
+  //designのインスタンス化
+  std::unique_ptr<ctrl::Design> design = std::make_unique<ctrl::Design>(Objects::accel_designer_);
+  //driveのインスタンス化
   std::unique_ptr<drive::Core> core = 
-  std::make_unique<drive::Core>(objects->motor_reg_,objects->imu_,objects->encoder_,objects->md_);
+  std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,design);
   /*----------初期化シーケンス実行------------*/
   Objects::buzzer_->Play(500,50,0.8);
   Objects::wait_->Ms(100);
@@ -98,14 +103,40 @@ int main()
   //interruputの初期化を行う．
   peripheral::IT::Init(&htim5);
   /*-------------------------------------INIT-------------------------------------*/
+
+  // if(Flag::Check(DRIVE_START)){
+  // std::cout << "111111111111" << std::endl;
+  // }else{
+  // std::cout << "000000000000" << std::endl;
+  // }
+
   peripheral::IT::Start();
 
   Objects::wait_->Ms(1000);
 
-  core->AD(90,0,1000);
-  core->AD(90,Objects::encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)],0);
+  //core->CurveAD(3000,0,0);
+  // Objects::buzzer_->Play(500,50,0.8);
+  // core->AD(100,0,1000);
+  
+  // core->AD(100,1000,0);
+  // Objects::wait_->Ms(100); 
+  std::cout << "imu_angle : " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  std::cout << "imu_omega : " << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  std::cout << "encoder_dist : " << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  std::cout << "encoder_spd : " << Objects::encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  std::cout << "motor_r_accel : " << Objects::motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  std::cout << "motor_r_spd : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  std::cout << "motor_r_dist : " << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  std::cout << "motor_r_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  std::cout << "motor_r_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  std::cout << "motor_r_alpha : " << Objects::motor_reg_->r_->alpha[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  std::cout << "u_r_ : " << Objects::motor_reg_->get_u_r() << "\t";
+  std::cout << "u_l_ : " << Objects::motor_reg_->get_u_l() << std::endl;
+  core->SpinTurn(45,0,300);
+  core->SpinTurn(45,300,0);
 
   while(true){
+
   }
   /* USER CODE END 3 */
 }

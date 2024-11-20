@@ -27,6 +27,7 @@ namespace sensor::imu{
 		void GetOffset();
 		void Update();
 		void ResetAngle();//積算値のリセット
+		void ResetOmega();//角速度のリセット
 		std::unique_ptr<state::Motion>& get_val_ref();
 		virtual ~Product() = default;//仮想デストラクタ（親クラス）
 	};

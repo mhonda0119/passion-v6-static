@@ -6,13 +6,13 @@ std::unique_ptr<sensor::encoder::Combine> Objects::encoder_ = nullptr;
 std::unique_ptr<sensor::pxstr::Product> Objects::pxstr_ = nullptr;
 std::unique_ptr<sensor::ir::OSI3CA5111A> Objects::ir_ = nullptr;
 std::unique_ptr<sensor::Wall> Objects::wall_ = nullptr;
+std::unique_ptr<ctrl::AccelDesigner> Objects::accel_designer_ = nullptr;
 std::unique_ptr<regulator::Motor> Objects::motor_reg_ = nullptr;
 std::unique_ptr<md::Product> Objects::md_ = nullptr;
 std::unique_ptr<peripheral::Wait> Objects::wait_ = nullptr;
 std::unique_ptr<indicator::LED> Objects::led_ = nullptr;
 std::unique_ptr<indicator::Buzzer> Objects::buzzer_ = nullptr;
 std::unique_ptr<sensor::bat::Vol> Objects::vol_ = nullptr;
-
 void Objects::Init(){
     //shared_ptrの初期化
     std::shared_ptr<peripheral::ADC> adc = std::make_shared<peripheral::ADC>(&hadc1);
@@ -41,8 +41,10 @@ void Objects::Init(){
                                                     LED_7_GPIO_Port,LED_7_Pin);
     //Wallの初期化
     Objects::wall_ = std::make_unique<sensor::Wall>(Objects::pxstr_,Objects::ir_,Objects::wait_,Objects::led_);
+    //accel_designerの初期化
+    Objects::accel_designer_ = std::make_unique<ctrl::AccelDesigner>();
     //regulatorの初期化
-    Objects::motor_reg_ = std::make_unique<regulator::Motor>(Objects::wall_,Objects::imu_,Objects::encoder_);
+    Objects::motor_reg_ = std::make_unique<regulator::Motor>(Objects::wall_,Objects::imu_,Objects::encoder_,Objects::accel_designer_);
     //モタドラの初期化
     std::unique_ptr<md::Creater> md_creater_ = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
     Objects::md_ = md_creater_->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4, 

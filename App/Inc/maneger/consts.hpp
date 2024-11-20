@@ -16,16 +16,16 @@ namespace consts::software{
     static constexpr float WALL_TH_FR = 100.0F;
     static constexpr float WALL_TH_R = 300.0F;
     //距離のPIDパラメータ
-    static constexpr float KP_DIST = 2.80F;
-    static constexpr float KI_DIST = 0.0F;
+    static constexpr float KP_DIST = 0.1F;
+    static constexpr float KI_DIST = 0.1F;
     static constexpr float KD_DIST = 0.0F;
     //速さのPIDパラメータ
-    static constexpr float KP_SPD = 2.0F;
+    static constexpr float KP_SPD = 3.0F;
     static constexpr float KI_SPD = 0.00F;
     static constexpr float KD_SPD = 0.0F;
     //角速度のPIDパラメータ
-    static constexpr float KP_OMEGA = 0.01F;
-    static constexpr float KI_OMEGA = 0.01F;
+    static constexpr float KP_OMEGA = 0.3F;
+    static constexpr float KI_OMEGA = 0.1F;
     static constexpr float KD_OMEGA = 0.01F;
     //角度のPIDパラメータ
     static constexpr float KP_ANGLE = 0.01F;
@@ -39,7 +39,12 @@ namespace consts::software{
     static constexpr float WALL_GAP_TH = 0.0F;
     //壁切れの補正値
     static constexpr float WALL_GAP_C = 0.0F;
-
+    //jerkの最大値mm/s^3
+    static constexpr float JERK_MAX = 5000000.0F;
+    //加速度の最大値mm/s^2
+    static constexpr float ACCEL_MAX = 250000.0F;
+    //速度の最大値mm/s
+    static constexpr float SPD_MAX = 2000.0F;
 }
 
 namespace consts::hardware{

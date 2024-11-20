@@ -12,6 +12,8 @@
 #include "correction.hpp"
 #include "filter.hpp"
 #include "states.hpp"
+#include "design.hpp"
+#include "flags.hpp"
 
 namespace regulator{
     class Motor{
@@ -33,6 +35,8 @@ namespace regulator{
         std::unique_ptr<sensor::imu::Product>& imu_;
         //エンコーダのインスタンス
         std::unique_ptr<sensor::encoder::Combine>& encoder_;
+        //accel_designerのインスタンス
+        std::unique_ptr<ctrl::AccelDesigner>& design_;
         //制御器のインスタンス
         std::unique_ptr<ctrl::PID> pid_dist_;
         std::unique_ptr<ctrl::PID> pid_spd_;
@@ -47,12 +51,17 @@ namespace regulator{
         public:
         //目標値
         std::unique_ptr<state::Motion> r_;
+        //DesignRegulateで使うカウンタ
+        float t_cnt_;
         Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
-        std::unique_ptr<sensor::encoder::Combine>& encoder);
+        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<ctrl::AccelDesigner>& design);
         void Regulate();
+        void DesignRegulate();
         void Reset_PID();
         float get_u_l();
         float get_u_r();
+        void set_u_l(float u_l);
+        void set_u_r(float u_r);
         ~Motor() = default;
     };
 }

@@ -18,6 +18,7 @@
 #include "vol.hpp"
 #include "wall.hpp"
 #include "regulator.hpp"
+#include "accel_designer.h"
 
 class Objects{
     public:
@@ -26,6 +27,7 @@ class Objects{
     static std::unique_ptr<sensor::pxstr::Product> pxstr_;
     static std::unique_ptr<sensor::ir::OSI3CA5111A> ir_;
     static std::unique_ptr<sensor::Wall> wall_;
+    static std::unique_ptr<ctrl::AccelDesigner> accel_designer_;
     static std::unique_ptr<regulator::Motor> motor_reg_;
     static std::unique_ptr<md::Product> md_;
     static std::unique_ptr<peripheral::Wait> wait_;
