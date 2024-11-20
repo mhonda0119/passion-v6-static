@@ -116,9 +116,9 @@ int main()
 
   //core->CurveAD(3000,0,0);
   // Objects::buzzer_->Play(500,50,0.8);
-  // core->AD(100,0,1000);
+  core->AD(100,0,1000);
   
-  // core->AD(100,1000,0);
+  core->AD(100,1000,0);
   // Objects::wait_->Ms(100); 
   std::cout << "imu_angle : " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
   std::cout << "imu_omega : " << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";

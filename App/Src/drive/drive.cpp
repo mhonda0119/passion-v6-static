@@ -86,14 +86,14 @@ namespace drive{
     //超信地旋回
     void Core::SpinTurn(float angle,float omega_in,float omega_out){
 
-        std::cout << "\tr_accel:"<<motor_reg_->r_->maccel[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\timu_accel : " << imu_->get_val_ref()->accel[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\tr_spd : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\timu_spd : " << imu_->get_val_ref()->spd[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
-        std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+        // std::cout << "\tr_accel:"<<motor_reg_->r_->maccel[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\timu_accel : " << imu_->get_val_ref()->accel[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\tr_spd : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\timu_spd : " << imu_->get_val_ref()->spd[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
+        // std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
 
         //回転角度をリセット
         imu_->ResetAngle();
@@ -109,16 +109,18 @@ namespace drive{
         Flag::Set(DRIVE_START);
         //壁制御OFF
         Flag::Reset(WALL_CTRL);
+        //SPINフラグ
+        Flag::Set(DRIVE_SPIN);
         //走行開始
         md_->Start();
          //実際の角度が目標角度になるまで走行
         if(angle>= 0){
-            std::cout << "CCW" << std::endl;
-                std::cout << "\tangle : " << angle;
-                std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+            // std::cout << "CCW" << std::endl;
+            //     std::cout << "\tangle : " << angle;
+            //     std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            //     std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            //     std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
+            //     std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
 
             while(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] < angle &&
             Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] > 0){
@@ -129,30 +131,30 @@ namespace drive{
                 //ccw->ccwのとき，
                 //omegaにリセットをかけてないのでomegaが逆に小さくなりすぎたとき，angleが目標値に達してしまうと，omega...?なんでだ？
                 //ともかく次の動作に移るとき，r_をspd_outにしとくか．
-                std::cout << "\tangle : " << angle;
-                std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+                // std::cout << "\tangle : " << angle;
+                // std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
+                // std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+                // std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
+                // std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
             }
         }else{
-            std::cout << "CW" << std::endl;
-            std::cout << "\tangle : " << angle;
-            std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
-            std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-            std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
-            std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+            // std::cout << "CW" << std::endl;
+            // std::cout << "\tangle : " << angle;
+            // std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\tr_angle : " << Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
             while(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] > angle && 
             Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] < 0){
-                std::cout << "\tangle : " << angle;
-                std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\tr_angle : " <<  Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
-                std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
+            // std::cout << "\tangle : " << angle;
+            // std::cout << "\tr_omega : " << Objects::motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\timu_omega : " << imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\tr_angle : " <<  Objects::motor_reg_->r_->angle[static_cast<int>(state::Motion::AXIS::Z)];
+            // std::cout << "\timu_angle : " << imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << std::endl;
             }
         }
         //終わりコメント
-         std::cout << "End Turn" << std::endl;
+        //  std::cout << "End Turn" << std::endl;
         //目標値ごまかし//角速度
         motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = omega_out;
         //目標値リセット//加速度
@@ -167,7 +169,8 @@ namespace drive{
         imu_->ResetAngle();
         //フラグ折る
         Flag::Reset(DRIVE_START);
-        std::cout << "DRIVE_START flag : " << Flag::Check(DRIVE_START) << std::endl;
+        Flag::Reset(DRIVE_SPIN);
+        // std::cout << "DRIVE_START flag : " << Flag::Check(DRIVE_START) << std::endl;
         //duty比リセット
         md_->Duty(0,0);
         motor_reg_->set_u_l(0);

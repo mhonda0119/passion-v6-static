@@ -37,6 +37,10 @@ namespace regulator{
         //現在の値を取得して差分をとる
 
         //PID制御(距離)//encoderの値を使う
+        if(Flag::Check(DRIVE_SPIN)){
+            r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+        }
+        //PID制御(距離)
         pid_dist_->Update(r_->dist[static_cast<int>(state::Motion::DIR::C)],
         encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //PID制御(速度)//PID制御(距離)の出力を使う
@@ -77,13 +81,10 @@ namespace regulator{
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //操作量の計算
         //PID制御(距離)の出力と壁制御の出力の和を操作量とする．
-        if(!(Flag::Check(DRIVE_SPIN))){
+
         u_r_ = pid_dist_->get_u() + pid_omega_->get_u();
         u_l_ = pid_dist_->get_u() - pid_omega_->get_u();
-        }else{
-        u_r_ =  + pid_omega_->get_u();
-        u_l_ = - pid_omega_->get_u();
-        }
+
         }
     }
 
