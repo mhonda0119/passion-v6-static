@@ -60,6 +60,7 @@ namespace drive{
         Flag::Reset(DRIVE_START);
         Flag::Reset(WALL_CTRL);
         //duty比リセット
+        
         md_->Duty(0,0);
         motor_reg_->set_u_l(0);
         motor_reg_->set_u_r(0);
