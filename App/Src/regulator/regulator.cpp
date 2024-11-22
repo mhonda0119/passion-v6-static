@@ -102,56 +102,54 @@ namespace regulator{
         encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]);
         //壁制御
         //左右の壁がある場合
-        if(Flag::Check(WALL_CTRL)){
-        if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] &&
-        wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
-            pid_wall_->Update(
-                (wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::R)]-
-                wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)])/2,
-                (wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)]-
-                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)])/2
-            );
-        }
-        //左の壁がある場合
-        else if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)]){
-            pid_wall_->Update(
-                wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)],
-                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)]
-            );
-        }
-        //右の壁がある場合
-        else if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
-            pid_wall_->Update(
-                wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::R)],
-                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)]
-            );
-        }
-        //両方の壁ない
-        else{
-            pid_wall_->Reset();
-        }
-        }
+        // if(Flag::Check(WALL_CTRL)){
+        // if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)] &&
+        // wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
+        //     pid_wall_->Update(
+        //         (wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::R)]-
+        //         wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)])/2,
+        //         (wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)]-
+        //         wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)])/2
+        //     );
+        // }
+        // //左の壁がある場合
+        // else if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)]){
+        //     pid_wall_->Update(
+        //         wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)],
+        //         wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)]
+        //     );
+        // }
+        // //右の壁がある場合
+        // else if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
+        //     pid_wall_->Update(
+        //         wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::R)],
+        //         wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)]
+        //     );
+        // }
+        // //両方の壁ない
+        // else{
+        //     pid_wall_->Reset();
+        // }
+        // }
         //角速度pidかける
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //pidの出力保存
         u_l_ = pid_dist_->get_u() + pid_omega_->get_u();
         u_r_ = pid_dist_->get_u() - pid_omega_->get_u();
+        // u_l_ = pid_dist_->get_u();
+        // u_r_ = pid_dist_->get_u();
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
             if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] 
             >= design_->x(design_->t_end()) || t_cnt_ >= design_->t_end()){
-                std::cout << "end" << std::endl;
+                //std::cout << "end" << std::endl;
                 pid_dist_->Reset();
-                r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
                 t_cnt_ = 0;
                 encoder_->ResetDist();
                 imu_->ResetAngle();
-                this->Reset_PID();
-                u_l_ = 0;
-                u_r_ = 0;
                 Flag::Reset(DRIVE_START);
-                Flag::Reset(WALL_CTRL);
+                //Flag::Reset(WALL_CTRL);
             }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
         }
         

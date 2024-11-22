@@ -24,9 +24,9 @@ namespace consts::software{
     static constexpr float KI_SPD = 0.00F;
     static constexpr float KD_SPD = 0.0F;
     //角速度のPIDパラメータ
-    static constexpr float KP_OMEGA = 0.3F;
-    static constexpr float KI_OMEGA = 0.1F;
-    static constexpr float KD_OMEGA = 0.01F;
+    static constexpr float KP_OMEGA = 0.001F;
+    static constexpr float KI_OMEGA = 0.0F;
+    static constexpr float KD_OMEGA = 0.0F;
     //角度のPIDパラメータ
     static constexpr float KP_ANGLE = 0.01F;
     static constexpr float KI_ANGLE = 0.01F;

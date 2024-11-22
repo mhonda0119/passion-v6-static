@@ -114,14 +114,15 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  core->CurveAD(1000,0,0);
+  core->CurveAD(180,0,0);
 
 
   while(true){
     Objects::wait_->Ms(50);
     std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
-    std::cout << Objects::accel_designer_->v((Objects::motor_reg_->t_cnt_)) << "\t";
-    std::cout << Objects::accel_designer_->x((Objects::motor_reg_->t_cnt_)) << "\t";
+    std::cout << "v" <<Objects::accel_designer_->v((Objects::motor_reg_->t_cnt_)) << "\t";
+    std::cout << "x" <<Objects::accel_designer_->x((Objects::motor_reg_->t_cnt_)) << "\t";
+    std::cout << "encoder_dist" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
     std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << std::endl;
 
   }
