@@ -14,6 +14,8 @@
 #include "states.hpp"
 #include "design.hpp"
 #include "flags.hpp"
+#include "state.h"
+#include "trajectory.h"
 
 namespace regulator{
     class Motor{
@@ -37,12 +39,16 @@ namespace regulator{
         std::unique_ptr<sensor::encoder::Combine>& encoder_;
         //accel_designerのインスタンス
         std::unique_ptr<ctrl::AccelDesigner>& design_;
+        //trajectoryのインスタンス
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90_;
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90_;
         //制御器のインスタンス
         std::unique_ptr<ctrl::PID> pid_dist_;
         std::unique_ptr<ctrl::PID> pid_spd_;
         std::unique_ptr<ctrl::PID> pid_omega_;
         std::unique_ptr<ctrl::PID> pid_angle_;
         std::unique_ptr<ctrl::PID> pid_wall_;
+        std::unique_ptr<ctrl::PID> pid_stop_;
         //壁切れのインスタンス
         std::unique_ptr<correction::WallGap> wall_gap_;
         //なにもしないフィルター
@@ -51,12 +57,18 @@ namespace regulator{
         public:
         //目標値
         std::unique_ptr<state::Motion> r_;
-        //DesignRegulateで使うカウンタ
+        //DesignRegulateで使うカウンタｄｔ
         float t_cnt_;
+        ctrl::State s_; //trajectory使う場合はここに全部の状態が入るらしいなので動作が終わり次第リセットかけます．
         Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
-        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<ctrl::AccelDesigner>& design);
+        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<ctrl::AccelDesigner>& design,
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90);
         void Regulate();
+        void StopRegulate();
         void DesignRegulate();
+        void TrajL90Regulate();
+        void TrajR90Regulate();
+        void SpinRegulate();
         void Reset_PID();
         float get_u_l();
         float get_u_r();

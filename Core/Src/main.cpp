@@ -75,11 +75,12 @@ int main()
   std::unique_ptr<ctrl::Design> design = std::make_unique<ctrl::Design>(Objects::accel_designer_);
   //driveのインスタンス化
   std::unique_ptr<drive::Core> core = 
-  std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,design);
+  std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,
+  design,Objects::traj_l90_,Objects::traj_r90_);
   /*----------初期化シーケンス実行------------*/
-  Objects::buzzer_->Play(500,50,0.8);
+  Objects::buzzer_->Play(500,50,0.2);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,2000,0.8);//2秒//正しい位置に置く猶予
+  Objects::buzzer_->Play(500,2000,0.2);//2秒//正しい位置に置く猶予
 
   Objects::imu_->Init();
   Objects::encoder_->Init();
@@ -96,9 +97,9 @@ int main()
   Objects::encoder_->Start();
   Objects::imu_->GetOffset();
 
-  Objects::buzzer_->Play(500,50,0.8);
+  Objects::buzzer_->Play(500,50,0.2);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,50,0.8);
+  Objects::buzzer_->Play(500,50,0.2);
   /*------------初期化シーケンス終了------------*/
   //interruputの初期化を行う．
   peripheral::IT::Init(&htim5);
@@ -114,18 +115,36 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  core->CurveAD(180,0,0);
+  //core->CurveAD(180,0,0);
+  core->SpinTurn();
+  //core->Stop();
+  //Objects::buzzer_->Play(500,50,0.5);
+  // core->Slalom_R90(Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
+  // while(Flag::Check(DRIVE_START)){}
+  // core->Slalom_L90(Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
 
-
-  while(true){
-    Objects::wait_->Ms(50);
-    std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
-    std::cout << "v" <<Objects::accel_designer_->v((Objects::motor_reg_->t_cnt_)) << "\t";
-    std::cout << "x" <<Objects::accel_designer_->x((Objects::motor_reg_->t_cnt_)) << "\t";
-    std::cout << "encoder_dist" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-    std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << std::endl;
-
+  while(Flag::Check(DRIVE_START)){
+    Objects::wait_->Ms(5);
+    // std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
+    // std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+    // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RABD2DEG << "\t";
+    // std::cout << "s.q.th : " << Objects::motor_reg_->s_.q.th*consts::physics::RAD2DEG << "\t";
+    // std::cout << "v : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
+    // std::cout << "l_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::L)] << "\t";
+    // std::cout << "r_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)]<< "\t";
+    // std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+    // std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << "\t";
+    // std::cout << "DRIVE_STRAIGHT : " << Flag::Check(DRIVE_STRAIGHT) << "\t";
+    // std::cout << "DRIVE_SLALOM_L90 : " << Flag::Check(DRIVE_SLALOM_L90) << std::endl;
+    std::cout << "imu_omega:" << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+    std::cout << "omega_r" << Objects::accel_designer_->v(Objects::motor_reg_->t_cnt_) << "\t";
+    std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+    std::cout << "angle_r : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end())<< std::endl;
   }
+  Objects::buzzer_->Start(500,10 );
+  Objects::md_->ShortBrake();
+  Objects::wait_->Ms(100);
+  Objects::buzzer_->Stop();    
   /* USER CODE END 3 */
 }
 

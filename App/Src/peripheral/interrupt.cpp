@@ -16,8 +16,18 @@ namespace peripheral{
         Objects::encoder_->Update();
         Objects::imu_->Update();
         Objects::wall_->ReadVal();
-        //Objects::motor_reg_->Regulate();
-        Objects::motor_reg_->DesignRegulate();
+        if(Flag::Check(DRIVE_STOP)){
+            Objects::motor_reg_->StopRegulate();
+        }
+        else if(Flag::Check(DRIVE_STRAIGHT)){
+            Objects::motor_reg_->DesignRegulate();
+        }else if(Flag::Check(DRIVE_SLALOM_L90)){
+            Objects::motor_reg_->TrajL90Regulate();
+        }else if(Flag::Check(DRIVE_SLALOM_R90)){
+            Objects::motor_reg_->TrajR90Regulate();
+        }else if(Flag::Check(DRIVE_SPIN)){
+            Objects::motor_reg_->SpinRegulate();
+        }
         Objects::md_->Duty(Objects::motor_reg_->get_u_l(),Objects::motor_reg_->get_u_r());
     }
 

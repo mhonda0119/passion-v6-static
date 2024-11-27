@@ -33,7 +33,7 @@ namespace  md{
         void Duty(float duty_l,float duty_r) override; //dutyは0-100で指定%で指定
         void Freq(uint32_t freq_l,uint32_t freq_r)override;
         void Start() override;//pwmスタート
-        void Stop() override;//pwmストップ
+        void ShortBrake() override;//pwmストップ
         void Off() override;//stbyをl
         virtual ~TB6612FNG() = default;
     };

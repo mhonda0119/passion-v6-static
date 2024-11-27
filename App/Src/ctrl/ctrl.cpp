@@ -38,6 +38,17 @@ namespace ctrl{
         i_ = 0;
         d_ = 0;
     }
+
+    void PID::set_kp(float kp){
+        kp_ = kp;
+    }
+    void PID::set_ki(float ki){
+        ki_ = ki;
+    }
+    void PID::set_kd(float kd){
+        kd_ = kd;
+    }
+
 }
 
 namespace ctrl{

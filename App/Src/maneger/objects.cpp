@@ -13,6 +13,8 @@ std::unique_ptr<peripheral::Wait> Objects::wait_ = nullptr;
 std::unique_ptr<indicator::LED> Objects::led_ = nullptr;
 std::unique_ptr<indicator::Buzzer> Objects::buzzer_ = nullptr;
 std::unique_ptr<sensor::bat::Vol> Objects::vol_ = nullptr;
+std::unique_ptr<ctrl::slalom::Trajectory> Objects::traj_l90_ = nullptr;
+std::unique_ptr<ctrl::slalom::Trajectory> Objects::traj_r90_ = nullptr;
 void Objects::Init(){
     //shared_ptrの初期化
     std::shared_ptr<peripheral::ADC> adc = std::make_shared<peripheral::ADC>(&hadc1);
@@ -43,8 +45,26 @@ void Objects::Init(){
     Objects::wall_ = std::make_unique<sensor::Wall>(Objects::pxstr_,Objects::ir_,Objects::wait_,Objects::led_);
     //accel_designerの初期化
     Objects::accel_designer_ = std::make_unique<ctrl::AccelDesigner>();
+    //traj_l90_の初期化
+        //slalomの事前設計
+        //設計パラメータ定義
+        const ctrl::Pose pose_total_l90 = ctrl::Pose(90, 90, consts::physics::PI / 2); //< 探索90度ターンを想定
+        const float y_curve = 75;
+        //スラロームの形状を定義
+        ctrl::slalom::Shape shape_l90 = ctrl::slalom::Shape(pose_total_l90, y_curve);
+        //スラロームの軌道を生成(trajectory_の初期化)
+        Objects::traj_l90_ = std::make_unique<ctrl::slalom::Trajectory>(shape_l90);
+    //traj_r90_の初期化
+        //slalomの事前設計
+        //設計パラメータ定義
+        const ctrl::Pose pose_total_r90 = ctrl::Pose(90, -90, -consts::physics::PI / 2); //< 探索90度ターンを想定
+        //スラロームの形状を定義
+        ctrl::slalom::Shape shape_r90 = ctrl::slalom::Shape(pose_total_r90, -y_curve);
+        //スラロームの軌道を生成(trajectory_の初期化)
+        Objects::traj_r90_ = std::make_unique<ctrl::slalom::Trajectory>(shape_r90);
     //regulatorの初期化
-    Objects::motor_reg_ = std::make_unique<regulator::Motor>(Objects::wall_,Objects::imu_,Objects::encoder_,Objects::accel_designer_);
+    Objects::motor_reg_ = std::make_unique<regulator::Motor>(Objects::wall_,Objects::imu_,Objects::encoder_,Objects::accel_designer_,
+                                                                Objects::traj_l90_,Objects::traj_r90_);
     //モタドラの初期化
     std::unique_ptr<md::Creater> md_creater_ = std::make_unique<md::Creater>(md::NAME::TB6612FNG);
     Objects::md_ = md_creater_->Create(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_4, 
@@ -58,5 +78,6 @@ void Objects::Init(){
     Objects::buzzer_ = std::make_unique<indicator::Buzzer>(&htim3, TIM_CHANNEL_2);
     //volの初期化
     Objects::vol_ = std::make_unique<sensor::bat::Vol>(adc);
+
 
 }

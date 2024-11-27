@@ -88,7 +88,7 @@ namespace md{
         pwm_l_ -> Start();
     }
 
-    void TB6612FNG::Stop(){
+    void TB6612FNG::ShortBrake(){
         pwm_r_ -> Stop();
         pwm_l_ -> Stop();
     }

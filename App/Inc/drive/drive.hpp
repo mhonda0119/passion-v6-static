@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <optional>
 
 #include "states.hpp"
 #include "ctrl.hpp"
@@ -11,6 +12,7 @@
 #include "regulator.hpp"
 #include "interrupt.hpp"
 #include "flags.hpp"
+#include "trajectory.h"
 
 namespace drive{
 
@@ -26,12 +28,20 @@ namespace drive{
         std::unique_ptr<md::Product>& md_;
         //軌道設計
         std::unique_ptr<ctrl::Design>& design_;
+        //スラロームの軌道
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90_; 
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90_;
         public:
         Core(std::unique_ptr<regulator::Motor>& motor_reg,std::unique_ptr<sensor::imu::Product>& imu,
-        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md,std::unique_ptr<ctrl::Design>& design);
+        std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md,std::unique_ptr<ctrl::Design>& design,
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90);
         void AD(float dist , float spd_in , float spd_out);
         void CurveAD(float dist , float spd_in , float spd_out);
-        void SpinTurn(float angle,float omega_in,float omega_out);
+        void SpinTurn();
+        void Slalom_L90(float v);
+        void Slalom_R90(float v);
+        void Stop();
         ~Core() = default;
     };
 }

@@ -21,6 +21,9 @@ namespace ctrl{
     public:
         PID(float kp, float ki = 0, float kd = 0 ,float freq = consts::software::CTRL_FREQ);//defaultの値を設定しとくといいかも
         void Update(float r, float y);//r:目標値 y:制御量
+        void set_kp(float kp);
+        void set_ki(float ki);
+        void set_kd(float kd);
         float get_u();
         float get_p();
         float get_i();
