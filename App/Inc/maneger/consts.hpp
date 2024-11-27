@@ -48,9 +48,9 @@ namespace consts::software{
     //速度の最大値mm/s
     static constexpr float SPD_MAX = 2000.0F;
     //超信地旋回のパラメータdeg
-    static constexpr float SPIN_JERK_MAX = 4000.0F;
-    static constexpr float SPIN_ALPHA_MAX = 500.0F;
-    static constexpr float SPIN_OMEGA_MAX = 150.0F;
+    static constexpr float SPIN_JERK_MAX = 80000.0F;
+    static constexpr float SPIN_ALPHA_MAX = 2500.0F;
+    static constexpr float SPIN_OMEGA_MAX = 200.0F;
 
 }
 

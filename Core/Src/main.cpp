@@ -115,8 +115,9 @@ int main()
 
   Objects::wait_->Ms(1000);
 
-  //core->CurveAD(180,0,0);
-  core->SpinTurn();
+  core->CurveAD(180,0,0);
+  // while(Flag::Check(DRIVE_START)){}
+  //core->SpinTurn();
   //core->Stop();
   //Objects::buzzer_->Play(500,50,0.5);
   // core->Slalom_R90(Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
@@ -141,10 +142,11 @@ int main()
     std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
     std::cout << "angle_r : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end())<< std::endl;
   }
-  Objects::buzzer_->Start(500,10 );
-  Objects::md_->ShortBrake();
-  Objects::wait_->Ms(100);
-  Objects::buzzer_->Stop();    
+  core->Stop();
+  // Objects::buzzer_->Start(500,10 );
+  // Objects::md_->ShortBrake();
+  // Objects::wait_->Ms(100);
+  // Objects::buzzer_->Stop();    
   /* USER CODE END 3 */
 }
 

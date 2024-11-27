@@ -277,8 +277,8 @@ namespace regulator{
         //1.現在の時刻の目標角度を取得
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = design_->v(t_cnt_);
         //角速度pidにかける
-        pid_omega_->set_kp(0.6);
-        pid_omega_->set_ki(0.1);
+        pid_omega_->set_kp(0.04);
+        pid_omega_->set_ki(0.01);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //距離pidにかける
