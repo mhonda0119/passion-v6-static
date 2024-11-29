@@ -126,6 +126,8 @@ int main()
 
   peripheral::IT::Start();
 
+  
+
   // core->SpinTurn();
   // while(Flag::Check(DRIVE_START)){}
 
