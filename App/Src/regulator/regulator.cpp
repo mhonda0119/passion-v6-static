@@ -19,7 +19,7 @@ namespace regulator{
     pid_omega_(std::make_unique<ctrl::PID>(consts::software::KP_OMEGA,consts::software::KI_OMEGA,consts::software::KD_OMEGA)),
     pid_angle_(std::make_unique<ctrl::PID>(consts::software::KP_ANGLE,consts::software::KI_ANGLE,consts::software::KD_ANGLE)),
     pid_wall_(std::make_unique<ctrl::PID>(consts::software::KP_WALL,consts::software::KI_WALL,consts::software::KD_WALL)),
-    pid_stop_(std::make_unique<ctrl::PID>(1.6,0.4,0.1)),
+    pid_stop_(std::make_unique<ctrl::PID>(1.0,0.1,0)),
     wall_gap_(std::make_unique<correction::WallGap>(consts::software::WALL_GAP_TH)),
     sieve_(std::make_unique<filter::Sieve>()),
     r_(std::make_unique<state::Motion>()){}
@@ -35,11 +35,13 @@ namespace regulator{
     
     void Motor::StopRegulate(){
         //目標値
+        if(Flag::Check(DRIVE_START)){
         pid_stop_->Update(r_->spd[static_cast<int>(state::Motion::DIR::C)],
         encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
         //操作量の計算
         u_r_ = pid_stop_->get_u();
         u_l_ = pid_stop_->get_u();
+        }
     }
 
     void Motor::Regulate(){
@@ -144,7 +146,6 @@ namespace regulator{
         // }
         //角速度pidかける
         pid_omega_->set_kp(0.01);
-        pid_omega_->set_ki(0);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //pidの出力保存
@@ -154,8 +155,8 @@ namespace regulator{
         // u_r_ = pid_dist_->get_u();
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
-            if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] 
-            >= design_->x(design_->t_end()) 
+            if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]
+            >= (design_->x(design_->t_end()))
             //|| t_cnt_ >= design_->t_end() 
             ){
                 std::cout << "end" << std::endl;
@@ -165,6 +166,8 @@ namespace regulator{
                 t_cnt_ = 0;
                 encoder_->ResetDist();
                 imu_->ResetAngle();
+                pid_omega_->set_kp(consts::software::KP_OMEGA);
+                pid_omega_->set_ki(consts::software::KI_OMEGA);
                 Flag::Reset(DRIVE_START);
                 Flag::Reset(DRIVE_STRAIGHT);
                 //Flag::Reset(WALL_CTRL);
@@ -183,8 +186,6 @@ namespace regulator{
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_l90_->getVelocity();
         // //角速度PIDにかける
-        pid_omega_->set_kp(0.4);
-        pid_omega_->set_ki(0.5);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -194,9 +195,7 @@ namespace regulator{
         u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
         u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
         //角度が目標値になったら
-        if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] >= 90
-        || encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] >= 180
-        ){
+        if(t_cnt_ >= traj_l90_->getTimeCurve()){
             std::cout << "end_slalom" << std::endl;
             //タイマーリセット
             t_cnt_ = 0;
@@ -232,8 +231,6 @@ namespace regulator{
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_r90_->getVelocity();
         // //角速度PIDにかける
-        pid_omega_->set_kp(0.4);
-        pid_omega_->set_ki(0.5);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -243,9 +240,9 @@ namespace regulator{
         u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
         u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
         //角度が目標値になったら
-        if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] <= -90
-        || encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] >= 180
-        ){
+        // if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] <= s_.q.th*consts::physics::RAD2DEG
+        // || t_cnt_ >= traj_r90_->getTimeCurve())
+        if(t_cnt_ >= traj_r90_->getTimeCurve()){
             std::cout << "end_slalom" << std::endl;
             //タイマーリセット
             t_cnt_ = 0;
@@ -277,8 +274,8 @@ namespace regulator{
         //1.現在の時刻の目標角度を取得
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = design_->v(t_cnt_);
         //角速度pidにかける
-        pid_omega_->set_kp(0.04);
-        pid_omega_->set_ki(0.01);
+        pid_omega_->set_kp(0.4);
+        pid_omega_->set_ki(0.2);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //距離pidにかける
@@ -294,10 +291,12 @@ namespace regulator{
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
             if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] 
-            >= abs(design_->x(design_->t_end())||
-            t_cnt_ >= design_->t_end()) 
+            >= 178.0f
+            /*||t_cnt_ >= design_->t_end()*/
             ){
                 std::cout << "end" << std::endl;
+                pid_omega_->set_kp(consts::software::KP_OMEGA);
+                pid_omega_->set_ki(consts::software::KI_OMEGA);
                 r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
                 r_->angle[static_cast<int>(state::Motion::AXIS::Z)] = 0;
                 r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;

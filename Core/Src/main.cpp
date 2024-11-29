@@ -60,46 +60,59 @@ int main()
   //hello_world
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
-  long version = __cplusplus;
-  std::cout << "C++ Version : " << version << "\n";
+  std::cout << "C++ : " << __cplusplus << "\n";
   //hello_world
 
   /*-------------------------------------INIT-------------------------------------*/
   //objectsのインスタンス化(本来，objectsはstaticなクラスであるが，ここではインスタンス化している)
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
+  std::cout << "objects_Instance" << std::endl;
   //objectsの初期化
   //すべてのstaticなクラスのインスタンス化を行う．
   objects->Init();
+  std::cout << "objects_Init" << std::endl;
   //objectsを利用した初期化を行う．
   //designのインスタンス化
   std::unique_ptr<ctrl::Design> design = std::make_unique<ctrl::Design>(Objects::accel_designer_);
+  std::cout << "design_Instance" << std::endl;
   //driveのインスタンス化
   std::unique_ptr<drive::Core> core = 
   std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,
   design,Objects::traj_l90_,Objects::traj_r90_);
+  std::cout << "drive_Instance" << std::endl;
   /*----------初期化シーケンス実行------------*/
-  Objects::buzzer_->Play(500,50,0.2);
-  Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,2000,0.2);//2秒//正しい位置に置く猶予
+
+  Objects::buzzer_->Play(500,50,1);
 
   Objects::imu_->Init();
   Objects::encoder_->Init();
   Objects::pxstr_->Init();
   Objects::wall_->Init();
-  
+
   Objects::md_->On();
   Objects::md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
   Objects::md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
   Objects::md_->Duty(0,0);
+  Objects::buzzer_->Play(500,50,1);
+  Objects::md_->Duty(5,5);
+  Objects::md_->Start();
+  Objects::wait_->Ms(100);
+  Objects::buzzer_->Play(500,50,1);
+  Objects::md_->Duty(0,0);
+  Objects::md_->ShortBrake();
+
+  Objects::buzzer_->Play(500,50,1);
+  Objects::wait_->Ms(100);
+  Objects::buzzer_->Play(500,2000,1);//2秒//正しい位置に置く猶予
 
   Objects::wall_->GetOffset();
   Objects::encoder_->GetOffset();
   Objects::encoder_->Start();
   Objects::imu_->GetOffset();
 
-  Objects::buzzer_->Play(500,50,0.2);
+  Objects::buzzer_->Play(500,50,1);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,50,0.2);
+  Objects::buzzer_->Play(500,50,1);
   /*------------初期化シーケンス終了------------*/
   //interruputの初期化を行う．
   peripheral::IT::Init(&htim5);
@@ -113,40 +126,70 @@ int main()
 
   peripheral::IT::Start();
 
-  Objects::wait_->Ms(1000);
-
-  core->CurveAD(180,0,0);
+  // core->SpinTurn();
   // while(Flag::Check(DRIVE_START)){}
-  //core->SpinTurn();
+
+  // Objects::led_->On();
+  //core->Ketsu();
   //core->Stop();
-  //Objects::buzzer_->Play(500,50,0.5);
-  // core->Slalom_R90(Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
-  // while(Flag::Check(DRIVE_START)){}
-  // core->Slalom_L90(Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
+  // Objects::md_->Off();
+  // Objects::led_->Off();
 
+  // core->CurveAD(180,0,500);
+  // while(Flag::Check(DRIVE_START)){}
+  // Objects::buzzer_->Start(500,5);
+  // Objects::led_->On();
+
+  // core->CurveAD(40,500,500);
+  // while(Flag::Check(DRIVE_START)){}
+  // core->Slalom_R90(500);
+  // while(Flag::Check(DRIVE_START)){}
+  // core->CurveAD(72,500,500);
+  // while(Flag::Check(DRIVE_START)){}
+
+  // core->CurveAD(50,500,500);
+  // while(Flag::Check(DRIVE_START)){}
+  // core->Slalom_L90(500);
+  // while(Flag::Check(DRIVE_START)){}
+  // core->CurveAD(40,500,500);
+
+  // Objects::buzzer_->Start(500,50);
+  /*Flag::Check(DRIVE_START)*/
   while(Flag::Check(DRIVE_START)){
     Objects::wait_->Ms(5);
     // std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
-    // std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-    // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RABD2DEG << "\t";
+    //std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+    // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RAD2DEG << "\t";
     // std::cout << "s.q.th : " << Objects::motor_reg_->s_.q.th*consts::physics::RAD2DEG << "\t";
+    std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
+    std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
+
+    //std::cout << "l_v" << Objects::traj_l90_->getVelocity() << "\t";
+    //std::cout << "end_t " << Objects::traj_l90_->getTimeCurve() << "\t";
     // std::cout << "v : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
     // std::cout << "l_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::L)] << "\t";
     // std::cout << "r_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)]<< "\t";
-    // std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+    //std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
     // std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << "\t";
     // std::cout << "DRIVE_STRAIGHT : " << Flag::Check(DRIVE_STRAIGHT) << "\t";
     // std::cout << "DRIVE_SLALOM_L90 : " << Flag::Check(DRIVE_SLALOM_L90) << std::endl;
-    std::cout << "imu_omega:" << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-    std::cout << "omega_r" << Objects::accel_designer_->v(Objects::motor_reg_->t_cnt_) << "\t";
-    std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-    std::cout << "angle_r : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end())<< std::endl;
+    // std::cout << "imu_omega:" << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+    // std::cout << "omega_r" << Objects::accel_designer_->v(Objects::motor_reg_->t_cnt_) << "\t";
+    // std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+    //std::cout << "x_t_end : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end()) + 5<< std::endl;
+    std::cout << std::endl;
   }
-  core->Stop();
-  // Objects::buzzer_->Start(500,10 );
-  // Objects::md_->ShortBrake();
+  // Objects::led_->Off();
+  // Objects::buzzer_->Start(500,50);
+  //Objects::md_->ShortBrake();
+  // core->Stop();
   // Objects::wait_->Ms(100);
-  // Objects::buzzer_->Stop();    
+  //Objects::led_->Off();
+  // Objects::buzzer_->Stop();
+  // Objects::buzzer_->Start(500,10 );
+  //Objects::md_->ShortBrake();
+  // Objects::wait_->Ms(100);
+  // Objects::buzzer_->Stop();
   /* USER CODE END 3 */
 }
 

@@ -67,7 +67,6 @@ namespace drive{
         motor_reg_->set_u_r(0);
 
     }
-
     //曲線加速走行
     void Core::CurveAD(float dist , float spd_in , float spd_out){
         //回転角度をリセット
@@ -81,7 +80,7 @@ namespace drive{
         //角速度の目標値を0に
         motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
         //目標値を設定
-        design_->CurveAccel(dist,spd_in,spd_out);
+        design_->CurveAccel(dist-25,spd_in,spd_out);
         // std::cout << "v:::::" << Objects::accel_designer_->v(0.1) << std::endl;
         // std::cout << "x:::::" << Objects::accel_designer_->x(0.5) << std::endl;
         //走行開始flag立てる
@@ -106,7 +105,7 @@ namespace drive{
         //目標値を設定
         Objects::accel_designer_->reset(consts::software::SPIN_JERK_MAX,
         consts::software::SPIN_ALPHA_MAX,
-        consts::software::SPIN_OMEGA_MAX,0,0,180);
+        consts::software::SPIN_OMEGA_MAX,0,0,200);
         //走行開始flag立てる
         Flag::Set(DRIVE_START);
         //SPINフラグを立てる
@@ -122,12 +121,13 @@ namespace drive{
         //走行開始
         md_->Start();
         //スラロームの軌道を生成
-        traj_l90_->reset(v);
+        traj_l90_->reset(v,0,traj_l90_->getShape().straight_prev/v);
         //走行開始フラグ立てる
         Flag::Set(DRIVE_START);
         //slalomフラグを立てる
         Flag::Set(DRIVE_SLALOM_L90);
     }
+    
     void Core::Slalom_R90(float v){
         imu_->ResetAngle();
         //距離をリセット
@@ -137,13 +137,15 @@ namespace drive{
         //走行開始
         md_->Start();
         //スラロームの軌道を生成
-        traj_r90_->reset(v);
+        traj_r90_->reset(v,0,traj_r90_->getShape().straight_prev/v);
         //走行開始フラグ立てる
         Flag::Set(DRIVE_START);
         //slalomフラグを立てる
         Flag::Set(DRIVE_SLALOM_R90);
     }
+
     void Core::Stop(){
+        std::cout << "STOP" << std::endl;
         //回転角度をリセット
         imu_->ResetAngle();
         //距離をリセット
@@ -161,6 +163,24 @@ namespace drive{
         //それでも止まっていなかったら強制停止
         if(encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)] != 0){
             md_->ShortBrake();
+        //目標値リセット//加速度
+        motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
+        //目標値リセット//距離
+        motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+        //PIDのリセット
+        motor_reg_->Reset_PID();
+        //走行距離をリセット
+        encoder_->ResetDist();
+        //回転角度をリセット
+        imu_->ResetAngle();
+        //回転角速度をリセット
+        imu_->ResetOmega();
+        //指令値リセット
+        motor_reg_->set_u_l(0);
+        motor_reg_->set_u_r(0);
+        //フラグ折る
+        Flag::Reset(DRIVE_STOP);
+        Flag::Reset(DRIVE_START);
         }
         //目標値リセット//加速度
         motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
@@ -178,9 +198,74 @@ namespace drive{
         motor_reg_->set_u_l(0);
         motor_reg_->set_u_r(0);
         //フラグ折る
+        Flag::Reset(DRIVE_STOP);
         Flag::Reset(DRIVE_START);
     }
 
+    void Core::Ketsu(){
+        std::cout << "KETSU" << std::endl;
+        //回転角度をリセット
+        imu_->ResetAngle();
+        //距離をリセット
+        encoder_->ResetDist();
+        //Dutyセット
+        motor_reg_->set_u_l(-5);
+        motor_reg_->set_u_r(-5);
+        std::cout << "md->duty" << std::endl;
+        //走行開始
+        md_->Start();
+        //wait
+        Objects::wait_->Ms(1000);
+        //停止
+        md_->ShortBrake();
+        Objects::md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
+        Objects::md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
+        //目標値リセット//加速度
+        motor_reg_->r_->maccel[static_cast<int>(state::Motion::DIR::C)] = 0;
+        //目標値リセット//距離
+        motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+        //PIDのリセット
+        motor_reg_->Reset_PID();
+        //走行距離をリセット
+        encoder_->ResetDist();
+        //回転角度をリセット
+        imu_->ResetAngle();
+        //回転角速度をリセット
+        imu_->ResetOmega();
+        //指令値リセット
+        motor_reg_->set_u_l(0);
+        motor_reg_->set_u_r(0);
+        
+    }
+
+    void Core::Straight(float dist,float v_in,float v_out){
+        this->AD(dist,v_in,v_out);
+        while(Flag::Check(DRIVE_START)){}
+    }
+
+    void Core::TurnL90(float v,float prev_d,float after_d){
+    prev_d += 25;
+    after_d += 25;
+    this->CurveAD(prev_d,v,v);
+    while(Flag::Check(DRIVE_START)){}
+    this->Slalom_L90(v);
+    while(Flag::Check(DRIVE_START)){}
+    this->CurveAD(after_d,v,v);
+    while(Flag::Check(DRIVE_START)){}
+
+    }
+
+    void Core::TurnR90(float v,float prev_d,float after_d){
+    prev_d += 25;
+    after_d += 25;
+    this->CurveAD(prev_d,v,v);
+    while(Flag::Check(DRIVE_START)){}
+    this->Slalom_R90(v);
+    while(Flag::Check(DRIVE_START)){}
+    this->CurveAD(after_d,v,v);
+    while(Flag::Check(DRIVE_START)){}
+
+    }
     
 
 }
