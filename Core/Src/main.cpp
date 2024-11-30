@@ -30,6 +30,7 @@
 #include "regulator.hpp"
 #include "accel_designer.h"
 #include "flags.hpp"
+#include "search.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -80,6 +81,10 @@ int main()
   std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,
   design,Objects::traj_l90_,Objects::traj_r90_);
   std::cout << "drive_Instance" << std::endl;
+  //Searchのインスタンス化
+ std::unique_ptr<maze::Search> search = 
+ std::make_unique<maze::Search>(Objects::wall_,Objects::wait_,core,Objects::encoder_,
+ consts::software::GOAL_X,consts::software::GOAL_Y);
   /*----------初期化シーケンス実行------------*/
 
   Objects::buzzer_->Play(500,50,1);
@@ -126,6 +131,36 @@ int main()
 
   peripheral::IT::Start();
 
+  core->Straight(90,0,300);
+  core->TurnR90(300,0,0);
+  core->TurnL90(300,0,0);
+  core->Stop();
+
+  while(true);
+
+
+
+  /*========================searchB====================================================*/
+  // std::cout << "searchB" << std::endl;
+  // //二次走行フラグをクリア
+  // Flag::Reset(SCND);
+  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+  // core->Ketsu();
+  // //機体が安定するまで
+  // Objects::wait_->Ms(100);
+  // //壁制御用のオフセットを取得
+  // Objects::imu_->GetOffset();
+  // Objects::wall_->GetOffset();
+  // //サーチBする
+  // search->SearchB();
+  // //なんか待つ
+  // Objects::wait_->Ms(500);
+  // //ゴール座標を設定する
+  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+  /*========================searchB====================================================*/
+
+
+
   // core->SpinTurn();
   // while(Flag::Check(DRIVE_START)){}
 
@@ -155,14 +190,19 @@ int main()
 
   // Objects::buzzer_->Start(500,50);
   /*Flag::Check(DRIVE_START)*/
-  while(Flag::Check(DRIVE_START)){
+  while(true){
     Objects::wait_->Ms(5);
     // std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
     //std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
     // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RAD2DEG << "\t";
     // std::cout << "s.q.th : " << Objects::motor_reg_->s_.q.th*consts::physics::RAD2DEG << "\t";
-    std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
-    std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
+    // std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
+    // std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
+
+    std::cout << "raw_sensor_l : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
+    std::cout << "raw_sensor_fl : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
+    std::cout << "raw_sensor_fr : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
+    std::cout << "raw_sensor_r : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << "\t";
 
     //std::cout << "l_v" << Objects::traj_l90_->getVelocity() << "\t";
     //std::cout << "end_t " << Objects::traj_l90_->getTimeCurve() << "\t";

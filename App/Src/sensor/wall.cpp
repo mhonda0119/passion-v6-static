@@ -46,7 +46,7 @@ namespace sensor{
     void Wall::ReadVal(float wall_th_l,float wall_th_fl, float wall_th_fr,float wall_th_r){
         //壁センサの値を取得
         ir_->On();
-        wait_->Us(20);
+        wait_->Us(15);
         pxstr_->ReadVal();
         ir_->Off();
         //代入

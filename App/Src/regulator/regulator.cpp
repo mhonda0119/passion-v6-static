@@ -3,7 +3,8 @@
 namespace regulator{
     Motor::Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
     std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<ctrl::AccelDesigner>& design,
-    std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90)
+    std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90,
+    std::unique_ptr<indicator::Buzzer>& buzzer)
     :
     wall_th_l_(consts::software::WALL_TH_L),
     wall_th_fl_(consts::software::WALL_TH_FL),
@@ -13,7 +14,7 @@ namespace regulator{
     wall_gap_th_r_(consts::software::WALL_GAP_TH),
     u_r_(0.0),
     u_l_(0.0),
-    wall_(wall),imu_(imu),encoder_(encoder),design_(design),traj_l90_(traj_l90),traj_r90_(traj_r90),
+    wall_(wall),imu_(imu),encoder_(encoder),design_(design),traj_l90_(traj_l90),traj_r90_(traj_r90),buzzer_(buzzer),
     pid_dist_(std::make_unique<ctrl::PID>(consts::software::KP_DIST,consts::software::KI_DIST,consts::software::KD_DIST)),
     pid_spd_(std::make_unique<ctrl::PID>(consts::software::KP_SPD,consts::software::KI_SPD,consts::software::KD_SPD)),
     pid_omega_(std::make_unique<ctrl::PID>(consts::software::KP_OMEGA,consts::software::KI_OMEGA,consts::software::KD_OMEGA)),
@@ -145,12 +146,11 @@ namespace regulator{
         }
         }
         //角速度pidかける
-        pid_omega_->set_kp(0.01);
-        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
+        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] - pid_wall_->get_u(),
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //pidの出力保存
-        u_l_ = pid_dist_->get_u() + pid_omega_->get_u();
-        u_r_ = pid_dist_->get_u() - pid_omega_->get_u();
+        u_l_ = pid_dist_->get_u() - pid_omega_->get_u();
+        u_r_ = pid_dist_->get_u() + pid_omega_->get_u();
         // u_l_ = pid_dist_->get_u();
         // u_r_ = pid_dist_->get_u();
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
@@ -160,6 +160,8 @@ namespace regulator{
             //|| t_cnt_ >= design_->t_end() 
             ){
                 std::cout << "end" << std::endl;
+                //buzzer_->Start(800);
+                
                 r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
                 pid_omega_->Reset();
                 pid_dist_->Reset();
@@ -170,6 +172,8 @@ namespace regulator{
                 pid_omega_->set_ki(consts::software::KI_OMEGA);
                 Flag::Reset(DRIVE_START);
                 Flag::Reset(DRIVE_STRAIGHT);
+                Flag::Reset(WALL_CTRL);
+
                 //Flag::Reset(WALL_CTRL);
             }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
         }
@@ -213,8 +217,8 @@ namespace regulator{
             Flag::Reset(DRIVE_START);
             Flag::Reset(DRIVE_SLALOM_L90);
             //duty比リセット
-            u_l_ = 0;
-            u_r_ = 0;
+            // u_l_ = 0;
+            // u_r_ = 0;
  
         }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
 
@@ -237,8 +241,8 @@ namespace regulator{
         pid_spd_->Update(r_->spd[static_cast<int>(state::Motion::DIR::C)],
         encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)]);
         //操作量の計算
-        u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
         u_l_ = pid_spd_->get_u() - pid_omega_->get_u();
+        u_r_ = pid_spd_->get_u() + pid_omega_->get_u();
         //角度が目標値になったら
         // if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] <= s_.q.th*consts::physics::RAD2DEG
         // || t_cnt_ >= traj_r90_->getTimeCurve())
@@ -260,8 +264,8 @@ namespace regulator{
             Flag::Reset(DRIVE_START);
             Flag::Reset(DRIVE_SLALOM_R90);
             //duty比リセット
-            u_l_ = 0;
-            u_r_ = 0;
+            // u_l_ = 0;
+            // u_r_ = 0;
  
         }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
 

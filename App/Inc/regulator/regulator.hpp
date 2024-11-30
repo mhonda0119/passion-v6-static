@@ -16,6 +16,7 @@
 #include "flags.hpp"
 #include "state.h"
 #include "trajectory.h"
+#include "buzzer.hpp"
 
 namespace regulator{
     class Motor{
@@ -42,6 +43,8 @@ namespace regulator{
         //trajectoryのインスタンス
         std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90_;
         std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90_;
+        //buzzerのインスタンス
+        std::unique_ptr<indicator::Buzzer>& buzzer_;
         //制御器のインスタンス
         std::unique_ptr<ctrl::PID> pid_dist_;
         std::unique_ptr<ctrl::PID> pid_spd_;
@@ -62,7 +65,8 @@ namespace regulator{
         ctrl::State s_; //trajectory使う場合はここに全部の状態が入るらしいなので動作が終わり次第リセットかけます．
         Motor(std::unique_ptr<sensor::Wall>& wall,std::unique_ptr<sensor::imu::Product>& imu,
         std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<ctrl::AccelDesigner>& design,
-        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90);
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90,
+        std::unique_ptr<indicator::Buzzer>& buzzer);
         void Regulate();
         void StopRegulate();
         void DesignRegulate();

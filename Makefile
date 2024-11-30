@@ -82,6 +82,7 @@ $(wildcard App/Src/correction/*.cpp) \
 $(wildcard App/Src/ctrl/*.cpp) \
 $(wildcard App/Src/drive/*.cpp) \
 $(wildcard App/Src/maneger/*.cpp) \
+$(wildcard App/Src/maze/*.cpp) \
 
 # ASM sources
 ASM_SOURCES =  \
@@ -174,6 +175,7 @@ CPP_INCLUDES += \
 -IApp/Inc/correction\
 -IApp/Inc/ctrl\
 -IApp/Inc/drive\
+-IApp/Inc/maze\
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections

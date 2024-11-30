@@ -80,7 +80,7 @@ namespace drive{
         //角速度の目標値を0に
         motor_reg_->r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = 0;
         //目標値を設定
-        design_->CurveAccel(dist-25,spd_in,spd_out);
+        design_->CurveAccel(dist-consts::software::AD_OFFSET,spd_in,spd_out);
         // std::cout << "v:::::" << Objects::accel_designer_->v(0.1) << std::endl;
         // std::cout << "x:::::" << Objects::accel_designer_->x(0.5) << std::endl;
         //走行開始flag立てる
@@ -88,7 +88,7 @@ namespace drive{
         //まっすぐフラグを立てる
         Flag::Set(DRIVE_STRAIGHT);
         //壁制御ON
-        //Flag::Reset(WALL_CTRL);
+        Flag::Set(WALL_CTRL);
     }
     //超信地旋回
     void Core::SpinTurn(){
@@ -239,33 +239,32 @@ namespace drive{
     }
 
     void Core::Straight(float dist,float v_in,float v_out){
-        this->AD(dist,v_in,v_out);
+        this->CurveAD(dist,v_in,v_out);
         while(Flag::Check(DRIVE_START)){}
     }
 
     void Core::TurnL90(float v,float prev_d,float after_d){
-    prev_d += 25;
-    after_d += 25;
-    this->CurveAD(prev_d,v,v);
-    while(Flag::Check(DRIVE_START)){}
+    prev_d += consts::software::AD_OFFSET;
+    after_d += consts::software::AD_OFFSET;
+    // this->CurveAD(prev_d,v,v);
+    // while(Flag::Check(DRIVE_START)){}
     this->Slalom_L90(v);
-    while(Flag::Check(DRIVE_START)){}
-    this->CurveAD(after_d,v,v);
-    while(Flag::Check(DRIVE_START)){}
+    // while(Flag::Check(DRIVE_START)){}
+    // this->CurveAD(after_d,v,v);
+    // while(Flag::Check(DRIVE_START)){}
 
     }
 
     void Core::TurnR90(float v,float prev_d,float after_d){
-    prev_d += 25;
-    after_d += 25;
-    this->CurveAD(prev_d,v,v);
-    while(Flag::Check(DRIVE_START)){}
+    prev_d += consts::software::AD_OFFSET;
+    after_d += consts::software::AD_OFFSET;
+    // this->CurveAD(prev_d,v,v);
+    // while(Flag::Check(DRIVE_START)){}
     this->Slalom_R90(v);
-    while(Flag::Check(DRIVE_START)){}
-    this->CurveAD(after_d,v,v);
-    while(Flag::Check(DRIVE_START)){}
+    // while(Flag::Check(DRIVE_START)){}
+    // this->CurveAD(after_d,v,v);
+    // while(Flag::Check(DRIVE_START)){}
 
     }
-    
 
 }

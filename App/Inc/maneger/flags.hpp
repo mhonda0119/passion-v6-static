@@ -10,6 +10,7 @@ constexpr uint32_t DRIVE_SLALOM_L90 (1<<3);
 constexpr uint32_t DRIVE_SLALOM_R90 (1<<4);
 constexpr uint32_t DRIVE_STRAIGHT (1<<5);
 constexpr uint32_t DRIVE_STOP (1<<6);
+constexpr uint32_t SCND(1<<7);
 
 class Flag{
     private:

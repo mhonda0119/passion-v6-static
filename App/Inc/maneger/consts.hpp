@@ -13,40 +13,54 @@ namespace consts::software{
     static constexpr float SENSOR_FREQ = 1000.0F;
     static constexpr float CTRL_FREQ = 1000.0F;
     //WALLセンサの閾値
-    static constexpr float WALL_TH_L = 300.0F;
-    static constexpr float WALL_TH_FL = 100.0F;
-    static constexpr float WALL_TH_FR = 100.0F;
-    static constexpr float WALL_TH_R = 300.0F;
+    static constexpr float WALL_TH_L = 200.0F;
+    static constexpr float WALL_TH_FL = 200.0F;
+    static constexpr float WALL_TH_FR = 200.0F;
+    static constexpr float WALL_TH_R = 200.0F;
     //距離のPIDパラメータ
-    static constexpr float KP_DIST = 0.6F;
-    static constexpr float KI_DIST = 0.1F;
-    static constexpr float KD_DIST = 0.01F;
+    // static constexpr float KP_DIST = 0.6F;
+    // static constexpr float KI_DIST = 0.1F;
+    // static constexpr float KD_DIST = 0.01F;
+
+    static constexpr float KP_DIST = 2.8F;
+    static constexpr float KI_DIST = 0.01F;
+    static constexpr float KD_DIST = 2.8F;
+
     //速さのPIDパラメータ
-    static constexpr float KP_SPD = 0.03F;
-    static constexpr float KI_SPD = 0.0F;
-    static constexpr float KD_SPD = 0.0F;
+    static constexpr float KP_SPD = 0.20F;
+    static constexpr float KI_SPD = 0.0002F;
+    static constexpr float KD_SPD = 0.20F;
+    // static constexpr float KP_SPD = 0.03F;
+    // static constexpr float KI_SPD = 0.0F;
+    // static constexpr float KD_SPD = 0.0F;
     //角速度のPIDパラメータ
-    static constexpr float KP_OMEGA = 0.4F;
-    static constexpr float KI_OMEGA = 0.2F;
-    static constexpr float KD_OMEGA = 0.0F;
+    // static constexpr float KP_OMEGA = 0.4F;
+    // static constexpr float KI_OMEGA = 0.2F;
+    // static constexpr float KD_OMEGA = 0.0F;
+
+    static constexpr float KP_OMEGA = 0.044F;
+    static constexpr float KI_OMEGA = 0.0013F;
+    static constexpr float KD_OMEGA = 0.006F;
     //角度のPIDパラメータ
     static constexpr float KP_ANGLE = 0.01F;
     static constexpr float KI_ANGLE = 0.01F;
     static constexpr float KD_ANGLE = 0.01F;
     //壁制御のPIDパラメータ
     static constexpr float KP_WALL = 0.1F;
-    static constexpr float KI_WALL = 0.1F;
-    static constexpr float KD_WALL = 0.1F;
+    static constexpr float KI_WALL = 0.0F;
+    static constexpr float KD_WALL = 0.0F;
     //壁切れの閾値
     static constexpr float WALL_GAP_TH = 0.0F;
     //壁切れの補正値
     static constexpr float WALL_GAP_C = 0.0F;
     //jerkの最大値mm/s^3
-    static constexpr float JERK_MAX = 50000.0F;
+    //static constexpr float JERK_MAX = 50000.0F;
+    static constexpr float JERK_MAX = 25000.0F;
     //加速度の最大値mm/s^2
-    static constexpr float ACCEL_MAX = 25000.0F;
+    //static constexpr float ACCEL_MAX = 25000.0F;
+    static constexpr float ACCEL_MAX = 1250.0F;
     //速度の最大値mm/s
-    static constexpr float SPD_MAX = 2000.0F;
+    static constexpr float SPD_MAX = 300.0F;
     //超信地旋回のパラメータdeg
     static constexpr float SPIN_JERK_MAX = 80000.0F;
     static constexpr float SPIN_ALPHA_MAX = 2500.0F;
@@ -55,6 +69,17 @@ namespace consts::software{
     static constexpr float SL_JERK_MAX = 80000.0F;
     static constexpr float SL_ALPHA_MAX = 2500.0F;
     static constexpr float SL_OMEGA_MAX = 500.0F;
+    //探索の基準速度mm/s
+    static constexpr float SPD_SEARCH = 300.0F;
+    //1区画の長さmm
+    static constexpr float ONE_BLOCK = 180.0F;
+    //半区画の長さmm
+    static constexpr float HALF_BLOCK = 90.0F;
+    //ゴール座標
+    static constexpr uint8_t GOAL_X = 2;
+    static constexpr uint8_t GOAL_Y = 0;
+    //CurveADのオフセット
+    static constexpr float AD_OFFSET = 6.0F;
 }
 
 namespace consts::hardware{

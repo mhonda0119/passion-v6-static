@@ -43,6 +43,12 @@ namespace state{
         struct FLAG {
             bool WALL_CTRL = false;
         };
+        //MAZE
+        struct COORD_DIR{
+            uint8_t x;
+            uint8_t y;
+            uint8_t dir;
+        };
 }
 
 #endif // _STATE_HPP_
