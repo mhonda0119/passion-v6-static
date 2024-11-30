@@ -155,27 +155,27 @@ namespace regulator{
         // u_r_ = pid_dist_->get_u();
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
-            if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]
-            >= (design_->x(design_->t_end()))
-            //|| t_cnt_ >= design_->t_end() 
-            ){
-                std::cout << "end" << std::endl;
-                //buzzer_->Start(800);
+                if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]
+                >= (design_->x(design_->t_end())))
                 
-                r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
-                pid_omega_->Reset();
-                pid_dist_->Reset();
-                t_cnt_ = 0;
-                encoder_->ResetDist();
-                imu_->ResetAngle();
-                pid_omega_->set_kp(consts::software::KP_OMEGA);
-                pid_omega_->set_ki(consts::software::KI_OMEGA);
-                Flag::Reset(DRIVE_START);
-                Flag::Reset(DRIVE_STRAIGHT);
-                Flag::Reset(WALL_CTRL);
+                {
+                    std::cout << "end" << std::endl;
+                    //buzzer_->Start(800);
+                    
+                    r_->dist[static_cast<int>(state::Motion::DIR::C)] = 0;
+                    pid_omega_->Reset();
+                    pid_dist_->Reset();
+                    t_cnt_ = 0;
+                    encoder_->ResetDist();
+                    imu_->ResetAngle();
+                    pid_omega_->set_kp(consts::software::KP_OMEGA);
+                    pid_omega_->set_ki(consts::software::KI_OMEGA);
+                    Flag::Reset(DRIVE_START);
+                    Flag::Reset(DRIVE_STRAIGHT);
+                    Flag::Reset(WALL_CTRL);
 
-                //Flag::Reset(WALL_CTRL);
-            }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
+                    //Flag::Reset(WALL_CTRL);
+                }else{t_cnt_ += 1/consts::software::CTRL_FREQ;}
         }
         
     }

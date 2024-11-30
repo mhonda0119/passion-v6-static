@@ -11,6 +11,7 @@ constexpr uint32_t DRIVE_SLALOM_R90 (1<<4);
 constexpr uint32_t DRIVE_STRAIGHT (1<<5);
 constexpr uint32_t DRIVE_STOP (1<<6);
 constexpr uint32_t SCND(1<<7);
+constexpr uint32_t FWALL_CTRL(1<<8);
 
 class Flag{
     private:
