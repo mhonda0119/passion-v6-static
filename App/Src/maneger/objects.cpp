@@ -58,8 +58,8 @@ void Objects::Init(){
     //traj_l90_の初期化
         //slalomの事前設計
         //設計パラメータ定義
-        const ctrl::Pose pose_total_l90 = ctrl::Pose(80, 100, consts::physics::PI / 1.8); //< 探索90度ターンを想定
-        const float y_curve = 100;
+        const ctrl::Pose pose_total_l90 = ctrl::Pose(58/*80*/,80/*100*/, consts::physics::PI / 1.81); //< 探索90度ターンを想定
+        const float y_curve = 80;
         //スラロームの形状を定義
         ctrl::slalom::Shape shape_l90 = ctrl::slalom::Shape(pose_total_l90, y_curve,0,
         consts::software::SL_JERK_MAX*consts::physics::DEG2RAD,
@@ -71,9 +71,9 @@ void Objects::Init(){
     //traj_r90_の初期化
         //slalomの事前設計
         //設計パラメータ定義
-        ctrl::Pose pose_total_r90 = ctrl::Pose(80/*90*/, -100/*90*/, -consts::physics::PI / 1.8); //< 探索90度ターンを想定
+        ctrl::Pose pose_total_r90 = ctrl::Pose(58/*90*/, -90/*90*/, -consts::physics::PI / 1.77); //< 探索90度ターンを想定
         //スラロームの形状を定義
-        ctrl::slalom::Shape shape_r90 = ctrl::slalom::Shape(pose_total_r90, -y_curve,0,
+        ctrl::slalom::Shape shape_r90 = ctrl::slalom::Shape(pose_total_r90, -90,0,
         consts::software::SL_JERK_MAX*consts::physics::DEG2RAD,
         consts::software::SL_ALPHA_MAX*consts::physics::DEG2RAD,
         consts::software::SL_OMEGA_MAX*consts::physics::DEG2RAD);

@@ -194,6 +194,9 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
             /*OFFSET*/
 
             std::cout << "searchB" << std::endl;
@@ -202,7 +205,7 @@ int main()
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
             core->Ketsu();
             //機体が安定するまで
-            Objects::wait_->Ms(100);
+            Objects::wait_->Ms(300);
             //壁制御用のオフセットを取得
             Objects::imu_->GetOffset();
             Objects::wall_->GetOffset();
@@ -232,6 +235,9 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
             /*OFFSET*/
 
             core->Straight(90,0,300);
@@ -257,6 +263,9 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
             /*OFFSET*/
 
             core->Straight(90,0,300);
@@ -292,12 +301,48 @@ int main()
 
             printf("mode 5.\n");
 
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
 
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+            while(true){
+            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)] << "\t";
+            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)] << std::endl;
+            }
             break;
 
         case 6:
 
             printf("Mode 6\n");
+
+                        Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+
+            core->Straight(540,0,0);
+            core->Stop();
+
+            
 
             break;
 

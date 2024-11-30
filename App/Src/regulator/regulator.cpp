@@ -20,7 +20,7 @@ namespace regulator{
     pid_omega_(std::make_unique<ctrl::PID>(consts::software::KP_OMEGA,consts::software::KI_OMEGA,consts::software::KD_OMEGA)),
     pid_angle_(std::make_unique<ctrl::PID>(consts::software::KP_ANGLE,consts::software::KI_ANGLE,consts::software::KD_ANGLE)),
     pid_wall_(std::make_unique<ctrl::PID>(consts::software::KP_WALL,consts::software::KI_WALL,consts::software::KD_WALL)),
-    pid_stop_(std::make_unique<ctrl::PID>(0.6,0.1,0)),
+    pid_stop_(std::make_unique<ctrl::PID>(0.45,0.08,0)),
     wall_gap_(std::make_unique<correction::WallGap>(consts::software::WALL_GAP_TH)),
     sieve_(std::make_unique<filter::Sieve>()),
     r_(std::make_unique<state::Motion>()){}
@@ -146,7 +146,7 @@ namespace regulator{
             }
         }
         //角速度pidかける
-        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] - pid_wall_->get_u(),
+        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //pidの出力保存
         u_l_ = pid_dist_->get_u() - pid_omega_->get_u();
@@ -190,8 +190,8 @@ namespace regulator{
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_l90_->getVelocity();
         // //角速度PIDにかける
-        pid_omega_->set_kp(0.41);
-        pid_omega_->set_ki(0.1);
+        pid_omega_->set_kp(0.3);
+        pid_omega_->set_ki(0.08);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -241,8 +241,8 @@ namespace regulator{
         //角速度PIDにかける
         // pid_omega_->set_kp(0.6);
         // pid_omega_->set_ki(0.2);
-        pid_omega_->set_kp(0.41);
-        pid_omega_->set_ki(0.1);
+        pid_omega_->set_kp(0.3);
+        pid_omega_->set_ki(0.08);
 
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
@@ -289,8 +289,8 @@ namespace regulator{
         //1.現在の時刻の目標角度を取得
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = design_->v(t_cnt_);
         //角速度pidにかける
-        pid_omega_->set_kp(0.4);
-        pid_omega_->set_ki(0.1);
+        pid_omega_->set_kp(0.3);
+        pid_omega_->set_ki(0.08);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //距離pidにかける

@@ -41,8 +41,8 @@ namespace drive{
         void SpinTurn();
         void Slalom_L90(float v);
         void Slalom_R90(float v);
-        void TurnL90(float v,float prev_d = 25,float after_d = 15);
-        void TurnR90(float v,float prev_d = 15,float after_d = 47);
+        void TurnL90(float v,float prev_d = 15,float after_d = 20);
+        void TurnR90(float v,float prev_d = 15,float after_d = 20);
         void Straight(float dist,float v_in,float v_out);
         void Stop();
         void Ketsu();

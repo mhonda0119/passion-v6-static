@@ -244,30 +244,34 @@ namespace drive{
     }
 
     void Core::TurnL90(float v,float prev_d,float after_d){
-    prev_d += consts::software::AD_OFFSET;
-    after_d += consts::software::AD_OFFSET;
-    // this->CurveAD(prev_d,v,v);
-    // while(Flag::Check(DRIVE_START)){}
-    // this->Slalom_L90(v);
-    // while(Flag::Check(DRIVE_START)){}
-    // this->CurveAD(after_d,v,v);
-    // while(Flag::Check(DRIVE_START)){}
-    this->Slalom_L90(v);
-    while(Flag::Check(DRIVE_START)){}
+        if(prev_d <= consts::software::AD_OFFSET|| after_d <= consts::software::AD_OFFSET){
+        this->Slalom_L90(v);
+        while(Flag::Check(DRIVE_START)){}
+        }else{
+            this->Straight(prev_d,v,v);
+            this->Slalom_L90(v);
+            while(Flag::Check(DRIVE_START)){}
+            this->Straight(after_d,v,v);
+        }
+        // this->CurveAD(prev_d,v,v);
+        // while(Flag::Check(DRIVE_START)){}
+        // this->Slalom_L90(v);
+        // while(Flag::Check(DRIVE_START)){}
+        // this->CurveAD(after_d,v,v);
+        // while(Flag::Check(DRIVE_START)){}
+
     }
 
     void Core::TurnR90(float v,float prev_d,float after_d){
-    prev_d += consts::software::AD_OFFSET;
-    after_d += consts::software::AD_OFFSET;
-    // this->CurveAD(prev_d,v,v);
-    // while(Flag::Check(DRIVE_START)){}
-    // this->Slalom_R90(v);
-    // while(Flag::Check(DRIVE_START)){}
-    // this->CurveAD(after_d,v,v);
-    // while(Flag::Check(DRIVE_START)){}
-    this->Slalom_R90(v);
-    while(Flag::Check(DRIVE_START)){}
-    //this->Straight(10,v,v);
+        if(prev_d <= consts::software::AD_OFFSET|| after_d <= consts::software::AD_OFFSET){
+        this->Slalom_R90(v);
+        while(Flag::Check(DRIVE_START)){}
+        }else{
+            this->Straight(prev_d,v,v);
+            this->Slalom_R90(v);
+            while(Flag::Check(DRIVE_START)){}
+            this->Straight(after_d,v,v);
+        }
     }
 
 }

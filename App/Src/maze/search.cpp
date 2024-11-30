@@ -343,7 +343,7 @@ void Search::SearchB()
       //----右折----
       case 0x44:
         //Objects::buzzer_->Start(800);  //前進音を鳴らす
-        core_->TurnR90(consts::software::SPD_SEARCH,0,0); //右回転
+        core_->TurnR90(consts::software::SPD_SEARCH); //右回転
         this->TurnDir(DIR_TURN_R90);     //マイクロマウス内部位置情報でも右回転処理
         this->GetWallInfo();//壁情報の取得
         //Objects::buzzer_->Stop();      //前進音を止める
@@ -379,7 +379,7 @@ void Search::SearchB()
       case 0x11:
         //Objects::buzzer_->Start(600);  //前進音を鳴らす
         //core_->TurnL90(encoder_->get_val_ref()->spd[static_cast<int>(state::Motion::DIR::C)],0,0);
-        core_->TurnL90(consts::software::SPD_SEARCH,0,0);             //左回転
+        core_->TurnL90(consts::software::SPD_SEARCH);             //左回転
         this->TurnDir(DIR_TURN_L90);     //マイクロマウス内部位置情報でも左回転処理
         this->GetWallInfo();//壁情報の取得
         //Objects::buzzer_->Stop();      //前進音を止める
@@ -393,6 +393,7 @@ void Search::SearchB()
 
     //halfsectionD
     core_->Straight(consts::software::HALF_BLOCK,consts::software::SPD_SEARCH,0);  //半区画分減速しながら走行し停止
+    core_->Stop();
     this->GetWallInfo();//壁情報の取得
 
     HAL_Delay(1000);  //スタートでは***2秒以上***停止しなくてはならない
