@@ -19,7 +19,7 @@ namespace consts::software{
     static constexpr float WALL_TH_FL = 1230.0F;
     static constexpr float WALL_TH_FR = 1780.0F;
     //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
-    static constexpr float WALL_TH_R = 1400.0F;
+    static constexpr float WALL_TH_R = 1300.0F;
     //距離のPIDパラメータ
     // static constexpr float KP_DIST = 0.6F;
     // static constexpr float KI_DIST = 0.1F;
@@ -51,7 +51,8 @@ namespace consts::software{
     static constexpr float KI_ANGLE = 0.01F;
     static constexpr float KD_ANGLE = 0.01F;
     //壁制御のPIDパラメータ
-    static constexpr float KP_WALL = 0.002F;
+    //static constexpr float KP_WALL = 0.002F;
+    static constexpr float KP_WALL = 1.0F;
     static constexpr float KI_WALL = 0.0F;
     static constexpr float KD_WALL = 0.0F;
     //壁切れの閾値
@@ -84,7 +85,8 @@ namespace consts::software{
     static constexpr uint8_t GOAL_X = 1;
     static constexpr uint8_t GOAL_Y = 0;
     //CurveADのオフセット
-    static constexpr float AD_OFFSET = 6.0F;
+    //static constexpr float AD_OFFSET = 6.0F;
+    static constexpr float AD_OFFSET = 0.0F;
     //モード選択時のセンサー閾値
     static constexpr float MODE_TH = 2200.0F;
 }
