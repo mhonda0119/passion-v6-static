@@ -63,7 +63,7 @@ int main()
   std::cout << "hello_c++" << std::endl;
   std::cout << "C++ : " << __cplusplus << "\n";
   //hello_world
-
+  /*----------------------------------起動シーケンス開始----------------------------*/
   /*-------------------------------------INIT-------------------------------------*/
   //objectsのインスタンス化(本来，objectsはstaticなクラスであるが，ここではインスタンス化している)
   std::unique_ptr<Objects> objects = std::make_unique<Objects>();
@@ -87,13 +87,14 @@ int main()
  consts::software::GOAL_X,consts::software::GOAL_Y);
   /*----------初期化シーケンス実行------------*/
 
-  Objects::buzzer_->Play(500,50,1);
+  Objects::buzzer_->Play(500,50);
 
   Objects::imu_->Init();
   Objects::encoder_->Init();
   Objects::pxstr_->Init();
   Objects::wall_->Init();
 
+  /*motorの確認*/
   Objects::md_->On();
   Objects::md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
   Objects::md_->Dir(state::MOTOR::RIGHT,state::MOTOR::FWD);
@@ -105,58 +106,88 @@ int main()
   Objects::buzzer_->Play(500,50,1);
   Objects::md_->Duty(0,0);
   Objects::md_->ShortBrake();
+  /*motorの確認*/
 
-  Objects::buzzer_->Play(500,50,1);
+  /*offsetを一旦とる*/
+  Objects::wall_->GetOffset();
+  Objects::encoder_->GetOffset();
+  Objects::encoder_->Start();
+  Objects::imu_->GetOffset();
+  /*offsetを一旦とる*/
+  /*------------初期化シーケンス終了------------*/
+  //interruputの初期化を行う．
+  peripheral::IT::Init(&htim5);
+  /*-------------------------------------INIT-------------------------------------*/
+  peripheral::IT::Start();
+  /*encoderの確認*/
+  core->CurveAD(90,0,100);
+  while(Flag::Check(DRIVE_START)){
+    if(Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] > 110){
+      Objects::buzzer_->Play(1000,500);
+      for(int i = 0;i < 10;i++){
+        Objects::led_->On();
+        Objects::wait_->Ms(50);
+        Objects::led_->Off();
+        Objects::wait_->Ms(50);
+      }
+      break;
+    }
+  };
+  core->Stop();
+  /*encoderの確認*/
+  for(int i = 0; i < 4; i++){
+    Objects::buzzer_->Play(500 + i * 50, 50);
+    Objects::wait_->Ms(5);
+  } 
+
+  Objects::buzzer_->Play(500,50);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,2000,1);//2秒//正しい位置に置く猶予
+  Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
 
   Objects::wall_->GetOffset();
   Objects::encoder_->GetOffset();
   Objects::encoder_->Start();
   Objects::imu_->GetOffset();
 
-  Objects::buzzer_->Play(500,50,1);
+  Objects::buzzer_->Play(500,50);
   Objects::wait_->Ms(100);
-  Objects::buzzer_->Play(500,50,1);
-  /*------------初期化シーケンス終了------------*/
-  //interruputの初期化を行う．
-  peripheral::IT::Init(&htim5);
-  /*-------------------------------------INIT-------------------------------------*/
-
-  // if(Flag::Check(DRIVE_START)){
-  // std::cout << "111111111111" << std::endl;
-  // }else{
-  // std::cout << "000000000000" << std::endl;
-  // }
-
-  peripheral::IT::Start();
-
-  core->Straight(90,0,300);
-  core->TurnR90(300,0,0);
-  core->TurnL90(300,0,0);
-  core->Stop();
-
-  while(true);
+  Objects::buzzer_->Play(500,50);
+  /*-------------------------------------起動シーケンス終了-------------------------------------*/
 
 
+  // core->Straight(270,0,0);
+  // while(true);
 
+  // core->Slalom_L90(300);
+  //   while(Flag::Check(DRIVE_START)){}
+  // core->Slalom_R90(300);
+  //   while(Flag::Check(DRIVE_START)){}
+  // core->SpinTurn();
+  //   while(Flag::Check(DRIVE_START)){}
+
+  // Objects::led_->On();
+  // core->Stop();
+  // while(true);
+
+
+  
   /*========================searchB====================================================*/
-  // std::cout << "searchB" << std::endl;
-  // //二次走行フラグをクリア
-  // Flag::Reset(SCND);
-  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
-  // core->Ketsu();
-  // //機体が安定するまで
-  // Objects::wait_->Ms(100);
-  // //壁制御用のオフセットを取得
-  // Objects::imu_->GetOffset();
-  // Objects::wall_->GetOffset();
-  // //サーチBする
-  // search->SearchB();
-  // //なんか待つ
-  // Objects::wait_->Ms(500);
-  // //ゴール座標を設定する
-  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+  std::cout << "searchB" << std::endl;
+  //二次走行フラグをクリア
+  Flag::Reset(SCND);
+  search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+  core->Ketsu();
+  //機体が安定するまで
+  Objects::wait_->Ms(100);
+  //壁制御用のオフセットを取得
+  Objects::imu_->GetOffset();
+  Objects::wall_->GetOffset();
+  //サーチBする
+  search->SearchB();
+  //なんか待つ
+  Objects::wait_->Ms(500);
+  //ゴール座標を設定する
+  search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
   /*========================searchB====================================================*/
 
 
@@ -199,16 +230,18 @@ int main()
     // std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
     // std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
 
-    std::cout << "raw_sensor_l : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
-    std::cout << "raw_sensor_fl : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
-    std::cout << "raw_sensor_fr : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
-    std::cout << "raw_sensor_r : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << "\t";
+    // std::cout << "raw_sensor_l : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
+    // std::cout << "raw_sensor_fl : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
+    // std::cout << "raw_sensor_fr : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
+    // std::cout << "raw_sensor_r : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << "\t";
 
     //std::cout << "l_v" << Objects::traj_l90_->getVelocity() << "\t";
     //std::cout << "end_t " << Objects::traj_l90_->getTimeCurve() << "\t";
     // std::cout << "v : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
     // std::cout << "l_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::L)] << "\t";
     // std::cout << "r_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)]<< "\t";
+    std::cout << "l_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)] << "\t";
+    std::cout << "r_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)]<< "\t";
     //std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
     // std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << "\t";
     // std::cout << "DRIVE_STRAIGHT : " << Flag::Check(DRIVE_STRAIGHT) << "\t";

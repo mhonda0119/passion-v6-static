@@ -311,6 +311,7 @@ void Search::SearchB()
     core_->Straight(46+90,0,consts::software::SPD_SEARCH);
     //core_->Stop();
     //Objects::buzzer_->Start(500);  //スタート音を鳴らす
+    this->GetWallInfo();                  //壁情報の取得
     this->AdvPos();
     this->WriteMap();
 
@@ -394,7 +395,7 @@ void Search::SearchB()
     core_->Straight(consts::software::HALF_BLOCK,consts::software::SPD_SEARCH,0);  //半区画分減速しながら走行し停止
     this->GetWallInfo();//壁情報の取得
 
-    HAL_Delay(2500);  //スタートでは***2秒以上***停止しなくてはならない
+    HAL_Delay(1000);  //スタートでは***2秒以上***停止しなくてはならない
     //rotate_180();
     core_->SpinTurn();  //180度回転
     this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
@@ -402,6 +403,9 @@ void Search::SearchB()
     // if(Flag::Check(SCND)){
     // store_map_in_eeprom();          //一次探索走行時はROMにマップ情報を書き込む
     // }
+    //====探索終了音を鳴らす====
+    Objects::buzzer_->Play(987,200);  //探索終了音を鳴らす
+    Objects::buzzer_->Play(783,500);
 }
 
 void Search::set_goal(uint8_t goal_x,uint8_t goal_y)

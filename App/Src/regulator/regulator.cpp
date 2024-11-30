@@ -190,6 +190,8 @@ namespace regulator{
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_l90_->getVelocity();
         // //角速度PIDにかける
+        pid_omega_->set_kp(0.41);
+        pid_omega_->set_ki(0.1);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -209,6 +211,8 @@ namespace regulator{
             //PIDリセット
             pid_omega_->Reset();
             pid_spd_->Reset();
+            pid_omega_->set_kp(consts::software::KP_OMEGA);
+            pid_omega_->set_ki(consts::software::KI_OMEGA);
             //走行距離リセット
             encoder_->ResetDist();
             //角度リセット
@@ -234,7 +238,12 @@ namespace regulator{
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = consts::physics::RAD2DEG*s_.dq.th;
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_r90_->getVelocity();
-        // //角速度PIDにかける
+        //角速度PIDにかける
+        // pid_omega_->set_kp(0.6);
+        // pid_omega_->set_ki(0.2);
+        pid_omega_->set_kp(0.41);
+        pid_omega_->set_ki(0.1);
+
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -256,6 +265,8 @@ namespace regulator{
             //PIDリセット
             pid_omega_->Reset();
             pid_spd_->Reset();
+            pid_omega_->set_kp(consts::software::KP_OMEGA);
+            pid_omega_->set_ki(consts::software::KI_OMEGA);
             //走行距離リセット
             encoder_->ResetDist();
             //角度リセット
@@ -279,7 +290,7 @@ namespace regulator{
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = design_->v(t_cnt_);
         //角速度pidにかける
         pid_omega_->set_kp(0.4);
-        pid_omega_->set_ki(0.2);
+        pid_omega_->set_ki(0.1);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //距離pidにかける
