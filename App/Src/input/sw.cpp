@@ -2,8 +2,14 @@
 
 namespace input{
 
-    SW::SW(GPIO_TypeDef* port,uint16_t pin)
+    SW::SW(GPIO_TypeDef* port,uint16_t pin,
+    std::unique_ptr<indicator::Buzzer>& buzzer,
+    std::unique_ptr<peripheral::Wait>& wait,
+    std::unique_ptr<sensor::Wall>& wall)
     :  gpio_(std::make_unique<peripheral::GPIO>(port, pin)),
+        buzzer_(buzzer),
+        wait_(wait),
+        wall_(wall),
         last_db_time_(0),
         last_stable_state_(false),
         current_state_(false) {}
@@ -30,6 +36,35 @@ namespace input{
 
     bool SW::Read(){
         return current_state_;
+    }
+
+    uint8_t SW::ModeSelect(uint8_t mode){
+        while (true) {
+        if (wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] < consts::software::MODE_TH 
+            && 
+            wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] > consts::software::MODE_TH) 
+            {
+            mode++;
+            if (mode > 7) {
+                mode = 0;
+            }
+
+            std::cout << "Mode : " << mode << std::endl;
+
+            buzzer_->Play(((9 - mode) * 0.5 * 200),200);
+        }
+
+        if (wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] > consts::software::MODE_TH 
+            && 
+            wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] < consts::software::MODE_TH
+            ) {//モード選択のセンサ閾値
+            buzzer_->Play(300,50);
+            wait_->Ms(100);
+            buzzer_->Play(300,50);
+            return mode;
+        }
+        }
+    std::cout << "Mode : " << mode << std::endl;
     }
 
 }

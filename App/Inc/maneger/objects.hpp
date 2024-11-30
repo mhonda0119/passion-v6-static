@@ -20,6 +20,7 @@
 #include "regulator.hpp"
 #include "accel_designer.h"
 #include "trajectory.h"
+#include "sw.hpp"
 
 class Objects{
     public:
@@ -37,6 +38,7 @@ class Objects{
     static std::unique_ptr<sensor::bat::Vol> vol_;
     static std::unique_ptr<ctrl::slalom::Trajectory> traj_l90_;
     static std::unique_ptr<ctrl::slalom::Trajectory> traj_r90_;
+    static std::unique_ptr<input::SW> mode_sw_;
     //objectsの中に，使用するインスタンスをすべてstaticで用意する．そのためのInit関数の中で，
     //あらかじめ用意したメンバ変数の中に順番に代入していく．
     Objects() = default;

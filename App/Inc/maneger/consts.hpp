@@ -85,6 +85,8 @@ namespace consts::software{
     static constexpr uint8_t GOAL_Y = 0;
     //CurveADのオフセット
     static constexpr float AD_OFFSET = 6.0F;
+    //モード選択時のセンサー閾値
+    static constexpr float MODE_TH = 2200.0F;
 }
 
 namespace consts::hardware{

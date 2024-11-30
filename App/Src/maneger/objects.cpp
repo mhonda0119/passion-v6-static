@@ -15,6 +15,7 @@ std::unique_ptr<indicator::Buzzer> Objects::buzzer_ = nullptr;
 std::unique_ptr<sensor::bat::Vol> Objects::vol_ = nullptr;
 std::unique_ptr<ctrl::slalom::Trajectory> Objects::traj_l90_ = nullptr;
 std::unique_ptr<ctrl::slalom::Trajectory> Objects::traj_r90_ = nullptr;
+std::unique_ptr<input::SW> Objects::mode_sw_ = nullptr;
 void Objects::Init(){
     //shared_ptrの初期化
     std::shared_ptr<peripheral::ADC> adc = std::make_shared<peripheral::ADC>(&hadc1);
@@ -99,6 +100,7 @@ void Objects::Init(){
     //volの初期化
     Objects::vol_ = std::make_unique<sensor::bat::Vol>(adc);
     //std::cout << "vol_Instance" << std::endl;
-
-
+    Objects::mode_sw_ = std::make_unique<input::SW>(PUSH_IN_1_GPIO_Port,PUSH_IN_1_Pin,
+                                                    Objects::buzzer_,Objects::wait_,Objects::wall_);
+    
 }

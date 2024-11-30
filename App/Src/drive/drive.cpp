@@ -267,7 +267,7 @@ namespace drive{
     // while(Flag::Check(DRIVE_START)){}
     this->Slalom_R90(v);
     while(Flag::Check(DRIVE_START)){}
-    this->Straight(10,v,v);
+    //this->Straight(10,v,v);
     }
 
 }

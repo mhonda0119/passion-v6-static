@@ -16,6 +16,7 @@ namespace peripheral{
         Objects::encoder_->Update();
         Objects::imu_->Update();
         Objects::wall_->ReadVal();
+        //Objects::mode_sw_->Update();
         if(Flag::Check(DRIVE_STOP)){
             Objects::motor_reg_->StopRegulate();
         }

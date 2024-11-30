@@ -167,26 +167,168 @@ int main()
   // Objects::led_->On();
   // core->Stop();
   // while(true);
+  uint8_t mode = 0;
+
+  while (1) {
+        mode = Objects::mode_sw_->ModeSelect(mode);
+
+        switch (mode) {
+        case 0:
+
+            break;
+
+        case 1:
+
+            printf("mode 1.\n");
+
+            /*OFFSET*/
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+
+            std::cout << "searchB" << std::endl;
+            //二次走行フラグをクリア
+            Flag::Reset(SCND);
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(100);
+            //壁制御用のオフセットを取得
+            Objects::imu_->GetOffset();
+            Objects::wall_->GetOffset();
+            //サーチBする
+            search->SearchB();
+            //なんか待つ
+            Objects::wait_->Ms(500);
+            //ゴール座標を設定する
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+
+            break;
+
+        case 2:
+            //スラロームの右90度
+            printf("mode 2.\n");
+
+            /*OFFSET*/
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+
+            core->Straight(90,0,300);
+            core->TurnR90(300);
+            core->Stop();
+
+            break;
+
+        case 3:
+
+            printf("mode 3.\n");
+
+            /*OFFSET*/
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+
+            core->Straight(90,0,300);
+            core->TurnL90(300);
+            core->Stop();
+
+            break;
+
+        case 4:
+
+            printf("mode 4.\n");
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+
+            core->Straight(540,0,0);
+            core->Stop();
+
+            break;
+
+        case 5:
+
+            printf("mode 5.\n");
+
+
+            break;
+
+        case 6:
+
+            printf("Mode 6\n");
+
+            break;
+
+        case 7:
+
+            printf("Mode 7\n");
+
+            break;
+        }
+    }
+
 
 
   
   /*========================searchB====================================================*/
-  std::cout << "searchB" << std::endl;
-  //二次走行フラグをクリア
-  Flag::Reset(SCND);
-  search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
-  core->Ketsu();
-  //機体が安定するまで
-  Objects::wait_->Ms(100);
-  //壁制御用のオフセットを取得
-  Objects::imu_->GetOffset();
-  Objects::wall_->GetOffset();
-  //サーチBする
-  search->SearchB();
-  //なんか待つ
-  Objects::wait_->Ms(500);
-  //ゴール座標を設定する
-  search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+  // std::cout << "searchB" << std::endl;
+  // //二次走行フラグをクリア
+  // Flag::Reset(SCND);
+  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+  // core->Ketsu();
+  // //機体が安定するまで
+  // Objects::wait_->Ms(100);
+  // //壁制御用のオフセットを取得
+  // Objects::imu_->GetOffset();
+  // Objects::wall_->GetOffset();
+  // //サーチBする
+  // search->SearchB();
+  // //なんか待つ
+  // Objects::wait_->Ms(500);
+  // //ゴール座標を設定する
+  // search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
   /*========================searchB====================================================*/
 
 
@@ -220,37 +362,37 @@ int main()
 
   // Objects::buzzer_->Start(500,50);
   /*Flag::Check(DRIVE_START)*/
-  while(true){
-    Objects::wait_->Ms(5);
-    // std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
-    //std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-    // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RAD2DEG << "\t";
-    // std::cout << "s.q.th : " << Objects::motor_reg_->s_.q.th*consts::physics::RAD2DEG << "\t";
-    // std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
-    // std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
+  // while(true){
+  //   Objects::wait_->Ms(5);
+  //   // std::cout << "t_cnt_ : " << Objects::motor_reg_->t_cnt_ << "\t";
+  //   //std::cout << "r_dist:" << Objects::motor_reg_->r_->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  //   // std::cout << "s_.dq.th : " << Objects::motor_reg_->s_.dq.th*consts::physics::RAD2DEG << "\t";
+  //   // std::cout << "s.q.th : " << Objects::motor_reg_->s_.q.th*consts::physics::RAD2DEG << "\t";
+  //   // std::cout << "r_v" << Objects::traj_r90_->getVelocity() << "\t";
+  //   // std::cout << "end_t " << Objects::traj_r90_->getTimeCurve() << "\t";
 
-    // std::cout << "raw_sensor_l : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
-    // std::cout << "raw_sensor_fl : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
-    // std::cout << "raw_sensor_fr : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
-    // std::cout << "raw_sensor_r : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << "\t";
+  //   // std::cout << "raw_sensor_l : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
+  //   // std::cout << "raw_sensor_fl : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
+  //   // std::cout << "raw_sensor_fr : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
+  //   // std::cout << "raw_sensor_r : " << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << "\t";
 
-    //std::cout << "l_v" << Objects::traj_l90_->getVelocity() << "\t";
-    //std::cout << "end_t " << Objects::traj_l90_->getTimeCurve() << "\t";
-    // std::cout << "v : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
-    // std::cout << "l_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::L)] << "\t";
-    // std::cout << "r_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)]<< "\t";
-    std::cout << "l_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)] << "\t";
-    std::cout << "r_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)]<< "\t";
-    //std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-    // std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << "\t";
-    // std::cout << "DRIVE_STRAIGHT : " << Flag::Check(DRIVE_STRAIGHT) << "\t";
-    // std::cout << "DRIVE_SLALOM_L90 : " << Flag::Check(DRIVE_SLALOM_L90) << std::endl;
-    // std::cout << "imu_omega:" << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-    // std::cout << "omega_r" << Objects::accel_designer_->v(Objects::motor_reg_->t_cnt_) << "\t";
-    // std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
-    //std::cout << "x_t_end : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end()) + 5<< std::endl;
-    std::cout << std::endl;
-  }
+  //   //std::cout << "l_v" << Objects::traj_l90_->getVelocity() << "\t";
+  //   //std::cout << "end_t " << Objects::traj_l90_->getTimeCurve() << "\t";
+  //   // std::cout << "v : " << Objects::motor_reg_->r_->spd[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  //   // std::cout << "l_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::L)] << "\t";
+  //   // std::cout << "r_encoder:" << Objects::encoder_->get_raw_ref()->spd[static_cast<int>(state::Motion::DIR::R)]<< "\t";
+  //   std::cout << "l_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)] << "\t";
+  //   std::cout << "r_encoder:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)]<< "\t";
+  //   //std::cout << "dist:" << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
+  //   // std::cout << "DRIVE_START : " << Flag::Check(DRIVE_START) << "\t";
+  //   // std::cout << "DRIVE_STRAIGHT : " << Flag::Check(DRIVE_STRAIGHT) << "\t";
+  //   // std::cout << "DRIVE_SLALOM_L90 : " << Flag::Check(DRIVE_SLALOM_L90) << std::endl;
+  //   // std::cout << "imu_omega:" << Objects::imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  //   // std::cout << "omega_r" << Objects::accel_designer_->v(Objects::motor_reg_->t_cnt_) << "\t";
+  //   // std::cout << "imu_angle: " << Objects::imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] << "\t";
+  //   //std::cout << "x_t_end : " << Objects::accel_designer_->x(Objects::accel_designer_->t_end()) + 5<< std::endl;
+  //   std::cout << std::endl;
+  // }
   // Objects::led_->Off();
   // Objects::buzzer_->Start(500,50);
   //Objects::md_->ShortBrake();
