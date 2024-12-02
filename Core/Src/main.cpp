@@ -79,7 +79,7 @@ int main()
   //driveのインスタンス化
   std::unique_ptr<drive::Core> core = 
   std::make_unique<drive::Core>(Objects::motor_reg_,Objects::imu_,Objects::encoder_,Objects::md_,
-  design,Objects::traj_l90_,Objects::traj_r90_);
+  design,Objects::traj_l90_,Objects::traj_r90_,Objects::wall_);
   std::cout << "drive_Instance" << std::endl;
   //Searchのインスタンス化
  std::unique_ptr<maze::Search> search = 
@@ -167,6 +167,10 @@ int main()
   // Objects::led_->On();
   // core->Stop();
   // while(true);
+
+  Flag::Set(FWALL_CTRL);
+  Flag::Reset(SCND);
+
   uint8_t mode = 0;
 
   while (1) {
@@ -197,7 +201,11 @@ int main()
 
             Objects::imu_->ResetAngle();
             Objects::encoder_->ResetDist();
-            /*OFFSET*/
+
+                //----フラグの初期化----
+            Flag::ResetAll();
+            //----マップデータ初期化----
+            search->SearchInit();
 
             std::cout << "searchB" << std::endl;
             //二次走行フラグをクリア

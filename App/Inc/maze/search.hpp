@@ -45,6 +45,7 @@ namespace maze{
         void MakeSmap();  //歩数マップ作成
         void MakeRoute();  //最短経路検索
         void set_goal(uint8_t x,uint8_t y); //ゴール座標設定
+        void SearchInit();  //探索初期化
 
         void SearchB();    //足立法探索
 

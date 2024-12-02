@@ -129,8 +129,8 @@ namespace regulator{
             //左の壁がある場合
             else if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)]){
                 pid_wall_->Update(
-                    wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)],
-                    wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)]
+                   -wall_->get_offset_ref()->dir[static_cast<int>(state::Wall::DIR::L)],
+                    -wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)]
                 );
             }
             //右の壁がある場合
@@ -146,7 +146,7 @@ namespace regulator{
             }
         }
         //角速度pidかける
-        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] + pid_wall_->get_u(),
+        pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)] - pid_wall_->get_u(),
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //pidの出力保存
         u_l_ = pid_dist_->get_u() - pid_omega_->get_u();
@@ -308,7 +308,7 @@ namespace regulator{
             if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] 
             >= 178.0f
             /*||t_cnt_ >= design_->t_end()*/
-            ){
+            ){  
                 std::cout << "end" << std::endl;
                 pid_omega_->set_kp(consts::software::KP_OMEGA);
                 pid_omega_->set_ki(consts::software::KI_OMEGA);
@@ -320,6 +320,8 @@ namespace regulator{
                 t_cnt_ = 0;
                 encoder_->ResetDist();
                 imu_->ResetAngle();
+                this->set_u_l(0);
+                this->set_u_r(0);
                 Flag::Reset(DRIVE_START);
                 Flag::Reset(DRIVE_SPIN);
                 //Flag::Reset(WALL_CTRL);

@@ -13,6 +13,7 @@
 #include "interrupt.hpp"
 #include "flags.hpp"
 #include "trajectory.h"
+#include "wall.hpp"
 
 namespace drive{
 
@@ -31,11 +32,13 @@ namespace drive{
         //スラロームの軌道
         std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90_; 
         std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90_;
+        //壁
+        std::unique_ptr<sensor::Wall>& wall_;
         public:
         Core(std::unique_ptr<regulator::Motor>& motor_reg,std::unique_ptr<sensor::imu::Product>& imu,
         std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md,std::unique_ptr<ctrl::Design>& design,
         std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,
-        std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90);
+        std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90,std::unique_ptr<sensor::Wall>& wall);
         void AD(float dist , float spd_in , float spd_out);
         void CurveAD(float dist , float spd_in , float spd_out);
         void SpinTurn();

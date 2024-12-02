@@ -11,6 +11,10 @@ std::unique_ptr<sensor::encoder::Combine>& encoder,
 uint8_t goal_x,uint8_t goal_y):
 goal_x_(goal_x),goal_y_(goal_y),wall_(wall),wait_(wait),
 core_(core),encoder_(encoder){
+
+}
+
+void Search::SearchInit(){
     //----フラグの初期化----
     Flag::ResetAll();
     //----マップデータ初期化----
@@ -49,17 +53,17 @@ void Search::GetWallInfo()
     //----前壁を見る----
     if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)]){
         //AD値が閾値より大きい（=壁があって光が跳ね返ってきている）場合
-        wall_info_ |= 0x08;                //壁情報を更新
+        wall_info_ |= 0x88;  //0x08              //壁情報を更新
     }
     //----右壁を見る----
     if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]){
         //AD値が閾値より大きい（=壁があって光が跳ね返ってきている）場合
-        wall_info_ |= 0x04;                //壁情報を更新
+        wall_info_ |= 0x44; //0x04               //壁情報を更新
     }
     //----左壁を見る----
     if(wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)]){
         //AD値が閾値より大きい（=壁があって光が跳ね返ってきている）場合
-        wall_info_ |= 0x01;                //壁情報を更新
+        wall_info_ |= 0x11; //0x01               //壁情報を更新
     }
 }
 
@@ -171,8 +175,8 @@ void Search::MakeSmap()
   //====自分の座標にたどり着くまでループ====
   do{
     //----マップ全域を捜索----
-    for( y = 0; y < 15; y++){                  //各Y座標で実行
-      for( x = 0; x < 15; x++){                //各X座標で実行
+    for( y = 0; y <= 15; y++){                  //各Y座標で実行
+      for( x = 0; x <= 15; x++){                //各X座標で実行
         //----現在最大の歩数を発見したとき----
         if( smap_[y][x] == m_step){              //歩数カウンタm_stepの値が現在最大の歩数
           uint8_t m_temp = map_[y][x];           //map配列からマップデータを取り出す
@@ -180,13 +184,13 @@ void Search::MakeSmap()
            m_temp >>= 4;                       //上位4bitを使うので4bit分右にシフトさせる
           }
           //----北壁についての処理----
-          if(!(m_temp & 0x08) && y < 15){      //北壁がなく現在最北端でないとき
+          if(!(m_temp & 0x08) && y != 15){      //北壁がなく現在最北端でないとき
             if(smap_[y+1][x] == 0xff){           //北側が未記入なら
               smap_[y+1][x] = m_step + 1;        //次の歩数を書き込む
             }
           }
           //----東壁についての処理----
-          if(!(m_temp & 0x04) && x < 15){      //東壁がなく現在最東端でないとき
+          if(!(m_temp & 0x04) && x != 15){      //東壁がなく現在最東端でないとき
             if(smap_[y][x+1] == 0xff){           //東側が未記入なら
               smap_[y][x+1] = m_step + 1;        //次の歩数を書き込む
             }
@@ -351,29 +355,18 @@ void Search::SearchB()
         break;
       //----180回転----
       case 0x22:
+      Objects::buzzer_->Start(700);  //前進音を鳴らす
 
         //half_sectionD();  //半区間分減速しながら走行し停止
         core_->Straight(consts::software::HALF_BLOCK,
         consts::software::SPD_SEARCH,0);
-
-        if (wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] &&
-            wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::R)]) {//前壁と右壁が有る場合
-            core_->SpinTurn();  //180度回転
-            wait_->Ms(100);  //機体が安定するまで待機
-            core_->Ketsu();//けつあて
-            wait_->Ms(100);  //機体が安定するまで待機
-        } else if (wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)] &&
-            wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::L)]) {  //それ以外で前壁と右壁が確実に有る場合
-            core_->SpinTurn();  //180度回転
-            wait_->Ms(100);  //機体が安定するまで待機
-            core_->Ketsu();//けつあて
-            wait_->Ms(100);  //機体が安定するまで待機
-        } else {
-            core_->SpinTurn();  //180度回転
-        }
+        core_->Stop();
+        core_->SpinTurn();  //180度回転
+        core_->Stop();
         this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
         core_->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
         this->GetWallInfo();//壁情報の取得
+        Objects::buzzer_->Stop();      //前進音を止める
         break;
       //----左折----
       case 0x11:

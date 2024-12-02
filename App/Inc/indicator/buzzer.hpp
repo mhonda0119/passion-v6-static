@@ -12,7 +12,7 @@ namespace indicator{
         std::unique_ptr<peripheral::PWM> pwm_;
     public:
         Buzzer(TIM_HandleTypeDef* htim,uint32_t channel);//pwm_driverのインスタンス化
-        void Start(uint32_t freq,float duty = 20);//指定された周波数で鳴らす
+        void Start(uint32_t freq,float duty = 80);//指定された周波数で鳴らす
         void Play(uint32_t freq,uint32_t duration,float duty = 20);//指定された周波数，指定された秒数鳴らす
         void Stop();//とめる．
         ~Buzzer() = default;

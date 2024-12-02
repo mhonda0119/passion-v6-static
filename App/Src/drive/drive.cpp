@@ -4,8 +4,9 @@ namespace drive{
     Core::Core(std::unique_ptr<regulator::Motor>& motor_reg,std::unique_ptr<sensor::imu::Product>& imu,
     std::unique_ptr<sensor::encoder::Combine>& encoder,std::unique_ptr<md::Product>& md,std::unique_ptr<ctrl::Design>& design,
     std::unique_ptr<ctrl::slalom::Trajectory>& traj_l90,
-    std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90)
-    : motor_reg_(motor_reg), imu_(imu), encoder_(encoder),md_(md), design_(design),traj_l90_(traj_l90),traj_r90_(traj_r90){}
+    std::unique_ptr<ctrl::slalom::Trajectory>& traj_r90,
+    std::unique_ptr<sensor::Wall>& wall)
+    : motor_reg_(motor_reg), imu_(imu), encoder_(encoder),md_(md), design_(design),traj_l90_(traj_l90),traj_r90_(traj_r90),wall_(wall){}
 
     //加減速走行
     void Core::AD(float dist,float spd_in, float spd_out){
@@ -248,17 +249,25 @@ namespace drive{
         this->Slalom_L90(v);
         while(Flag::Check(DRIVE_START)){}
         }else{
-            this->Straight(prev_d,v,v);
-            this->Slalom_L90(v);
-            while(Flag::Check(DRIVE_START)){}
-            this->Straight(after_d,v,v);
+            if(Flag::Check(FWALL_CTRL)&&
+            wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)]){
+                while(
+                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)]+
+                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] < 
+                consts::software::FWALL_TH){
+                this->Straight(prev_d,v,v);
+                break;
+                }
+                this->Slalom_L90(v);
+                while(Flag::Check(DRIVE_START)){}
+                this->Straight(after_d,v,v);
+            }else{
+                this->Straight(prev_d,v,v);
+                this->Slalom_L90(v);
+                while(Flag::Check(DRIVE_START)){}
+                this->Straight(after_d,v,v);
+            }
         }
-        // this->CurveAD(prev_d,v,v);
-        // while(Flag::Check(DRIVE_START)){}
-        // this->Slalom_L90(v);
-        // while(Flag::Check(DRIVE_START)){}
-        // this->CurveAD(after_d,v,v);
-        // while(Flag::Check(DRIVE_START)){}
 
     }
 
@@ -267,10 +276,24 @@ namespace drive{
         this->Slalom_R90(v);
         while(Flag::Check(DRIVE_START)){}
         }else{
-            this->Straight(prev_d,v,v);
-            this->Slalom_R90(v);
-            while(Flag::Check(DRIVE_START)){}
-            this->Straight(after_d,v,v);
+            if(Flag::Check(FWALL_CTRL)&&
+            wall_->get_val_ref()->dir[static_cast<int>(state::Wall::DIR::F)]){
+                while(
+                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)]+
+                wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] < 
+                consts::software::FWALL_TH){
+                this->Straight(prev_d,v,v);
+                break;
+                }
+                this->Slalom_R90(v);
+                while(Flag::Check(DRIVE_START)){}
+                this->Straight(after_d,v,v);
+            }else{
+                this->Straight(prev_d,v,v);
+                this->Slalom_R90(v);
+                while(Flag::Check(DRIVE_START)){}
+                this->Straight(after_d,v,v);
+            }
         }
     }
 
