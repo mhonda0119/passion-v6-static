@@ -42,10 +42,11 @@ namespace drive{
         void AD(float dist , float spd_in , float spd_out);
         void CurveAD(float dist , float spd_in , float spd_out);
         void SpinTurn();
+        void Spin();
         void Slalom_L90(float v);
         void Slalom_R90(float v);
-        void TurnL90(float v,float prev_d = 15,float after_d = 20);
-        void TurnR90(float v,float prev_d = 15,float after_d = 20);
+        void TurnL90(float v,float prev_d = consts::software::SL_L_PREV_OFFSET,float after_d = consts::software::SL_L_AFTER_OFFSET);
+        void TurnR90(float v,float prev_d = consts::software::SL_R_PREV_OFFSET,float after_d = consts::software::SL_R_AFTER_OFFSET);
         void Straight(float dist,float v_in,float v_out);
         void Stop();
         void Ketsu();

@@ -286,7 +286,7 @@ namespace regulator{
     void Motor::SpinRegulate(){
          //0.走行開始フラグの確認
         if(Flag::Check(DRIVE_START)){
-        //1.現在の時刻の目標角度を取得
+        //1.現在の時刻の目標角速度を取得
         r_->omega[static_cast<int>(state::Motion::AXIS::Z)] = design_->v(t_cnt_);
         //角速度pidにかける
         pid_omega_->set_kp(0.3);

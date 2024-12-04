@@ -45,13 +45,13 @@ namespace input{
             wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] > consts::software::MODE_TH) 
             {
             mode++;
-            if (mode > 7) {
+            if (mode > 8) {
                 mode = 0;
             }
 
             std::cout << "Mode : " << mode << std::endl;
 
-            buzzer_->Play(((9 - mode) * 0.5 * 200),200);
+            buzzer_->Play(((10 - mode) * 0.5 * 200),200);
         }
 
         if (wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] > consts::software::MODE_TH 

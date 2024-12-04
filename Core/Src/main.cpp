@@ -300,7 +300,7 @@ int main()
             Objects::buzzer_->Play(500,50);
             /*OFFSET*/
 
-            core->Straight(540,0,0);
+            core->Straight(180,0,0);
             core->Stop();
 
             break;
@@ -333,7 +333,7 @@ int main()
 
             printf("Mode 6\n");
 
-                        Objects::buzzer_->Play(500,50);
+            Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
 
@@ -347,8 +347,13 @@ int main()
             Objects::buzzer_->Play(500,50);
             /*OFFSET*/
 
-            core->Straight(540,0,0);
+            core->Straight(consts::software::HALF_BLOCK,consts::software::SPD_SEARCH,0);
             core->Stop();
+            Objects::wait_->Ms(1000);
+            core->SpinTurn();  //180度回転
+            while(Flag::Check(DRIVE_START)){}
+            core->Stop();
+            core->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
 
             
 
@@ -358,6 +363,46 @@ int main()
 
             printf("Mode 7\n");
 
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+            core->SpinTurn();  //180度回転
+            core->Stop();
+
+            break;
+
+            case 8:
+            
+            printf("Mode 8\n");
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+            /*OFFSET*/
+            core->Straight(consts::software::HALF_BLOCK,consts::software::SPD_SEARCH,0);  //半区画分減速しながら走行し停止
+            core->Stop();
+
+            HAL_Delay(1000);  //スタートでは***2秒以上***停止しなくてはならない
+            //rotate_180();
+            core->SpinTurn();  //180度回転
             break;
         }
     }

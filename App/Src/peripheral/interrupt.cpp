@@ -36,7 +36,7 @@ namespace peripheral{
         abs(Objects::imu_->get_raw_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]) > 2000){
         Objects::md_->ShortBrake();
         Objects::md_->Off();
-        Objects::buzzer_->Play(1000,1000,80);
+        //Objects::buzzer_->Start(1000,80);
         std::cout << "FAILSAFE" << std::endl;
         }
         Objects::md_->Duty(Objects::motor_reg_->get_u_l(),Objects::motor_reg_->get_u_r());

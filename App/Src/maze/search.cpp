@@ -301,7 +301,8 @@ void Search::SearchB()
     Objects::buzzer_->Play(500,200);  //スタート音を鳴らす
     Objects::led_->Toggle();          //LEDを点灯させる
     Objects::wait_->Ms(100);
-    Objects::led_->Toggle();          //LEDを消灯させる  
+    Objects::led_->Toggle();
+    Objects::wait_->Ms(100);          //LEDを消灯させる  
     Objects::led_->Toggle();          //LEDを点灯させる
     Objects::wait_->Ms(100);
     Objects::led_->Toggle();          //LEDを消灯させる  
@@ -355,18 +356,21 @@ void Search::SearchB()
         break;
       //----180回転----
       case 0x22:
-      Objects::buzzer_->Start(700);  //前進音を鳴らす
-
+      //core_->Stop();
+      //Objects::md_->Off();
+      //Objects::buzzer_->Start(800,80);  //前進音を鳴らす
+      //Objects::led_->On();
+      
         //half_sectionD();  //半区間分減速しながら走行し停止
         core_->Straight(consts::software::HALF_BLOCK,
         consts::software::SPD_SEARCH,0);
         core_->Stop();
-        core_->SpinTurn();  //180度回転
+        Objects::wait_->Ms(100);
+        core_->Spin();  //180度回転
         core_->Stop();
         this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
         core_->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
         this->GetWallInfo();//壁情報の取得
-        Objects::buzzer_->Stop();      //前進音を止める
         break;
       //----左折----
       case 0x11:
@@ -389,9 +393,9 @@ void Search::SearchB()
     core_->Stop();
     this->GetWallInfo();//壁情報の取得
 
-    HAL_Delay(1000);  //スタートでは***2秒以上***停止しなくてはならない
+    Objects::wait_->Ms(1000);  //スタートでは***2秒以上***停止しなくてはならない
     //rotate_180();
-    core_->SpinTurn();  //180度回転
+    core_->Spin();  //180度回転
     this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
     this->GetWallInfo();//壁情報の取得
     // if(Flag::Check(SCND)){

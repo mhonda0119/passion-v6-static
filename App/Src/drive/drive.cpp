@@ -297,4 +297,9 @@ namespace drive{
         }
     }
 
+    void Core::Spin(){
+        this->SpinTurn();
+        while(Flag::Check(DRIVE_START)){}
+    }
+
 }
