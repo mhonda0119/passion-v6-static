@@ -76,7 +76,7 @@ namespace consts::software{
     static constexpr float SL_ALPHA_MAX = 2500.0F;
     static constexpr float SL_OMEGA_MAX = 500.0F;
     //探索の基準速度mm/s
-    static constexpr float SPD_SEARCH = 300.0F;
+    static constexpr float SPD_SEARCH = 400.0F;
     //1区画の長さmm
     static constexpr float ONE_BLOCK = 180.0F;
     //半区画の長さmm
