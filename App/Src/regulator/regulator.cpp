@@ -190,8 +190,8 @@ namespace regulator{
         //現在の目標値を代入(速度)
         r_->spd[static_cast<int>(state::Motion::DIR::C)] = traj_l90_->getVelocity();
         // //角速度PIDにかける
-        pid_omega_->set_kp(0.3);
-        pid_omega_->set_ki(0.08);
+        // pid_omega_->set_kp(0.3);
+        // pid_omega_->set_ki(0.08);
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);
         //速度PIDにかける
@@ -241,8 +241,8 @@ namespace regulator{
         //角速度PIDにかける
         // pid_omega_->set_kp(0.6);
         // pid_omega_->set_ki(0.2);
-        pid_omega_->set_kp(0.3);
-        pid_omega_->set_ki(0.08);
+        // pid_omega_->set_kp(0.3);
+        // pid_omega_->set_ki(0.08);
 
         pid_omega_->Update(r_->omega[static_cast<int>(state::Motion::AXIS::Z)],
         imu_->get_val_ref()->omega[static_cast<int>(state::Motion::AXIS::Z)]);

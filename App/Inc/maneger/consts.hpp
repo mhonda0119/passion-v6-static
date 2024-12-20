@@ -25,24 +25,24 @@ namespace consts::software{
     // static constexpr float KI_DIST = 0.1F;
     // static constexpr float KD_DIST = 0.01F;
 
-    static constexpr float KP_DIST = 2.8F;
-    static constexpr float KI_DIST = 0.01F;
-    static constexpr float KD_DIST = 2.8F;
+    static constexpr float KP_DIST = 0.28F;
+    static constexpr float KI_DIST = 0.0F;
+    static constexpr float KD_DIST = 0.0F;
 
     //速さのPIDパラメータ
     static constexpr float KP_SPD = 0.20F;
-    static constexpr float KI_SPD = 0.0002F;
-    static constexpr float KD_SPD = 0.20F;
+    static constexpr float KI_SPD = 0.002F;
+    static constexpr float KD_SPD = 3.0F;
     // static constexpr float KP_SPD = 0.03F;
     // static constexpr float KI_SPD = 0.0F;
     // static constexpr float KD_SPD = 0.0F;
     //角速度のPIDパラメータ
     //static constexpr float KP_OMEGA = 0.044F;
-    static constexpr float KP_OMEGA = 0.17F;
+    static constexpr float KP_OMEGA = 0.044F;
     //static constexpr float KI_OMEGA = 0.0013F;
-    static constexpr float KI_OMEGA = 0.01F;
+    static constexpr float KI_OMEGA = 0.0013F;//0.0013F;
     //static constexpr float KD_OMEGA = 0.006F;
-    static constexpr float KD_OMEGA = 0.006F;
+    static constexpr float KD_OMEGA = 0.0011F;//0.0011F;
     // static constexpr float KP_OMEGA = 0.4F;
     // static constexpr float KI_OMEGA = 0.2F;
     // static constexpr float KD_OMEGA = 0.0F;
@@ -52,7 +52,7 @@ namespace consts::software{
     static constexpr float KD_ANGLE = 0.01F;
     //壁制御のPIDパラメータ
     //static constexpr float KP_WALL = 0.002F;
-    static constexpr float KP_WALL = 0.05F;
+    static constexpr float KP_WALL = 0.002F;
     static constexpr float KI_WALL = 0.0F;
     static constexpr float KD_WALL = 0.0F;
     //壁切れの閾値
