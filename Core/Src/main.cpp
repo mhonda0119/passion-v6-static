@@ -31,6 +31,7 @@
 #include "accel_designer.h"
 #include "flags.hpp"
 #include "search.hpp"
+#include "pwm.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -62,6 +63,7 @@ int main()
   printf("hello_c\n");
   std::cout << "hello_c++" << std::endl;
   std::cout << "C++ : " << __cplusplus << "\n";
+  
   //hello_world
   /*----------------------------------起動シーケンス開始----------------------------*/
   /*-------------------------------------INIT-------------------------------------*/
@@ -86,6 +88,10 @@ int main()
  std::make_unique<maze::Search>(Objects::wall_,Objects::wait_,core,Objects::encoder_,
  consts::software::GOAL_X,consts::software::GOAL_Y);
   /*----------初期化シーケンス実行------------*/
+
+
+  
+
 
   Objects::buzzer_->Play(500,50);
 
