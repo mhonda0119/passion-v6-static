@@ -13,6 +13,7 @@ namespace consts::software{
     static constexpr float SENSOR_FREQ = 1000.0F;
     static constexpr float CTRL_FREQ = 1000.0F;
     //WALLセンサの閾値
+<<<<<<< HEAD
     static constexpr float WALL_TH_L = 200.0F;/*本番用*/
     //static constexpr float WALL_TH_L = 1000.0F;
     //static constexpr float WALL_TH_L = 750.0F;
@@ -20,6 +21,15 @@ namespace consts::software{
     static constexpr float WALL_TH_FR = 180.0F;
     //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
     static constexpr float WALL_TH_R = 200.0F;
+=======
+    static constexpr float WALL_TH_L = 500.0F;/*本番用*/
+    //static constexpr float WALL_TH_L = 1000.0F;
+    //static constexpr float WALL_TH_L = 750.0F;
+    static constexpr float WALL_TH_FL = 500.0F;
+    static constexpr float WALL_TH_FR = 500.0F;
+    //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
+    static constexpr float WALL_TH_R = 500.0F;
+>>>>>>> 69d77825eb90378f0f1f2ce3ee01f6d2f981c85a
     //距離のPIDパラメータ
     // static constexpr float KP_DIST = 0.6F;
     // static constexpr float KI_DIST = 0.1F;
@@ -82,8 +92,13 @@ namespace consts::software{
     //半区画の長さmm
     static constexpr float HALF_BLOCK = 90.0F;
     //ゴール座標
+<<<<<<< HEAD
     static constexpr uint8_t GOAL_X = 1;
     static constexpr uint8_t GOAL_Y = 0;
+=======
+    static constexpr uint8_t GOAL_X = 7;
+    static constexpr uint8_t GOAL_Y = 7;
+>>>>>>> 69d77825eb90378f0f1f2ce3ee01f6d2f981c85a
     //CurveADのオフセット
     //static constexpr float AD_OFFSET = 6.0F;
     static constexpr float AD_OFFSET = 0.0F;
