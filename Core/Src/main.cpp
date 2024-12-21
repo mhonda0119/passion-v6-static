@@ -274,11 +274,14 @@ int main()
 
             Objects::imu_->ResetAngle();
             Objects::encoder_->ResetDist();
-            /*OFFSET*/
-
-            core->Straight(90,0,300);
-            core->TurnL90(300);
-            core->Stop();
+            /*OFFSET*/  
+            while(true){
+            Objects::wait_->Ms(200);
+            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
+            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
+            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
+            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Motion::DIR::R)] << std::endl;
+            }
 
             break;
 
