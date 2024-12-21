@@ -19,7 +19,7 @@ namespace consts::software{
     static constexpr float WALL_TH_FL = 1100.0F;//1300.0F;
     static constexpr float WALL_TH_FR = 1100.0F;//1300.0F;
     //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
-    static constexpr float WALL_TH_R = 1200.0F;
+    static constexpr float WALL_TH_R = 900.0F;
     //距離のPIDパラメータ
     // static constexpr float KP_DIST = 0.6F;
     // static constexpr float KI_DIST = 0.1F;
@@ -90,7 +90,7 @@ namespace consts::software{
     //モード選択時のセンサー閾値
     static constexpr float MODE_TH = 2500.0F;
     //前壁制御の閾値
-    static constexpr float FWALL_TH = 4000.0F;
+    static constexpr float FWALL_TH = 3000.0F;
     //スラロームのオフセット
     static constexpr float SL_R_PREV_OFFSET = 13.0F;
     //スラロームのオフセット

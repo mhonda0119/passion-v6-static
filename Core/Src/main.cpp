@@ -355,40 +355,19 @@ int main()
             Objects::wait_->Ms(300);
 
             search->SearchB();
+            //おかえり
+
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
-
-            //二次走行
-            /*OFFSET*/
-            Objects::buzzer_->Play(500,50);
-            Objects::wait_->Ms(100);
-            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
-
-            Objects::wall_->GetOffset();
-            Objects::encoder_->GetOffset();
-            Objects::encoder_->Start();
-            Objects::imu_->GetOffset();
-
-            Objects::buzzer_->Play(500,50);
-            Objects::wait_->Ms(100);
-            Objects::buzzer_->Play(500,50);
-
-            Objects::imu_->ResetAngle();
-            Objects::encoder_->ResetDist();
 
             //----フラグの初期化----
             Flag::ResetAll();
             Flag::Set(SCND);
-
-            std::cout << "searchB" << std::endl;
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            search->set_spd(500);
             core->Ketsu();
             //機体が安定するまで
             Objects::wait_->Ms(300);
-            //壁制御用のオフセットを取得
-            Objects::imu_->GetOffset();
-            Objects::wall_->GetOffset();
-
             //サーチBする
             search->SearchB();
             //なんか待つ
@@ -401,6 +380,7 @@ int main()
             search->SearchB();
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+
             break;
 
         case 6:
@@ -429,6 +409,7 @@ int main()
             Flag::ResetAll();
             Flag::Set(SCND);
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            search->set_spd(550);
             core->Ketsu();
             //機体が安定するまで
             Objects::wait_->Ms(300);

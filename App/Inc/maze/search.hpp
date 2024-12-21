@@ -22,6 +22,7 @@ namespace maze{
         uint8_t goal_x_, goal_y_;//ゴール座標
         uint8_t route_[256];  //最短経路格納配列
         uint8_t r_cnt_;      //経路カウンタ
+        float spd_ = consts::software::SPD_SEARCH;
         static constexpr uint8_t DIR_TURN_R90 = 0x01;
         static constexpr uint8_t DIR_TURN_L90 = 0xff;
         static constexpr uint8_t DIR_TURN_180 = 0x02;
@@ -31,7 +32,7 @@ namespace maze{
         std::unique_ptr<drive::Core>& core_;
         std::unique_ptr<sensor::encoder::Combine>& encoder_;
         std::unique_ptr<peripheral::EEPROM>& eeprom_;
-        
+
         public:
         Search(std::unique_ptr<sensor::Wall>& wall,
                std::unique_ptr<peripheral::Wait>& wait,
@@ -48,6 +49,7 @@ namespace maze{
         void MakeSmap();  //歩数マップ作成
         void MakeRoute();  //最短経路検索
         void set_goal(uint8_t x,uint8_t y); //ゴール座標設定
+        void set_spd(float spd);  //走行速度設定
         void SearchInit();  //探索初期化
         void StoreMapEEPROM();  //マップ情報をEEPROMに保存
         void LoadMapEEPROM();  //マップ情報をEEPROMから読み込み

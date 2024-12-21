@@ -156,7 +156,7 @@ namespace regulator{
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
                 if(encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)]
-                >= (design_->x(design_->t_end())))
+                >= (design_->x(design_->t_end()))||t_cnt_ >= design_->t_end()*1.5)
                 
                 {
                     std::cout << "end" << std::endl;
