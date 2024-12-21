@@ -82,8 +82,8 @@ namespace consts::software{
     //半区画の長さmm
     static constexpr float HALF_BLOCK = 90.0F;
     //ゴール座標
-    static constexpr uint8_t GOAL_X = 1;
-    static constexpr uint8_t GOAL_Y = 0 ;
+    static constexpr uint8_t GOAL_X = 7;
+    static constexpr uint8_t GOAL_Y = 7;
     //CurveADのオフセット
     //static constexpr float AD_OFFSET = 6.0F;
     static constexpr float AD_OFFSET = 0.0F;
