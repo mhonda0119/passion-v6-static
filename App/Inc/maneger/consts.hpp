@@ -25,9 +25,9 @@ namespace consts::software{
     // static constexpr float KI_DIST = 0.1F;
     // static constexpr float KD_DIST = 0.01F;
 
-    static constexpr float KP_DIST = 2.8F;
-    static constexpr float KI_DIST = 0.01F;
-    static constexpr float KD_DIST = 2.8F;
+    static constexpr float KP_DIST = 2.8F;//2.8F;
+    static constexpr float KI_DIST = 0.01F;//0.01F;
+    static constexpr float KD_DIST = 0.1F;//2.8F;
 
     //速さのPIDパラメータ
     static constexpr float KP_SPD = 0.20F;
@@ -76,7 +76,7 @@ namespace consts::software{
     static constexpr float SL_ALPHA_MAX = 2500.0F;
     static constexpr float SL_OMEGA_MAX = 500.0F;
     //探索の基準速度mm/s
-    static constexpr float SPD_SEARCH = 300.0F;
+    static constexpr float SPD_SEARCH = 300.0F;//300.0F;
     //1区画の長さmm
     static constexpr float ONE_BLOCK = 180.0F;
     //半区画の長さmm
@@ -94,11 +94,11 @@ namespace consts::software{
     //スラロームのオフセット
     static constexpr float SL_R_PREV_OFFSET = 13.0F;
     //スラロームのオフセット
-    static constexpr float SL_R_AFTER_OFFSET = 20.0F;
+    static constexpr float SL_R_AFTER_OFFSET = 25.0F;//20.0F;
     //スラロームのオフセット
     static constexpr float SL_L_PREV_OFFSET = 13.0F;
     //スラロームのオフセット
-    static constexpr float SL_L_AFTER_OFFSET = 20.0F;
+    static constexpr float SL_L_AFTER_OFFSET = 25.0F;
 
 }
 

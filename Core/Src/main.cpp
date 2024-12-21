@@ -31,6 +31,7 @@
 #include "accel_designer.h"
 #include "flags.hpp"
 #include "search.hpp"
+#include "consts.hpp"
 /* USER CODE END Includes */
 
 /**
@@ -83,7 +84,7 @@ int main()
   std::cout << "drive_Instance" << std::endl;
   //Searchのインスタンス化
  std::unique_ptr<maze::Search> search = 
- std::make_unique<maze::Search>(Objects::wall_,Objects::wait_,core,Objects::encoder_,
+ std::make_unique<maze::Search>(Objects::wall_,Objects::wait_,core,Objects::encoder_,Objects::eeprom_,
  consts::software::GOAL_X,consts::software::GOAL_Y);
   /*----------初期化シーケンス実行------------*/
 
@@ -167,9 +168,9 @@ int main()
   // Objects::led_->On();
   // core->Stop();
   // while(true);
-
+  search->SearchInit();
   Flag::Set(FWALL_CTRL);
-  Flag::Reset(SCND);
+  //Flag::Reset(FWALL_CTRL);
 
   uint8_t mode = 0;
 
@@ -202,10 +203,10 @@ int main()
             Objects::imu_->ResetAngle();
             Objects::encoder_->ResetDist();
 
-                //----フラグの初期化----
+            //----フラグの初期化----
             Flag::ResetAll();
             //----マップデータ初期化----
-            search->SearchInit();
+            //search->SearchInit();
 
             std::cout << "searchB" << std::endl;
             //二次走行フラグをクリア
@@ -248,7 +249,10 @@ int main()
             Objects::encoder_->ResetDist();
             /*OFFSET*/
 
-            core->Straight(90,0,300);
+            //core->Straight(90,0,300);
+            core->TurnR90(300);
+            core->TurnR90(300);
+            core->TurnR90(300);
             core->TurnR90(300);
             core->Stop();
 
@@ -307,11 +311,8 @@ int main()
             core->Stop();
 
             break;
-
         case 5:
-
-            printf("mode 5.\n");
-
+            /*OFFSET*/
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
@@ -324,18 +325,84 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
             /*OFFSET*/
-            while(true){
-            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::C)] << "\t";
-            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::L)] << "\t";
-            std::cout << Objects::encoder_->get_val_ref()->dist[static_cast<int>(state::Motion::DIR::R)] << std::endl;
-            }
+
+            //----フラグの初期化----
+            Flag::ResetAll();
+            //----マップデータ初期化----
+            search->SearchInit();
+
+            std::cout << "searchB" << std::endl;
+            //二次走行フラグをクリア
+            Flag::Reset(SCND);
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
+            //壁制御用のオフセットを取得
+            Objects::imu_->GetOffset();
+            Objects::wall_->GetOffset();
+            //サーチBする
+            search->SearchB();
+            //なんか待つ
+            Objects::wait_->Ms(500);
+            //ゴール座標をスタート地点にしてもっかいsearchB
+            search->set_goal(0,0);
+            search->SearchB();
+            //ゴール座標を設定する
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+
+            //二次走行
+            /*OFFSET*/
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
+
+            Objects::wall_->GetOffset();
+            Objects::encoder_->GetOffset();
+            Objects::encoder_->Start();
+            Objects::imu_->GetOffset();
+
+            Objects::buzzer_->Play(500,50);
+            Objects::wait_->Ms(100);
+            Objects::buzzer_->Play(500,50);
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
+
+            //----フラグの初期化----
+            Flag::ResetAll();
+            Flag::Set(SCND);
+
+            std::cout << "searchB" << std::endl;
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
+            //壁制御用のオフセットを取得
+            Objects::imu_->GetOffset();
+            Objects::wall_->GetOffset();
+
+            //サーチBする
+            search->SearchB();
+            //なんか待つ
+            Objects::wait_->Ms(500);
+            //ゴール座標を設定する
+            search->set_goal(0,0);
+            search->SearchB();
+            //ゴール座標を設定する
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
             break;
 
         case 6:
 
             printf("Mode 6\n");
 
+            //二次走行だけ
+            /*OFFSET*/
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
@@ -348,18 +415,24 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
-            /*OFFSET*/
 
-            core->Straight(consts::software::HALF_BLOCK,consts::software::SPD_SEARCH,0);
-            core->Stop();
-            Objects::wait_->Ms(1000);
-            core->SpinTurn();  //180度回転
-            while(Flag::Check(DRIVE_START)){}
-            core->Stop();
-            core->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
 
-            
-
+            //----フラグの初期化----
+            Flag::ResetAll();
+            Flag::Set(SCND);
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
+            //壁制御用のオフセットを取得
+            Objects::imu_->GetOffset();
+            Objects::wall_->GetOffset();
+            //サーチBする
+            search->SearchB();
+            //なんか待つ
+            Objects::wait_->Ms(500);
             break;
 
         case 7:
@@ -379,7 +452,11 @@ int main()
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
             /*OFFSET*/
-            core->SpinTurn();  //180度回転
+            core->TurnL90(300);
+            core->TurnL90(300);
+            core->TurnL90(300);
+            core->TurnL90(300);
+            core->Stop();
             core->Stop();
 
             break;

@@ -10,6 +10,7 @@
 #include "flags.hpp"
 #include "drive.hpp"
 #include "encoder_creater.hpp"
+#include "eeprom.hpp"
 
 namespace maze{
 
@@ -29,12 +30,13 @@ namespace maze{
         std::unique_ptr<peripheral::Wait>& wait_;
         std::unique_ptr<drive::Core>& core_;
         std::unique_ptr<sensor::encoder::Combine>& encoder_;
-
+        std::unique_ptr<peripheral::EEPROM>& eeprom_;
         public:
         Search(std::unique_ptr<sensor::Wall>& wall,
                std::unique_ptr<peripheral::Wait>& wait,
                std::unique_ptr<drive::Core>& core,
                std::unique_ptr<sensor::encoder::Combine>& encoder,
+               std::unique_ptr<peripheral::EEPROM>& eeprom,
                uint8_t goal_x,uint8_t goal_y);
         void AdvPos();    //マウスの位置情報を前進
         void GetWallInfo(); //壁情報取得
@@ -46,6 +48,8 @@ namespace maze{
         void MakeRoute();  //最短経路検索
         void set_goal(uint8_t x,uint8_t y); //ゴール座標設定
         void SearchInit();  //探索初期化
+        void StoreMapEEPROM();  //マップ情報をEEPROMに保存
+        void LoadMapEEPROM();  //マップ情報をEEPROMから読み込み
 
         void SearchB();    //足立法探索
 

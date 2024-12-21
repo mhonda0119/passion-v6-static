@@ -8,9 +8,10 @@ Search::Search(std::unique_ptr<sensor::Wall>& wall,
 std::unique_ptr<peripheral::Wait>& wait,
 std::unique_ptr<drive::Core>& core,
 std::unique_ptr<sensor::encoder::Combine>& encoder,
+std::unique_ptr<peripheral::EEPROM>& eeprom,
 uint8_t goal_x,uint8_t goal_y):
 goal_x_(goal_x),goal_y_(goal_y),wall_(wall),wait_(wait),
-core_(core),encoder_(encoder){
+core_(core),encoder_(encoder),eeprom_(eeprom){
 
 }
 
@@ -296,7 +297,7 @@ void Search::MakeRoute()
 void Search::SearchB()
 {
   if(Flag::Check(SCND)){
-    //load_map_from_eeprom();         //二次走行時はROMからマップ情報を取り出す
+    this->LoadMapEEPROM();         //二次走行時はROMからマップ情報を取り出す
   }
     Objects::buzzer_->Play(500,200);  //スタート音を鳴らす
     Objects::led_->Toggle();          //LEDを点灯させる
@@ -369,7 +370,8 @@ void Search::SearchB()
         core_->Spin();  //180度回転
         core_->Stop();
         this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
-        core_->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
+        core_->Ketsu();
+        core_->Straight(46+90,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
         //core_->Stop();
         this->GetWallInfo();//壁情報の取得
         Objects::buzzer_->Stop();      //前進音を止めるcore_->Stop();
@@ -400,9 +402,9 @@ void Search::SearchB()
     core_->Spin();  //180度回転
     this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
     this->GetWallInfo();//壁情報の取得
-    // if(Flag::Check(SCND)){
-    // store_map_in_eeprom();          //一次探索走行時はROMにマップ情報を書き込む
-    // }
+    if(Flag::Check(SCND) == false){
+    this->StoreMapEEPROM();          //一次探索走行時はROMにマップ情報を書き込む
+    }
     //====探索終了音を鳴らす====
     Objects::buzzer_->Play(987,200);  //探索終了音を鳴らす
     Objects::buzzer_->Play(783,500);
@@ -413,6 +415,41 @@ void Search::set_goal(uint8_t goal_x,uint8_t goal_y)
     goal_x_ = goal_x;
     goal_y_ = goal_y;
 
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//store_map_in_eeprom
+// mapデータをeepromに格納する
+// 引数：なし
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+
+void Search::StoreMapEEPROM(){
+  eeprom_->EnableWrite();
+  int i;
+    for(i = 0; i < 16; i++){
+    int j;
+    for(j = 0; j < 16; j++){
+     eeprom_->WriteHalfword(i*16 + j, (uint16_t) map_[i][j]);
+    }
+  }
+  eeprom_->DisableWrite();
+}
+
+//+++++++++++++++++++++++++++++++++++++++++++++++
+//load_map_in_eeprom
+// mapデータをeepromから取得する
+// 引数：なし
+// 戻り値：なし
+//+++++++++++++++++++++++++++++++++++++++++++++++
+void Search::LoadMapEEPROM(void){
+  int i;
+  for(i = 0; i < 16; i++){
+    int j;
+    for(j = 0; j < 16; j++){
+      map_[i][j] = (uint8_t) eeprom_->ReadHalfword(i*16 + j);
+    }
+  }
 }
 
 }
