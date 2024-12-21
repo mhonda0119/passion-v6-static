@@ -42,14 +42,14 @@ namespace consts::software{
     //static constexpr float KI_OMEGA = 0.0013F;
     static constexpr float KI_OMEGA = 0.0013F;//0.0013F;
     //static constexpr float KD_OMEGA = 0.006F;
-    static constexpr float KD_OMEGA = 0.0011F;//0.0011F;
+    static constexpr float KD_OMEGA = 0.006F;//0.0011F;
     // static constexpr float KP_OMEGA = 0.4F;
     // static constexpr float KI_OMEGA = 0.2F;
     // static constexpr float KD_OMEGA = 0.0F;
     //角度のPIDパラメータ
-    static constexpr float KP_ANGLE = 0.01F;
-    static constexpr float KI_ANGLE = 0.01F;
-    static constexpr float KD_ANGLE = 0.01F;
+    static constexpr float KP_ANGLE = 0.00F;
+    static constexpr float KI_ANGLE = 0.00F;
+    static constexpr float KD_ANGLE = 0.00F;
     //壁制御のPIDパラメータ
     //static constexpr float KP_WALL = 0.002F;
     static constexpr float KP_WALL = 0.002F;
