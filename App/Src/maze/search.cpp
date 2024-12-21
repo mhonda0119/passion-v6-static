@@ -367,11 +367,11 @@ void Search::SearchB()
         consts::software::SPD_SEARCH,0);
         core_->Stop();
         Objects::wait_->Ms(100);
-        core_->Spin();  //180度回転
+        core_->Spin();  //180度旋回
         core_->Stop();
-        this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
-        core_->Ketsu();
-        core_->Straight(46+90,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
+        
+        this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度旋回処理
+        core_->Straight(consts::software::HALF_BLOCK,0,consts::software::SPD_SEARCH);  //半区画分加速しながら走行する
         //core_->Stop();
         this->GetWallInfo();//壁情報の取得
         Objects::buzzer_->Stop();      //前進音を止めるcore_->Stop();
@@ -401,7 +401,9 @@ void Search::SearchB()
     //rotate_180();
     core_->Spin();  //180度回転
     this->TurnDir(DIR_TURN_180);  //マイクロマウス内部位置情報でも180度回転処理
+    
     this->GetWallInfo();//壁情報の取得
+
     if(Flag::Check(SCND) == false){
     this->StoreMapEEPROM();          //一次探索走行時はROMにマップ情報を書き込む
     }

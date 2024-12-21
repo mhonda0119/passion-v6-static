@@ -249,11 +249,7 @@ int main()
             Objects::encoder_->ResetDist();
             /*OFFSET*/
 
-            //core->Straight(90,0,300);
-            core->TurnR90(300);
-            core->TurnR90(300);
-            core->TurnR90(300);
-            core->TurnR90(300);
+            core->Straight(180,0,0);
             core->Stop();
 
             break;
@@ -349,8 +345,15 @@ int main()
             search->SearchB();
             //なんか待つ
             Objects::wait_->Ms(500);
+            Objects::led_->On();
+            Objects::wait_->Ms(500);
+            Objects::led_->Off();
             //ゴール座標をスタート地点にしてもっかいsearchB
             search->set_goal(0,0);
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
+
             search->SearchB();
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
@@ -392,6 +395,9 @@ int main()
             Objects::wait_->Ms(500);
             //ゴール座標を設定する
             search->set_goal(0,0);
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
             search->SearchB();
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);

@@ -16,8 +16,8 @@ namespace consts::software{
     static constexpr float WALL_TH_L = 950.0F;/*本番用*/
     //static constexpr float WALL_TH_L = 1000.0F;
     //static constexpr float WALL_TH_L = 750.0F;
-    static constexpr float WALL_TH_FL = 1300.0F;
-    static constexpr float WALL_TH_FR = 1300.0F;
+    static constexpr float WALL_TH_FL = 1100.0F;//1300.0F;
+    static constexpr float WALL_TH_FR = 1100.0F;//1300.0F;
     //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
     static constexpr float WALL_TH_R = 1200.0F;
     //距離のPIDパラメータ
