@@ -267,7 +267,7 @@ void Search::MakeRoute()
       m_step = smap_[y][x-1];                                //最大歩数マップ値を更新
       x--;                                                  //西に進んだのでX座標をデクリメント
     }
-
+  
     //----格納データ形式変更----
     switch(route_[i]){                 //route配列に格納した要素値で分岐
     case 0x00:                        //前進する場合
