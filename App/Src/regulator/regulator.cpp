@@ -306,7 +306,7 @@ namespace regulator{
         //距離が目標値になったら，目標値をリセット,時刻カウンタをリセット,
         //encoder,imuの積算値をリセット,走行開始フラグをリセット
             if(imu_->get_val_ref()->angle[static_cast<int>(state::Motion::AXIS::Z)] 
-            >= 178.0f
+            >= 178.0f||t_cnt_ >= design_->t_end()*2
             /*||t_cnt_ >= design_->t_end()*/
             ){  
                 std::cout << "end" << std::endl;
