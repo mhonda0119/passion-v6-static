@@ -31,6 +31,7 @@ namespace maze{
         std::unique_ptr<drive::Core>& core_;
         std::unique_ptr<sensor::encoder::Combine>& encoder_;
         std::unique_ptr<peripheral::EEPROM>& eeprom_;
+        
         public:
         Search(std::unique_ptr<sensor::Wall>& wall,
                std::unique_ptr<peripheral::Wait>& wait,
