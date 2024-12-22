@@ -412,7 +412,9 @@ void Search::SearchB()
     }
 
     this->AdvPos();                      //マイクロマウス内部位置情報でも前進処理
+    if(Flag::Check(SCND) == false){
     this->ConfRoute();                   //最短経路で進行可能か判定
+    }
 
     }while((mouse_.x != goal_x_) || (mouse_.y != goal_y_));   //現在座標とgoal座標が等しくなるまで実行
 

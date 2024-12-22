@@ -280,7 +280,7 @@ int main()
             std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::L)] << "\t";
             std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FL)] << "\t";
             std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::FR)] << "\t";
-            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Motion::DIR::R)] << std::endl;
+            std::cout << Objects::wall_->get_raw_ref()->dir[static_cast<int>(state::Wall::DIR::R)] << std::endl;
             }
 
             break;
@@ -360,6 +360,8 @@ int main()
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
 
+            for(uint8_t i = 0;i < 8 ;i++){
+
             //----フラグの初期化----
             Flag::ResetAll();
             Flag::Set(SCND);
@@ -380,6 +382,8 @@ int main()
             search->SearchB();
             //ゴール座標を設定する
             search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);
+
+            }
 
             break;
 
@@ -427,7 +431,11 @@ int main()
         case 7:
 
             printf("Mode 7\n");
+            
+            printf("Mode 6\n");
 
+            //二次走行だけ
+            /*OFFSET*/
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,2000);//2秒//正しい位置に置く猶予
@@ -440,13 +448,29 @@ int main()
             Objects::buzzer_->Play(500,50);
             Objects::wait_->Ms(100);
             Objects::buzzer_->Play(500,50);
-            /*OFFSET*/
-            core->TurnL90(300);
-            core->TurnL90(300);
-            core->TurnL90(300);
-            core->TurnL90(300);
-            core->Stop();
-            core->Stop();
+
+            Objects::imu_->ResetAngle();
+            Objects::encoder_->ResetDist();
+
+            //----フラグの初期化----
+            Flag::ResetAll();
+            Flag::Set(SCND);
+            search->set_goal(consts::software::GOAL_X,consts::software::GOAL_Y);//ゴール座標設定
+            search->set_spd(700);
+            core->Ketsu();
+            //機体が安定するまで
+            Objects::wait_->Ms(300);
+            //壁制御用のオフセットを取得
+            Objects::imu_->GetOffset();
+            Objects::wall_->GetOffset();
+            //サーチBする
+            search->SearchB();
+            //なんか待つ
+            Objects::wait_->Ms(500);
+            break;
+
+
+
 
             break;
 

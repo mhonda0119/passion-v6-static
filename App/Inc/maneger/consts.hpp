@@ -13,13 +13,13 @@ namespace consts::software{
     static constexpr float SENSOR_FREQ = 1000.0F;
     static constexpr float CTRL_FREQ = 1000.0F;
     //WALLセンサの閾値
-    static constexpr float WALL_TH_L = 950.0F;/*本番用*/
+    static constexpr float WALL_TH_L = 600.0F;/*本番用*/
     //static constexpr float WALL_TH_L = 1000.0F;
     //static constexpr float WALL_TH_L = 750.0F;
-    static constexpr float WALL_TH_FL = 1100.0F;//1300.0F;
-    static constexpr float WALL_TH_FR = 1100.0F;//1300.0F;
+    static constexpr float WALL_TH_FL = 900.0F;//1300.0F;
+    static constexpr float WALL_TH_FR = 1050.0F;//1300.0F;
     //static constexpr float WALL_TH_R = 1500.0F;/*本番用*/
-    static constexpr float WALL_TH_R = 900.0F;
+    static constexpr float WALL_TH_R = 600.0F;
     //距離のPIDパラメータ
     // static constexpr float KP_DIST = 0.6F;
     // static constexpr float KI_DIST = 0.1F;
@@ -52,7 +52,7 @@ namespace consts::software{
     static constexpr float KD_ANGLE = 0.01F;
     //壁制御のPIDパラメータ
     //static constexpr float KP_WALL = 0.002F;
-    static constexpr float KP_WALL = 0.05F;
+    static constexpr float KP_WALL = 0.10F;//0.05
     static constexpr float KI_WALL = 0.0F;
     static constexpr float KD_WALL = 0.0F;
     //壁切れの閾値
@@ -83,7 +83,7 @@ namespace consts::software{
     static constexpr float HALF_BLOCK = 90.0F;
     //ゴール座標
     static constexpr uint8_t GOAL_X = 7;
-    static constexpr uint8_t GOAL_Y = 7;
+    static constexpr uint8_t GOAL_Y = 8;
     //CurveADのオフセット
     //static constexpr float AD_OFFSET = 6.0F;
     static constexpr float AD_OFFSET = 0.0F;

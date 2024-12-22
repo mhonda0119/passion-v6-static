@@ -216,7 +216,7 @@ namespace drive{
         //走行開始
         md_->Start();
         //wait
-        Objects::wait_->Ms(1000);
+        Objects::wait_->Ms(1500);
         //停止
         md_->ShortBrake();
         Objects::md_->Dir(state::MOTOR::LEFT,state::MOTOR::FWD);
