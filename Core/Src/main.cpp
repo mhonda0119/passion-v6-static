@@ -408,7 +408,7 @@ int main()
 
             Objects::imu_->ResetAngle();
             Objects::encoder_->ResetDist();
-
+            
             //----フラグの初期化----
             Flag::ResetAll();
             Flag::Set(SCND);
